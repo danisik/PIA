@@ -58,13 +58,14 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public void addUser(String username, String password) {
+	public void addUser(String username, String password, String name, String birth_number, String address,
+						String email, String phone_number, String bank_account, String card_number) {
 		if (this.userRepo.findByUsername(username) != null) {
 			throw new IllegalArgumentException("User already exists!");
 		}
 
 		String hashed = this.encoder.encode(password);
-		User user = new User(username, hashed);
+		User user = new User(username, hashed, name, birth_number, address, email, phone_number, bank_account, card_number);
 		this.userRepo.save(user);
 	}
 
@@ -80,17 +81,23 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 			Role role_user = this.roleRepo.findByCode("USER");
 			Role role_purser = this.roleRepo.findByCode("PURSER");
 
-			this.addUser(DEFAULT_ADMIN1, DEFAULT_ADMIN1_PASSWORD);
+			this.addUser(DEFAULT_ADMIN1, DEFAULT_ADMIN1_PASSWORD, "Josef Kulihrášek", "123456/7890",
+					"Sedláčkova 209/16, 301 00 Plzeň-Vnitřní Město", "kulihrasek@seznam.cz",
+					"123456789", "1234567901/0600", "4339992979647585");
 			User admin1 = this.userRepo.findByUsername(DEFAULT_ADMIN1);
 			admin1.getRoles().add(role_admin);
 			this.userRepo.save(admin1);
 
-			this.addUser(DEFAULT_USER1, DEFAULT_USER1_PASSWORD);
+			this.addUser(DEFAULT_USER1, DEFAULT_USER1_PASSWORD, "František Seno", "456789/0123",
+					"Sedláčkova 220/16, 301 00 Plzeň-Vnitřní Město", "seno@seznam.cz",
+					"987654321", "1234567928/0600", "4599919667156954");
 			User user1 = this.userRepo.findByUsername(DEFAULT_USER1);
 			user1.getRoles().add(role_user);
 			this.userRepo.save(user1);
 
-			this.addUser(DEFAULT_USER2, DEFAULT_USER2_PASSWORD);
+			this.addUser(DEFAULT_USER2, DEFAULT_USER2_PASSWORD, "Vojtěch Gorgon", "012345/6789",
+					"Sedláčkova 230/16, 301 00 Plzeň-Vnitřní Město", "gorgon@seznam.cz",
+					"456789123", "1234567936/0600", "4665212535774631");
 			User user2 = this.userRepo.findByUsername(DEFAULT_USER2);
 			user2.getRoles().add(role_user);
 			user2.getRoles().add(role_purser);
