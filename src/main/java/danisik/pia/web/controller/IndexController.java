@@ -8,16 +8,19 @@ public class IndexController {
 
 	@GetMapping("/")
 	public String index() {
+
 		return "index";
 	}
 
 	@GetMapping("/info")
 	public String info() {
+
 		return "homepage/info";
 	}
 
 	@GetMapping("/services")
 	public String services() {
+
 		return "homepage/services";
 	}
 }

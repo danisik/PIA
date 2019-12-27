@@ -5,7 +5,6 @@
 		lang="cs"
 >
 	<head th:fragment="head(title)">
-		<!--/*@thymesVar id="title" type=""*/-->
 		<title th:replace="${title}">PIA ukázka</title>
 		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
 		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
@@ -28,41 +27,42 @@
 				<li sec:authorize="!isAuthenticated()">
 					<a th:href="@{/info}"><i class="fa fa-info"></i></a>
 				</li>
-				<li sec:authorize="!isAuthenticated()">
-					<a th:href="@{/login}"><i class="fa fa-sign-in-alt"></i></a>
-				</li>
 
 				<!--User buttons-->
 				<li sec:authorize="isAuthenticated()">
-					<a th:href="@{/userinfo}"><i class="fa fa-user-circle"></i></a>
+					<a th:href="@{/user/info}"><i class="fa fa-user-circle"></i></a>
         		</li>
 				<li sec:authorize="isAuthenticated()">
-					<a th:href="@{/useredit}"><i class="fa fa-user-edit"></i></a>
+					<a th:href="@{/user/edit}"><i class="fa fa-user-edit"></i></a>
         		</li>
 
 				<!--Admin buttons-->
 				<li sec:authorize="hasRole('ADMIN')">
-					<a th:href="@{/adminmanage}"><i class="fa fa-users-cog"></i></a>
+					<a th:href="@{/admin/manage}"><i class="fa fa-users-cog"></i></a>
 				</li>
 
 				<!--Purser buttons-->
 				<li sec:authorize="hasRole('PURSER')">
-					<a th:href="@{/invoiceinfo}"><i class="fa fa-file-invoice"></i></a>
+					<a th:href="@{/invoice/info}"><i class="fa fa-file-invoice"></i></a>
 				</li>
 				<li sec:authorize="hasRole('PURSER')">
-					<a th:href="@{/invoiceedit}"><i class="fa fa-file-contract"></i></a>
+					<a th:href="@{/invoice/edit}"><i class="fa fa-file-contract"></i></a>
 				</li>
 				<li sec:authorize="hasRole('PURSER')">
 					<a th:href="@{/addressbook}"><i class="fa fa-address-book"></i></a>
 				</li>
 
-				<!--Logout button-->
+				<!--Login / Logout button-->
+				<li sec:authorize="!isAuthenticated()">
+					<a th:href="@{/login}"><i class="fa fa-sign-in-alt"></i></a>
+				</li>
+
 				<li sec:authorize="isAuthenticated()">
 					<a th:href="@{/logout}"><i class="fa fa-sign-out-alt"></i></a>
 				</li>
 			</ul>
 		</nav>
 		
-		<p>Hello <span th:text="${#authentication.name}"></span></p>
+		<p>Hello <span th:text="${authentication.name}"></span></p>
 	</body>
 </html>

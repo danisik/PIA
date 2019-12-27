@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	lang="cs"
+>
+	<head th:replace="fragments/headers :: head(~{::title})">
+		<title>Index</title>
+	</head>
+
+	<body>
+	<nav th:replace="fragments/headers :: nav"></nav>
+		<table>
+			<tr>
+				<th>Jméno:</th>
+				<td th:text="${user.name}"></td>
+			</tr>
+
+			<tr>
+				<th>Rodné číslo:</th>
+				<td th:text="${user.birthNumber}"></td>
+			</tr>
+
+			<tr>
+				<th>Adresa:</th>
+				<td th:text="${user.address}"></td>
+			</tr>
+
+			<tr>
+				<th>Email:</th>
+				<td th:text="${user.email}"></td>
+			</tr>
+
+			<tr>
+				<th>Telefon:</th>
+				<td th:text="${user.phoneNumber}"></td>
+			</tr>
+
+			<tr>
+				<th>Číslo účtu:</th>
+				<td th:text="${user.bankAccount}"></td>
+			</tr>
+
+			<tr>
+				<th>Číslo karty:</th>
+				<td th:text="${user.cardNumber}"></td>
+			</tr>
+		</table>
+	</body>
+</html>

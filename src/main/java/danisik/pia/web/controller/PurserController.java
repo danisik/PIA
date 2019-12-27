@@ -8,16 +8,19 @@ public class PurserController {
 
 	@GetMapping("/addressbook")
 	public String addressbook() {
+
 		return "purser/addressbook";
 	}
 
-	@GetMapping("/invoiceedit")
+	@GetMapping("/invoice/edit")
 	public String invoiceedit() {
-		return "purser/invoiceedit";
+
+		return "purser/invoice/edit";
 	}
 
-	@GetMapping("/invoiceinfo")
+	@GetMapping("/invoice/info")
 	public String invoiceinfo() {
-		return "purser/invoiceinfo";
+
+		return "purser/invoice/info";
 	}
 }

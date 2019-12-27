@@ -78,6 +78,32 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		this.userRepo.save(user);
 	}
 
+	@Override
+	public User updateUserInfo(String username, User userValues) {
+		return updateUserInfo(username, userValues.getName(), userValues.getBirthNumber(), userValues.getAddress(),
+				userValues.getEmail(), userValues.getPhoneNumber(), userValues.getBankAccount(), userValues.getCardNumber());
+	}
+
+	@Override
+	public User updateUserInfo(String username, String name, String birthNumber, String address,
+						   String email, String phoneNumber, String bankAccount, String cardNumber) {
+		User user = this.userRepo.findByUsername(username);
+		user.setName(name);
+		user.setBirthNumber(birthNumber);
+		user.setAddress(address);
+		user.setEmail(email);
+		user.setPhoneNumber(phoneNumber);
+		user.setBankAccount(bankAccount);
+		user.setCardNumber(cardNumber);
+		this.userRepo.save(user);
+		return user;
+	}
+
+	@Override
+	public User findUserByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
+
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
@@ -87,7 +113,6 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		if (this.userRepo.count() == 0) {
 			log.info("No user present, creating admin and users.");
 			Role role_admin = this.roleRepo.findByCode("ADMIN");
-			Role role_user = this.roleRepo.findByCode("USER");
 			Role role_purser = this.roleRepo.findByCode("PURSER");
 
 			Contact contact = this.contactRepo.findByIdentificationNumber("26343398");
@@ -105,14 +130,13 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 					"Sedláčkova 220/16, 301 00 Plzeň-Vnitřní Město", "seno@seznam.cz",
 					"987654321", "1234567928/0600", "4599919667156954");
 			User user1 = this.userRepo.findByUsername(DEFAULT_USER1);
-			user1.getRoles().add(role_user);
+			user1.getRoles().add(role_purser);
 			this.userRepo.save(user1);
 
 			this.addUser(DEFAULT_USER2, DEFAULT_USER2_PASSWORD, "Vojtěch Gorgon", "012345/6789",
 					"Sedláčkova 230/16, 301 00 Plzeň-Vnitřní Město", "gorgon@seznam.cz",
 					"456789123", "1234567936/0600", "4665212535774631");
 			User user2 = this.userRepo.findByUsername(DEFAULT_USER2);
-			user2.getRoles().add(role_user);
 			user2.getRoles().add(role_purser);
 			user2.getInvoices().add(invoice1);
 			user2.getInvoices().add(invoice2);
