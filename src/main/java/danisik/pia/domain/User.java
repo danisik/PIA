@@ -22,17 +22,17 @@ public class User extends EntityParent{
 
 	private String name;
 
-	private String birth_number;
+	private String birthNumber;
 
 	private String address;
 
 	private String email;
 
-	private String phone_number;
+	private String phoneNumber;
 
-	private String bank_account;
+	private String bankAccount;
 
-	private String card_number;
+	private String cardNumber;
 
 
 	@ManyToMany
@@ -56,17 +56,17 @@ public class User extends EntityParent{
 	)
 	private List<Invoice> invoices = new LinkedList<>();
 
-	public User(String username, String password, String name, String birth_number, String address,
-				String email, String phone_number, String bank_account, String card_number) {
+	public User(String username, String password, String name, String birthNumber, String address,
+				String email, String phoneNumber, String bankAccount, String cardNumber) {
 		this.setUsername(username);
 		this.setPassword(password);
 		this.setName(name);
-		this.setBirth_number(birth_number);
+		this.setBirthNumber(birthNumber);
 		this.setAddress(address);
 		this.setEmail(email);
-		this.setPhone_number(phone_number);
-		this.setBank_account(bank_account);
-		this.setCard_number(card_number);
+		this.setPhoneNumber(phoneNumber);
+		this.setBankAccount(bankAccount);
+		this.setCardNumber(cardNumber);
 	}
 
 }

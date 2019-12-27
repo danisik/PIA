@@ -18,12 +18,12 @@ public class Contact extends EntityParent{
 
 	private String residence;
 
-	//25596641
-	private String identification_number;
+	@Column(unique = true)
+	private String identificationNumber;
 
-	private String tax_identification_number;
+	private String taxIdentificationNumber;
 
-	private String phone_number;
+	private String phoneNumber;
 
 	private String email;
 
@@ -33,13 +33,13 @@ public class Contact extends EntityParent{
 	@OneToMany(mappedBy = "contact")
 	private List<Invoice> invoices;
 
-	public Contact(String name, String residence, String identification_number, String tax_identification_number,
-				   String phone_number, String email) {
+	public Contact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
+				   String phoneNumber, String email) {
 		this.setName(name);
 		this.setResidence(residence);
-		this.setIdentification_number(identification_number);
-		this.setTax_identification_number(tax_identification_number);
-		this.setPhone_number(phone_number);
+		this.setIdentificationNumber(identificationNumber);
+		this.setTaxIdentificationNumber(taxIdentificationNumber);
+		this.setPhoneNumber(phoneNumber);
 		this.setEmail(email);
 	}
 

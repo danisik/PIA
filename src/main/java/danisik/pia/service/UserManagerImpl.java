@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import danisik.pia.dao.ContactRepository;
+import danisik.pia.dao.InvoiceRepository;
+import danisik.pia.domain.Contact;
+import danisik.pia.domain.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -40,12 +44,17 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 
 	private final UserRepository userRepo;
 	private final RoleRepository roleRepo;
+	private final ContactRepository contactRepo;
+	private final InvoiceRepository invoiceRepo;
 
 	@Autowired
-	public UserManagerImpl(PasswordEncoder encoder, UserRepository userRepo, RoleRepository roleRepo) {
+	public UserManagerImpl(PasswordEncoder encoder, UserRepository userRepo, RoleRepository roleRepo,
+						   ContactRepository contactRepo, InvoiceRepository invoiceRepo) {
 		this.encoder = encoder;
 		this.userRepo = userRepo;
 		this.roleRepo = roleRepo;
+		this.contactRepo = contactRepo;
+		this.invoiceRepo = invoiceRepo;
 	}
 
 	@Override
@@ -58,14 +67,14 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public void addUser(String username, String password, String name, String birth_number, String address,
-						String email, String phone_number, String bank_account, String card_number) {
+	public void addUser(String username, String password, String name, String birthNumber, String address,
+						String email, String phoneNumber, String bankAccount, String cardNumber) {
 		if (this.userRepo.findByUsername(username) != null) {
 			throw new IllegalArgumentException("User already exists!");
 		}
 
 		String hashed = this.encoder.encode(password);
-		User user = new User(username, hashed, name, birth_number, address, email, phone_number, bank_account, card_number);
+		User user = new User(username, hashed, name, birthNumber, address, email, phoneNumber, bankAccount, cardNumber);
 		this.userRepo.save(user);
 	}
 
@@ -80,6 +89,10 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 			Role role_admin = this.roleRepo.findByCode("ADMIN");
 			Role role_user = this.roleRepo.findByCode("USER");
 			Role role_purser = this.roleRepo.findByCode("PURSER");
+
+			Contact contact = this.contactRepo.findByIdentificationNumber("26343398");
+			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber("1234");
+			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber("5678");
 
 			this.addUser(DEFAULT_ADMIN1, DEFAULT_ADMIN1_PASSWORD, "Josef Kulihrášek", "123456/7890",
 					"Sedláčkova 209/16, 301 00 Plzeň-Vnitřní Město", "kulihrasek@seznam.cz",
@@ -101,6 +114,9 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 			User user2 = this.userRepo.findByUsername(DEFAULT_USER2);
 			user2.getRoles().add(role_user);
 			user2.getRoles().add(role_purser);
+			user2.getInvoices().add(invoice1);
+			user2.getInvoices().add(invoice2);
+			user2.getContacts().add(contact);
 			this.userRepo.save(user2);
 		}
 	}
