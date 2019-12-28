@@ -9,6 +9,6 @@ public interface ContactManager {
 	List<Contact> getContacts();
 
 	void addContact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
-					String phoneNumber, String email);
+					String phoneNumber, String email, String bankAccount);
 
 }

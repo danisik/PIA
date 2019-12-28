@@ -3,6 +3,7 @@ package danisik.pia.service;
 import java.util.LinkedList;
 import java.util.List;
 
+import danisik.pia.InitConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -30,16 +31,37 @@ public class ContactManagerImpl implements ContactManager {
 	@Order(1)
 	public void setup() {
 		if (this.contactRepo.count() == 0) {
-			log.info("No contacts present, one contact");
-			this.addContact("ZF Engineering Pilsen s.r.o", "Univerzitní 1159/53, 301 00 Plzeň 3",
-					"26343398", "CZ26343398",
-					"373 736 311", "info-plzen@zf.com");
+			log.info("No contacts present, creating 2 contacts");
+
+			// Supplier
+			this.addContact(InitConstants.DEFAULT_RECIPIENT_NAME,
+					InitConstants.DEFAULT_RECIPIENT_RESIDENCE,
+					InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER,
+					InitConstants.DEFAULT_RECIPIENT_TAX_IDENTIFICATION_NUMBER,
+					InitConstants.DEFAULT_RECIPIENT_PHONE_NUMBER,
+					InitConstants.DEFAULT_RECIPIENT_EMAIL,
+					InitConstants.DEFAULT_RECIPIENT_BANK_ACCOUNT);
+
+			// Recipient.
+			this.addContact(InitConstants.DEFAULT_SUPPLIER_NAME,
+					InitConstants.DEFAULT_SUPPLIER_RESIDENCE,
+					InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER,
+					InitConstants.DEFAULT_SUPPLIER_TAX_IDENTIFICATION_NUMBER,
+					InitConstants.DEFAULT_SUPPLIER_PHONE_NUMBER,
+					InitConstants.DEFAULT_SUPPLIER_EMAIL,
+					InitConstants.DEFAULT_SUPPLIER_BANK_ACCOUNT);
+
+			Contact supplier = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
+			Contact recipient = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER);
+
+			this.contactRepo.save(supplier);
+			this.contactRepo.save(recipient);
 		}
 	}
 
 	public void addContact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
-						   String phoneNumber, String email) {
-		Contact contact = new Contact(name, residence, identificationNumber, taxIdentificationNumber, phoneNumber, email);
+						   String phoneNumber, String email, String bankAccount) {
+		Contact contact = new Contact(name, residence, identificationNumber, taxIdentificationNumber, phoneNumber, email, bankAccount);
 		this.contactRepo.save(contact);
 	}
 

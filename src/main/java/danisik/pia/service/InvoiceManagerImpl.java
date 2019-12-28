@@ -1,5 +1,6 @@
 package danisik.pia.service;
 
+import danisik.pia.InitConstants;
 import danisik.pia.dao.ContactRepository;
 import danisik.pia.dao.InvoiceRepository;
 import danisik.pia.domain.Contact;
@@ -30,41 +31,48 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
-	@Order(1)
+	@Order(2)
 	public void setup() {
 		if (this.invoiceRepo.count() == 0) {
 			log.info("No invoices present, creating 2 invoices.");
 
-			Contact contact = this.contactRepo.findByIdentificationNumber("26343398");
+			Contact supplier = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
+			Contact recipient = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER);
 
-			this.addInvoice("ZF Engineering Pilsen s.r.o", "Univerzitní 1159/53, 301 00 Plzeň 3",
-					"CZ26343398", "1234", "Nothing",
-					"Boots", "2017-04-03", "2017-05-03",
-					"10000", "500", "2000", "100");
+			Long documentSerialNumber = InitConstants.DEFAULT_INVOICE1_ID;
 
-			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber("1234");
-			invoice1.setContact(contact);
+			this.addInvoice(InitConstants.DEFAULT_INVOICE1_DATE_EXPOSURE,
+					InitConstants.DEFAULT_INVOICE1_DATE_DUE,
+					InitConstants.DEFAULT_INVOICE1_DATE_FRUITION_PERFORM,
+					InitConstants.DEFAULT_INVOICE1_SYMBOL_VARIABLE,
+					InitConstants.DEFAULT_INVOICE1_SYMBOL_CONSTANT);
+
+			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber(documentSerialNumber);
+
+			invoice1.setSupplier(supplier);
+			invoice1.setRecipient(recipient);
 			this.invoiceRepo.save(invoice1);
 
-			this.addInvoice("ZF Engineering Pilsen s.r.o", "Univerzitní 1159/53, 301 00 Plzeň 3",
-					"CZ26343398", "5678", "Don't know",
-					"Car", "2017-04-03", "2017-05-03",
-					"3000", "1000", "1000", "500");
+			documentSerialNumber = InitConstants.DEFAULT_INVOICE2_ID;
 
-			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber("5678");
-			invoice2.setContact(contact);
+			this.addInvoice(InitConstants.DEFAULT_INVOICE2_DATE_EXPOSURE,
+					InitConstants.DEFAULT_INVOICE2_DATE_DUE,
+					InitConstants.DEFAULT_INVOICE2_DATE_FRUITION_PERFORM,
+					InitConstants.DEFAULT_INVOICE2_SYMBOL_VARIABLE,
+					InitConstants.DEFAULT_INVOICE2_SYMBOL_CONSTANT);
+
+			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber(documentSerialNumber);
+
+			invoice2.setRecipient(supplier);
+			invoice2.setSupplier(recipient);
 			this.invoiceRepo.save(invoice2);
 		}
 
 
 	}
 
-	public void addInvoice(String company, String residence, String taxIdentificationNumber, String documentSerialNumber,
-						   String taxablePerformanceScope, String taxablePerformanceSubject, String dateIssueDocument,
-						   String dateTaxableTransaction, String costFinal, String taxRate, String dphBase, String dphQuantified) {
-		Invoice invoice = new Invoice(company, residence, taxIdentificationNumber, documentSerialNumber,
-				taxablePerformanceScope, taxablePerformanceSubject, dateIssueDocument, dateTaxableTransaction,
-				costFinal, taxRate, dphBase, dphQuantified);
+	public void addInvoice(String dateExposure, String dateDue, String dateFruitionPerform, Long symbolVariable, Long symbolConstant) {
+		Invoice invoice = new Invoice((long)getInvoices().size(), dateExposure, dateDue, dateFruitionPerform, symbolVariable, symbolConstant);
 		this.invoiceRepo.save(invoice);
 	}
 

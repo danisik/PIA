@@ -30,8 +30,6 @@ public class User extends EntityParent{
 
 	private String phoneNumber;
 
-	private String bankAccount;
-
 	private String cardNumber;
 
 
@@ -57,7 +55,7 @@ public class User extends EntityParent{
 	private List<Invoice> invoices = new LinkedList<>();
 
 	public User(String username, String password, String name, String birthNumber, String address,
-				String email, String phoneNumber, String bankAccount, String cardNumber) {
+				String email, String phoneNumber, String cardNumber) {
 		this.setUsername(username);
 		this.setPassword(password);
 		this.setName(name);
@@ -65,7 +63,6 @@ public class User extends EntityParent{
 		this.setAddress(address);
 		this.setEmail(email);
 		this.setPhoneNumber(phoneNumber);
-		this.setBankAccount(bankAccount);
 		this.setCardNumber(cardNumber);
 	}
 

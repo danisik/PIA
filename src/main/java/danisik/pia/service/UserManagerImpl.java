@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import danisik.pia.InitConstants;
 
 import danisik.pia.dao.ContactRepository;
 import danisik.pia.dao.InvoiceRepository;
@@ -30,15 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class UserManagerImpl implements UserManager, UserDetailsService {
-
-	private static final String DEFAULT_ADMIN1 = "Admin001";
-	private static final String DEFAULT_ADMIN1_PASSWORD = "1234";
-
-	private static final String DEFAULT_USER1 = "User0001";
-	private static final String DEFAULT_USER1_PASSWORD = "0001";
-
-	private static final String DEFAULT_USER2 = "User0002";
-	private static final String DEFAULT_USER2_PASSWORD = "0002";
 
 	private final PasswordEncoder encoder;
 
@@ -68,32 +60,31 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 
 	@Override
 	public void addUser(String username, String password, String name, String birthNumber, String address,
-						String email, String phoneNumber, String bankAccount, String cardNumber) {
+						String email, String phoneNumber, String cardNumber) {
 		if (this.userRepo.findByUsername(username) != null) {
 			throw new IllegalArgumentException("User already exists!");
 		}
 
 		String hashed = this.encoder.encode(password);
-		User user = new User(username, hashed, name, birthNumber, address, email, phoneNumber, bankAccount, cardNumber);
+		User user = new User(username, hashed, name, birthNumber, address, email, phoneNumber, cardNumber);
 		this.userRepo.save(user);
 	}
 
 	@Override
 	public User updateUserInfo(String username, User userValues) {
 		return updateUserInfo(username, userValues.getName(), userValues.getBirthNumber(), userValues.getAddress(),
-				userValues.getEmail(), userValues.getPhoneNumber(), userValues.getBankAccount(), userValues.getCardNumber());
+				userValues.getEmail(), userValues.getPhoneNumber(), userValues.getCardNumber());
 	}
 
 	@Override
 	public User updateUserInfo(String username, String name, String birthNumber, String address,
-						   String email, String phoneNumber, String bankAccount, String cardNumber) {
+						   String email, String phoneNumber, String cardNumber) {
 		User user = this.userRepo.findByUsername(username);
 		user.setName(name);
 		user.setBirthNumber(birthNumber);
 		user.setAddress(address);
 		user.setEmail(email);
 		user.setPhoneNumber(phoneNumber);
-		user.setBankAccount(bankAccount);
 		user.setCardNumber(cardNumber);
 		this.userRepo.save(user);
 		return user;
@@ -107,40 +98,45 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
-	@Order(2)
+	@Order(3)
 	@Transactional
 	public void setup() {
 		if (this.userRepo.count() == 0) {
 			log.info("No user present, creating admin and users.");
-			Role role_admin = this.roleRepo.findByCode("ADMIN");
-			Role role_purser = this.roleRepo.findByCode("PURSER");
+			Role role_admin = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_ADMIN_CODE);
+			Role role_user = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_USER_CODE);
+			Role role_purser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_PURSER_CODE);
 
-			Contact contact = this.contactRepo.findByIdentificationNumber("26343398");
-			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber("1234");
-			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber("5678");
+			Contact contact = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
+			//TODO recipient
+			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE1_ID);
+			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE2_ID);
 
-			this.addUser(DEFAULT_ADMIN1, DEFAULT_ADMIN1_PASSWORD, "Josef Kulihrášek", "123456/7890",
-					"Sedláčkova 209/16, 301 00 Plzeň-Vnitřní Město", "kulihrasek@seznam.cz",
-					"123456789", "1234567901/0600", "4339992979647585");
-			User admin1 = this.userRepo.findByUsername(DEFAULT_ADMIN1);
+			this.addUser(InitConstants.DEFAULT_ADMIN1_USERNAME, InitConstants.DEFAULT_ADMIN1_PASSWORD, InitConstants.DEFAULT_ADMIN1_NAME,
+					InitConstants.DEFAULT_ADMIN1_BIRTH_NUMBER, InitConstants.DEFAULT_ADMIN1_ADDRESS, InitConstants.DEFAULT_ADMIN1_EMAIL,
+					InitConstants.DEFAULT_ADMIN1_PHONE_NUMBER, InitConstants.DEFAULT_ADMIN1_CARD_NUMBER);
+			User admin1 = this.userRepo.findByUsername(InitConstants.DEFAULT_ADMIN1_USERNAME);
 			admin1.getRoles().add(role_admin);
 			this.userRepo.save(admin1);
 
-			this.addUser(DEFAULT_USER1, DEFAULT_USER1_PASSWORD, "František Seno", "456789/0123",
-					"Sedláčkova 220/16, 301 00 Plzeň-Vnitřní Město", "seno@seznam.cz",
-					"987654321", "1234567928/0600", "4599919667156954");
-			User user1 = this.userRepo.findByUsername(DEFAULT_USER1);
-			user1.getRoles().add(role_purser);
+			this.addUser(InitConstants.DEFAULT_USER1_USERNAME, InitConstants.DEFAULT_USER1_PASSWORD, InitConstants.DEFAULT_USER1_NAME,
+					InitConstants.DEFAULT_USER1_BIRTH_NUMBER, InitConstants.DEFAULT_USER1_ADDRESS, InitConstants.DEFAULT_USER1_EMAIL,
+					InitConstants.DEFAULT_USER1_PHONE_NUMBER, InitConstants.DEFAULT_USER1_CARD_NUMBER);
+			User user1 = this.userRepo.findByUsername(InitConstants.DEFAULT_USER1_USERNAME);
+			user1.getRoles().add(role_user);
 			this.userRepo.save(user1);
 
-			this.addUser(DEFAULT_USER2, DEFAULT_USER2_PASSWORD, "Vojtěch Gorgon", "012345/6789",
-					"Sedláčkova 230/16, 301 00 Plzeň-Vnitřní Město", "gorgon@seznam.cz",
-					"456789123", "1234567936/0600", "4665212535774631");
-			User user2 = this.userRepo.findByUsername(DEFAULT_USER2);
+			this.addUser(InitConstants.DEFAULT_USER2_USERNAME, InitConstants.DEFAULT_USER2_PASSWORD, InitConstants.DEFAULT_USER2_NAME,
+					InitConstants.DEFAULT_USER2_BIRTH_NUMBER, InitConstants.DEFAULT_USER2_ADDRESS, InitConstants.DEFAULT_USER2_EMAIL,
+					InitConstants.DEFAULT_USER2_PHONE_NUMBER, InitConstants.DEFAULT_USER2_CARD_NUMBER);
+			User user2 = this.userRepo.findByUsername(InitConstants.DEFAULT_USER2_USERNAME);
+			user2.getRoles().add(role_user);
 			user2.getRoles().add(role_purser);
+
 			user2.getInvoices().add(invoice1);
 			user2.getInvoices().add(invoice2);
 			user2.getContacts().add(contact);
+			//TODO recipient
 			this.userRepo.save(user2);
 		}
 	}

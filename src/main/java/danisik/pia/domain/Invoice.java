@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,53 +15,39 @@ import java.util.List;
 @NoArgsConstructor
 public class Invoice extends EntityParent{
 
-	String company;
-
-	String residence;
-
-	String taxIdentificationNumber;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="supplier_contact_id")
+	private Contact supplier;
 
 	@Column(unique = true)
-	String documentSerialNumber;
+	private Long documentSerialNumber;
 
-	String taxablePerformanceScope;
+	private String dateExposure;
 
-	String taxablePerformanceSubject;
+	private String dateDue;
 
-	String dateIssueDocument;
+	private String dateFruitionPerform;
 
-	String dateTaxableTransaction;
+	private Long symbolVariable;
 
-	String costFinal;
-
-	String taxRate;
-
-	String dphBase;
-
-	String dphQuantified;
+	private Long symbolConstant;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="contact_id")
-	private Contact contact;
+	@JoinColumn(name="recipient_contact_id")
+	private Contact recipient;
+
+	@OneToMany(mappedBy = "invoice")
+	private List<Goods> wares;
 
 	@ManyToMany(mappedBy = "invoices")
 	private List<User> users;
 
-	public Invoice(String company, String residence, String taxIdentificationNumber, String documentSerialNumber,
-				   String taxablePerformanceScope, String taxablePerformanceSubject, String dateIssueDocument,
-				   String dateTaxableTransaction, String costFinal, String taxRate, String dphBase, String dphQuantified) {
-		this.setCompany(company);
-		this.setResidence(residence);
-		this.setTaxIdentificationNumber(taxIdentificationNumber);
+	public Invoice(Long documentSerialNumber, String dateExposure, String dateDue, String dateFruitionPerform, Long symbolVariable, Long symbolConstant) {
 		this.setDocumentSerialNumber(documentSerialNumber);
-		this.setTaxablePerformanceScope(taxablePerformanceScope);
-		this.setTaxablePerformanceSubject(taxablePerformanceSubject);
-		this.setDateIssueDocument(dateIssueDocument);
-		this.setDateTaxableTransaction(dateTaxableTransaction);
-		this.setCostFinal(costFinal);
-		this.setTaxRate(taxRate);
-		this.setDphBase(dphBase);
-		this.setDphQuantified(dphQuantified);
+		this.setDateExposure(dateExposure);
+		this.setDateDue(dateDue);
+		this.setDateFruitionPerform(dateFruitionPerform);
+		this.setSymbolVariable(symbolVariable);
+		this.setSymbolConstant(symbolConstant);
 	}
-
 }

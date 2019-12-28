@@ -39,10 +39,11 @@
 				<!--User buttons-->
 				<li sec:authorize="isAuthenticated()">
 					<div class="dropdown">
-						<button class="dropbtn">Uživatel</button>
+						<button class="dropbtn">Účet</button>
 						<div class="dropdown-content">
 							<a th:href="@{/user/info}" class="href-no-underline dropdown-font-size">Údaje</a>
 							<a th:href="@{/user/edit}" class="href-no-underline dropdown-font-size">Úprava údajů</a>
+							<a th:href="@{/user/password}" class="href-no-underline dropdown-font-size">Změna hesla</a>
 						</div>
 					</div>
         		</li>

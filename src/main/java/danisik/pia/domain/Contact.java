@@ -27,20 +27,23 @@ public class Contact extends EntityParent{
 
 	private String email;
 
+	private String bankAccount;
+
 	@ManyToMany(mappedBy = "contacts")
 	private List<User> users;
 
-	@OneToMany(mappedBy = "contact")
+	@OneToMany(mappedBy = "recipient")
 	private List<Invoice> invoices;
 
 	public Contact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
-				   String phoneNumber, String email) {
+				   String phoneNumber, String email, String bankAccount) {
 		this.setName(name);
 		this.setResidence(residence);
 		this.setIdentificationNumber(identificationNumber);
 		this.setTaxIdentificationNumber(taxIdentificationNumber);
 		this.setPhoneNumber(phoneNumber);
 		this.setEmail(email);
+		this.setBankAccount(bankAccount);
 	}
 
 }
