@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html
+		xmlns:th="http://www.thymeleaf.org"
+		lang="cs"
+>
+	<head th:replace="fragments/headers :: head(~{::title})">
+		<title>Index</title>
+	</head>
+	<body>
+		<nav th:replace="fragments/headers :: nav"></nav>
+		<table class="tables object-on-page-center">
+			<tr>
+				<th>Název firmy</th>
+				<th>Sídlo firmy</th>
+				<th>DIČ</th>
+				<th>Pořadové číslo dokladu</th>
+				<th>Rozsah zdanitelného plnění</th>
+				<th>Předmět zdanitelného plnění</th>
+				<th>Datum vystavení dokladu</th>
+				<th>Datum uskutečnění zdanitelného plnění</th>
+				<th>Celkem cena</th>
+				<th>Sazba daně</th>
+				<th>Základ DPH</th>
+				<th>Vyčíslená DPH</th>
+				<th>Kontaktní jméno</th>
+			</tr>
+			<th:block th:each="invoice : ${invoices}">
+				<tr>
+					<td th:text="${invoice.company}">...</td>
+					<td th:text="${invoice.residence}">...</td>
+					<td th:text="${invoice.taxIdentificationNumber}">...</td>
+					<td th:text="${invoice.documentSerialNumber}">...</td>
+					<td th:text="${invoice.taxablePerformanceScope}">...</td>
+					<td th:text="${invoice.taxablePerformanceSubject}">...</td>
+					<td th:text="${invoice.dateIssueDocument}">...</td>
+					<td th:text="${invoice.dateTaxableTransaction}">...</td>
+					<td th:text="${invoice.costFinal}">...</td>
+					<td th:text="${invoice.taxRate}">...</td>
+					<td th:text="${invoice.dphBase}">...</td>
+					<td th:text="${invoice.dphQuantified}">...</td>
+					<td th:text="${invoice.contact.name}">...</td>
+					<td>
+						<a th:href="@{/invoice/info}"><i class="fa fa-file-contract invoice-fa-icon-size"></i></a>
+					</td>
+				</tr>
+			</th:block>
+		</table>
+	</body>
+</html>

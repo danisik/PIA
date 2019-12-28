@@ -2,25 +2,29 @@ package danisik.pia.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IndexController {
 
 	@GetMapping("/")
-	public String index() {
+	public ModelAndView index() {
+		ModelAndView modelAndView = new ModelAndView("index");
 
-		return "index";
+		return modelAndView;
 	}
 
 	@GetMapping("/info")
-	public String info() {
+	public ModelAndView info() {
+		ModelAndView modelAndView = new ModelAndView("homepage/infoHomepage");
 
-		return "homepage/info";
+		return modelAndView;
 	}
 
 	@GetMapping("/services")
-	public String services() {
+	public ModelAndView services() {
+		ModelAndView modelAndView = new ModelAndView("homepage/servicesHomepage");
 
-		return "homepage/services";
+		return modelAndView;
 	}
 }

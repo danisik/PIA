@@ -1,6 +1,5 @@
 package danisik.pia.web.controller;
 
-import danisik.pia.dao.UserRepository;
 import danisik.pia.domain.User;
 import danisik.pia.service.UserManager;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -26,7 +24,7 @@ public class UserController {
 	@GetMapping("/user/edit")
 	public ModelAndView userEditGet() {
 
-		ModelAndView modelAndView = new ModelAndView("user/edit");
+		ModelAndView modelAndView = new ModelAndView("user/editUser");
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
@@ -41,7 +39,7 @@ public class UserController {
 	@PostMapping("/user/edit")
 	public ModelAndView userEditPost(@Valid @ModelAttribute("user") User userValues) {
 
-		ModelAndView modelAndView = new ModelAndView("user/info");
+		ModelAndView modelAndView = new ModelAndView("user/infoUser");
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
@@ -55,7 +53,7 @@ public class UserController {
 	@GetMapping("/user/info")
 	public ModelAndView userInfo() {
 
-		ModelAndView modelAndView = new ModelAndView("user/info");
+		ModelAndView modelAndView = new ModelAndView("user/infoUser");
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();

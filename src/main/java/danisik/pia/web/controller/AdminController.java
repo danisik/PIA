@@ -2,13 +2,15 @@ package danisik.pia.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AdminController {
 
 	@GetMapping("/admin/manage")
-	public String index() {
+	public ModelAndView index() {
+		ModelAndView modelAndView = new ModelAndView("admin/manageUsersAdmin");
 
-		return "admin/admin/manage";
+		return modelAndView;
 	}
 }

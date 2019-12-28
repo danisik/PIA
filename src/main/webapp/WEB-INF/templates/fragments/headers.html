@@ -10,55 +10,76 @@
 		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
 	</head>
 	<body>
+		<!--<li><h1>Účetnictví PIA</h1></li>-->
 		<nav th:fragment="nav">
 			<ul>
-				<li><h1>Účetnictví PIA</h1></li>
+				<li>
+					<h2>
+						<a th:href="@{/}" class="href-no-underline">Účetnictví PIA</a>
+					</h2>
+				</li>
 			</ul>
+		</nav>
+		<nav th:fragment="nav">
 			<ul>
 				<!--Home button-->
 				<li>
-					<a th:href="@{/}"><i class="fa fa-home"></i></a>
+					<a th:href="@{/}"><i class="fa fa-home header-fa-icon-size"></i></a>
 				</li>
-
+			</ul>
+			<ul>
 				<!--Unauthorized user buttons-->
 				<li sec:authorize="!isAuthenticated()">
-					<a th:href="@{/services}"><i class="fa fa-briefcase"></i></a>
+					<a th:href="@{/services}" class="href-no-underline header-font-size">Služby</a>
 				</li>
 				<li sec:authorize="!isAuthenticated()">
-					<a th:href="@{/info}"><i class="fa fa-info"></i></a>
+					<a th:href="@{/info}" class="href-no-underline header-font-size">Info</a>
 				</li>
 
 				<!--User buttons-->
 				<li sec:authorize="isAuthenticated()">
-					<a th:href="@{/user/info}"><i class="fa fa-user-circle"></i></a>
-        		</li>
-				<li sec:authorize="isAuthenticated()">
-					<a th:href="@{/user/edit}"><i class="fa fa-user-edit"></i></a>
+					<div class="dropdown">
+						<button class="dropbtn">Uživatel</button>
+						<div class="dropdown-content">
+							<a th:href="@{/user/info}" class="href-no-underline dropdown-font-size">Údaje</a>
+							<a th:href="@{/user/edit}" class="href-no-underline dropdown-font-size">Úprava údajů</a>
+						</div>
+					</div>
         		</li>
 
 				<!--Admin buttons-->
 				<li sec:authorize="hasRole('ADMIN')">
-					<a th:href="@{/admin/manage}"><i class="fa fa-users-cog"></i></a>
+					<a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Správa účtů</a>
 				</li>
 
 				<!--Purser buttons-->
 				<li sec:authorize="hasRole('PURSER')">
-					<a th:href="@{/invoice/info}"><i class="fa fa-file-invoice"></i></a>
+					<div class="dropdown">
+						<button class="dropbtn">Faktury</button>
+						<div class="dropdown-content">
+							<a th:href="@{/invoice/info}" class="href-no-underline dropdown-font-size">Seznam</a>
+							<a th:href="@{/invoice/new}" class="href-no-underline dropdown-font-size">Nová faktura</a>
+						</div>
+					</div>
 				</li>
+
 				<li sec:authorize="hasRole('PURSER')">
-					<a th:href="@{/invoice/edit}"><i class="fa fa-file-contract"></i></a>
-				</li>
-				<li sec:authorize="hasRole('PURSER')">
-					<a th:href="@{/addressbook}"><i class="fa fa-address-book"></i></a>
+					<div class="dropdown">
+						<button class="dropbtn">Kontakty</button>
+						<div class="dropdown-content">
+							<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Seznam</a>
+							<a th:href="@{/addressbook/new}" class="href-no-underline dropdown-font-size">Nový kontakt</a>
+						</div>
+					</div>
 				</li>
 
 				<!--Login / Logout button-->
 				<li sec:authorize="!isAuthenticated()">
-					<a th:href="@{/login}"><i class="fa fa-sign-in-alt"></i></a>
+					<a th:href="@{/login}"><i class="fa fa-sign-in-alt header-fa-icon-size"></i></a>
 				</li>
 
 				<li sec:authorize="isAuthenticated()">
-					<a th:href="@{/logout}"><i class="fa fa-sign-out-alt"></i></a>
+					<a th:href="@{/logout}"><i class="fa fa-sign-out-alt header-fa-icon-size"></i></a>
 				</li>
 			</ul>
 		</nav>
