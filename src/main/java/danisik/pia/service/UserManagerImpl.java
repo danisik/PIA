@@ -107,8 +107,9 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 			Role role_user = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_USER_CODE);
 			Role role_purser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_PURSER_CODE);
 
-			Contact contact = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
-			//TODO recipient
+			Contact supplier = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
+			Contact recipient = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER);
+
 			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE1_ID);
 			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE2_ID);
 
@@ -135,8 +136,8 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 
 			user2.getInvoices().add(invoice1);
 			user2.getInvoices().add(invoice2);
-			user2.getContacts().add(contact);
-			//TODO recipient
+			user2.getContacts().add(supplier);
+			user2.getContacts().add(recipient);
 			this.userRepo.save(user2);
 		}
 	}
