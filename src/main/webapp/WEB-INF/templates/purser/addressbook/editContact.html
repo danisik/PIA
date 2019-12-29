@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	lang="cs"
+>
+	<head th:replace="fragments/headers :: head(~{::title})">
+		<title>Index</title>
+	</head>
+	<body>
+		<nav th:replace="fragments/headers :: nav"></nav>
+		<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a>
+		<div><a th:href="@{/addressbook/contact/info?id={id}(id=${contact.Id})}" class="href-no-underline dropdown-font-size">Zpět na informace</a></div>
+		<form th:action="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" method="post">
+			<table class="tables">
+				<tr>
+					<th>Jméno*:</th>
+					<td><input type="text" name="name" id="name" th:field="${contact.name}" required="required"/></td>
+				</tr>
+
+				<tr>
+					<th>Sídlo*:</th>
+					<td><input type="text" name="residence" id="residence" th:field="${contact.residence}" required="required"/></td>
+				</tr>
+
+				<tr>
+					<th>IČ*:</th>
+					<td><input type="text" name="identificationNumber" id="identificationNumber" th:field="${contact.identificationNumber}" required="required"/></td>
+				</tr>
+
+				<tr>
+					<th>DIČ*:</th>
+					<td><input type="text" name="taxIdentificationNumber" id="taxIdentificationNumber" th:field="${contact.taxIdentificationNumber}" required="required"/></td>
+				</tr>
+
+				<tr>
+					<th>Telefon*:</th>
+					<td><input type="text" name="phoneNumber" id="phoneNumber" th:field="${contact.phoneNumber}" required="required"/></td>
+				</tr>
+
+				<tr>
+					<th>Email*:</th>
+					<td><input type="text" name="email" id="email" th:field="${contact.email}" required="required"/></td>
+				</tr>
+
+				<tr>
+					<th>Číslo účtu*:</th>
+					<td><input type="text" name="bankAccount" id="bankAccount" th:field="${contact.bankAccount}" required="required"/></td></td>
+				</tr>
+			</table>
+			<div>
+				<div>Políčka označená * jsou povinná.</div>
+			</div>
+			<div>
+				<input type="submit" value="Upravit" />
+			</div>
+		</form>
+	</body>
+</html>

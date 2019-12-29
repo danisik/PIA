@@ -79,7 +79,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	@Override
 	public User updateUserInfo(String username, String name, String birthNumber, String address,
 						   String email, String phoneNumber, String cardNumber) {
-		User user = this.userRepo.findByUsername(username);
+		User user = findUserByUsername(username);
 		user.setName(name);
 		user.setBirthNumber(birthNumber);
 		user.setAddress(address);

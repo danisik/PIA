@@ -13,21 +13,21 @@ public class InitConstants {
 
     public static final String DEFAULT_USER1_USERNAME = "User0001";
     public static final String DEFAULT_USER1_PASSWORD = "0001";
-    public static final String DEFAULT_USER1_NAME = "";
-    public static final String DEFAULT_USER1_BIRTH_NUMBER = "";
-    public static final String DEFAULT_USER1_ADDRESS = "";
-    public static final String DEFAULT_USER1_EMAIL = "";
-    public static final String DEFAULT_USER1_PHONE_NUMBER = "";
-    public static final String DEFAULT_USER1_CARD_NUMBER = "";
+    public static final String DEFAULT_USER1_NAME = "Vojtěch Gorgron";
+    public static final String DEFAULT_USER1_BIRTH_NUMBER = "970123/1233";
+    public static final String DEFAULT_USER1_ADDRESS = "Radonická 30, 420 44 Radonice";
+    public static final String DEFAULT_USER1_EMAIL = "gorgron@seznam.cz";
+    public static final String DEFAULT_USER1_PHONE_NUMBER = "098 898 111";
+    public static final String DEFAULT_USER1_CARD_NUMBER = "1027892979647393";
 
     public static final String DEFAULT_USER2_USERNAME = "User0002";
     public static final String DEFAULT_USER2_PASSWORD = "0002";
-    public static final String DEFAULT_USER2_NAME = "";
-    public static final String DEFAULT_USER2_BIRTH_NUMBER = "";
-    public static final String DEFAULT_USER2_ADDRESS = "";
-    public static final String DEFAULT_USER2_EMAIL = "";
-    public static final String DEFAULT_USER2_PHONE_NUMBER = "";
-    public static final String DEFAULT_USER2_CARD_NUMBER = "";
+    public static final String DEFAULT_USER2_NAME = "Jana Opletalová";
+    public static final String DEFAULT_USER2_BIRTH_NUMBER = "123456/0293";
+    public static final String DEFAULT_USER2_ADDRESS = "Kadaňská 20, 202 01 Kadaň";
+    public static final String DEFAULT_USER2_EMAIL = "opletalova@seznam.cz";
+    public static final String DEFAULT_USER2_PHONE_NUMBER = "121 232 343";
+    public static final String DEFAULT_USER2_CARD_NUMBER = "1234567890123456";
 
 
     // Invoice.

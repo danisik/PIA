@@ -10,7 +10,7 @@
 
 	<body>
 	<nav th:replace="fragments/headers :: nav"></nav>
-		<table>
+		<table class="tables">
 			<tr>
 				<th>Jméno:</th>
 				<td th:text="${user.name}"></td>
@@ -34,11 +34,6 @@
 			<tr>
 				<th>Telefon:</th>
 				<td th:text="${user.phoneNumber}"></td>
-			</tr>
-
-			<tr>
-				<th>Číslo účtu:</th>
-				<td th:text="${user.bankAccount}"></td>
 			</tr>
 
 			<tr>

@@ -11,4 +11,13 @@ public interface ContactManager {
 	void addContact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
 					String phoneNumber, String email, String bankAccount);
 
+	Contact findContactByIdentificationNumber(String identificationNumber);
+
+	Contact findContactByID(Long Id);
+
+	Contact updateContactInfo(Long Id, Contact contactValues);
+
+	Contact updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
+							  String phoneNumber, String email, String bankAccount);
+
 }

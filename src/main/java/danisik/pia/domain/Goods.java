@@ -13,10 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Goods extends EntityParent{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
 	private String name;
 
 	private Long quantity;

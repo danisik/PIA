@@ -18,7 +18,6 @@ public class Contact extends EntityParent{
 
 	private String residence;
 
-	@Column(unique = true)
 	private String identificationNumber;
 
 	private String taxIdentificationNumber;

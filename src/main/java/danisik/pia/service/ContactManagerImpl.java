@@ -72,4 +72,37 @@ public class ContactManagerImpl implements ContactManager {
 		return retVal;
 	}
 
+	@Override
+	public Contact findContactByIdentificationNumber(String identificationNumber) {
+		return contactRepo.findByIdentificationNumber(identificationNumber);
+	}
+
+	@Override
+	public Contact findContactByID(Long Id) {
+		return contactRepo.getById(Id);
+	}
+
+	@Override
+	public Contact updateContactInfo(Long Id, Contact contactValues) {
+		return updateContactInfo(Id, contactValues.getName(), contactValues.getResidence(), contactValues.getIdentificationNumber(),
+				contactValues.getTaxIdentificationNumber(), contactValues.getPhoneNumber(), contactValues.getEmail(),
+				contactValues.getBankAccount());
+	}
+
+	@Override
+	public Contact updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
+									 String phoneNumber, String email, String bankAccount) {
+		Contact contact = findContactByID(Id);
+		contact.setName(name);
+		contact.setResidence(residence);
+		contact.setIdentificationNumber(identificationNumber);
+		contact.setTaxIdentificationNumber(taxIdentificationNumber);
+		contact.setPhoneNumber(phoneNumber);
+		contact.setEmail(email);
+		contact.setBankAccount(bankAccount);
+
+		this.contactRepo.save(contact);
+		return contact;
+	}
+
 }

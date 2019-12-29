@@ -39,7 +39,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/edit")
-	public ModelAndView userEditPost(@Valid @ModelAttribute("user") User userValues) {
+	public ModelAndView userEditPost(@Valid @ModelAttribute(ATTRIBUTE_NAME_USER) User userValues) {
 
 		ModelAndView modelAndView = new ModelAndView("user/infoUser");
 

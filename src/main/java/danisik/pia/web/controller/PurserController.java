@@ -18,27 +18,6 @@ public class PurserController {
 		this.userManager = userManager;
 	}
 
-	@GetMapping("/addressbook/info")
-	public ModelAndView addressBookInfo() {
-		ModelAndView modelAndView = new ModelAndView("purser/addressbook/infoContact");
-
-		ModelMap modelMap = modelAndView.getModelMap();
-
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userManager.findUserByUsername(username);
-
-		modelMap.addAttribute("contacts", user.getContacts());
-
-		return modelAndView;
-	}
-
-	@GetMapping("/addressbook/new")
-	public ModelAndView addressBookNew() {
-		ModelAndView modelAndView = new ModelAndView("purser/addressbook/newContact");
-
-		return modelAndView;
-	}
-
 	@GetMapping("invoice/new")
 	public ModelAndView invoiceNew() {
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/newInvoice");
