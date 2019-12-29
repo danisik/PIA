@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-public class AddressBookController {
+public class ContactController {
 
 	private UserManager userManager;
 	private ContactManager contactManager;
@@ -23,7 +23,7 @@ public class AddressBookController {
 
 	private static final String ATTRIBUTE_MAPPING_ID = "id";
 
-	public AddressBookController(ContactManager contactManager, UserManager userManager) {
+	public ContactController(ContactManager contactManager, UserManager userManager) {
 		this.contactManager = contactManager;
 		this.userManager = userManager;
 	}
@@ -34,16 +34,13 @@ public class AddressBookController {
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userManager.findUserByUsername(username);
-
-		modelMap.addAttribute(ATTRIBUTE_NAME_CONTACTS, user.getContacts());
+		modelMap.addAttribute(ATTRIBUTE_NAME_CONTACTS, contactManager.getContacts());
 
 		return modelAndView;
 	}
 
 	@GetMapping("/addressbook/contact/info")
-	public ModelAndView addressBookInfoContact(@RequestParam(value = ATTRIBUTE_MAPPING_ID) Long Id) {
+	public ModelAndView addressBookContactInfo(@RequestParam(value = ATTRIBUTE_MAPPING_ID) Long Id) {
 		ModelAndView modelAndView = new ModelAndView("purser/addressbook/infoContact");
 
 		ModelMap modelMap = modelAndView.getModelMap();
@@ -54,7 +51,7 @@ public class AddressBookController {
 	}
 
 	@GetMapping("/addressbook/contact/edit")
-	public ModelAndView addressBookEditContactGet(@RequestParam(value = ATTRIBUTE_MAPPING_ID) Long Id) {
+	public ModelAndView addressBookContactEditGet(@RequestParam(value = ATTRIBUTE_MAPPING_ID) Long Id) {
 		ModelAndView modelAndView = new ModelAndView("purser/addressbook/editContact");
 
 		ModelMap modelMap = modelAndView.getModelMap();
@@ -65,23 +62,51 @@ public class AddressBookController {
 	}
 
 	@PostMapping("/addressbook/contact/edit")
-	public ModelAndView addressBookEditContactPost(@RequestParam(value = ATTRIBUTE_MAPPING_ID) Long Id, @Valid @ModelAttribute(ATTRIBUTE_NAME_CONTACT) Contact contactValues) {
+	public ModelAndView addressBookContactEditPost(@RequestParam(value = ATTRIBUTE_MAPPING_ID) Long Id, @Valid @ModelAttribute(ATTRIBUTE_NAME_CONTACT) Contact contactValues) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/addressbook/contact/info?id="+ Id);
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
-		Contact editedContact = contactManager.updateContactInfo(Id, contactValues);
+		contactManager.updateContactInfo(Id, contactValues);
+		Contact contact = contactManager.findContactByID(Id);
 
-		modelMap.addAttribute(ATTRIBUTE_NAME_CONTACT, editedContact);
+		modelMap.addAttribute(ATTRIBUTE_NAME_CONTACT, contact);
 
 		return modelAndView;
 	}
 
-	@GetMapping("/addressbook/new")
-	public ModelAndView addressBookNew() {
-		ModelAndView modelAndView = new ModelAndView("purser/addressbook/newContact");
+	@GetMapping("/addressbook/contact/new")
+	public ModelAndView addressBookContactNewGet() {
+		ModelAndView modelAndView = new ModelAndView("/purser/addressbook/newContact");
+
+		return modelAndView;
+	}
+
+	@PostMapping("/addressbook/contact/new")
+	public ModelAndView addressBookContactNewPost(@Valid @ModelAttribute(ATTRIBUTE_NAME_CONTACT) Contact contactValues) {
+		ModelAndView modelAndView = new ModelAndView();
 
 		ModelMap modelMap = modelAndView.getModelMap();
+
+		Long Id = this.contactManager.addContact(contactValues);
+		modelAndView.setViewName("redirect:/addressbook/contact/info?id=" + Id);
+
+		modelMap.addAttribute("contact", this.contactManager.findContactByID(Id));
+
+		return modelAndView;
+	}
+
+	@GetMapping("/addressbook/contact/delete")
+	public ModelAndView addressBookContactDeleteGet() {
+		ModelAndView modelAndView = new ModelAndView("redirect:/addressbook/info");
+		return modelAndView;
+	}
+
+	@PostMapping("/addressbook/contact/delete")
+	public ModelAndView addressBookContactDeletePost(@RequestParam(value = ATTRIBUTE_MAPPING_ID) Long Id) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/addressbook/info");
+
+		contactManager.deleteContact(Id);
 
 		return modelAndView;
 	}

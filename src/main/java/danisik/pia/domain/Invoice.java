@@ -32,22 +32,22 @@ public class Invoice extends EntityParent{
 
 	private Long symbolConstant;
 
+	private Boolean cancelled;
+
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="recipient_contact_id")
-	private Contact recipient;
+	@JoinColumn(name="customer_contact_id")
+	private Contact customer;
 
 	@OneToMany(mappedBy = "invoice")
 	private List<Goods> wares;
 
-	@ManyToMany(mappedBy = "invoices")
-	private List<User> users;
-
-	public Invoice(Long documentSerialNumber, String dateExposure, String dateDue, String dateFruitionPerform, Long symbolVariable, Long symbolConstant) {
+	public Invoice(Long documentSerialNumber, String dateExposure, String dateDue, String dateFruitionPerform, Long symbolVariable, Long symbolConstant, Boolean cancelled) {
 		this.setDocumentSerialNumber(documentSerialNumber);
 		this.setDateExposure(dateExposure);
 		this.setDateDue(dateDue);
 		this.setDateFruitionPerform(dateFruitionPerform);
 		this.setSymbolVariable(symbolVariable);
 		this.setSymbolConstant(symbolConstant);
+		this.setCancelled(cancelled);
 	}
 }

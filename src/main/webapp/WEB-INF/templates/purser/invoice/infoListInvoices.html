@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html
+		xmlns:th="http://www.thymeleaf.org"
+		lang="cs"
+>
+<head th:replace="fragments/headers :: head(~{::title})">
+	<title>Index</title>
+</head>
+<body>
+<nav th:replace="fragments/headers :: nav"></nav>
+<table class="tables object-on-page-center">
+	<tr>
+		<td>
+			<div>
+				<i class="fa fa-plus infos-fa-icon-size"></i>
+				<a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size">Nová faktura</a>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Číslo dokladu</th>
+		<th>Dodavatel</th>
+		<th>Odběratel</th>
+		<th>Stornováno</th>
+		<th>PDF</th>
+	</tr>
+	<th:block th:each="invoice : ${invoices}">
+		<tr>
+			<td th:text="${invoice.documentSerialNumber}">...</td>
+			<td><div th:text="${invoice.supplier.name}"></div></td>
+			<td><div th:text="${invoice.customer.name}"></div></td>
+			<td>
+				<div th:if="${invoice.cancelled}">
+					<i class="fa fa-check-circle infos-fa-yes-no-icon-size"></i>
+				</div>
+				<div th:unless="${invoice.cancelled}">
+					<i class="fa fa-times-circle infos-fa-yes-no-icon-size"></i>
+				</div>
+			</td>
+			<td><input type="button" value="PDF"></td>
+			<td><a th:href="@{/invoices/invoice/info?id={id}(id=${invoice.Id})}" class="href-no-underline">
+				<i class="fa fa-file-invoice infos-fa-icon-size"></i>
+			</a></td>
+			<td><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline">
+				<i class="fa fa-edit infos-fa-icon-size"></i>
+			</a></td>
+		</tr>
+	</th:block>
+</table>
+</body>
+</html>

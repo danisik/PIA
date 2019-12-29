@@ -37,7 +37,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
 			log.info("No invoices present, creating 2 invoices.");
 
 			Contact supplier = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
-			Contact recipient = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER);
+			Contact customer = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_CUSTOMER_IDENTIFICATION_NUMBER);
 
 			Long documentSerialNumber = InitConstants.DEFAULT_INVOICE1_ID;
 
@@ -45,12 +45,13 @@ public class InvoiceManagerImpl implements InvoiceManager {
 					InitConstants.DEFAULT_INVOICE1_DATE_DUE,
 					InitConstants.DEFAULT_INVOICE1_DATE_FRUITION_PERFORM,
 					InitConstants.DEFAULT_INVOICE1_SYMBOL_VARIABLE,
-					InitConstants.DEFAULT_INVOICE1_SYMBOL_CONSTANT);
+					InitConstants.DEFAULT_INVOICE1_SYMBOL_CONSTANT,
+					InitConstants.DEFAULT_INVOICE1_CANCELLED);
 
 			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber(documentSerialNumber);
 
 			invoice1.setSupplier(supplier);
-			invoice1.setRecipient(recipient);
+			invoice1.setCustomer(customer);
 			this.invoiceRepo.save(invoice1);
 
 			documentSerialNumber = InitConstants.DEFAULT_INVOICE2_ID;
@@ -59,20 +60,21 @@ public class InvoiceManagerImpl implements InvoiceManager {
 					InitConstants.DEFAULT_INVOICE2_DATE_DUE,
 					InitConstants.DEFAULT_INVOICE2_DATE_FRUITION_PERFORM,
 					InitConstants.DEFAULT_INVOICE2_SYMBOL_VARIABLE,
-					InitConstants.DEFAULT_INVOICE2_SYMBOL_CONSTANT);
+					InitConstants.DEFAULT_INVOICE2_SYMBOL_CONSTANT,
+					InitConstants.DEFAULT_INVOICE2_CANCELLED);
 
 			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber(documentSerialNumber);
 
-			invoice2.setRecipient(supplier);
-			invoice2.setSupplier(recipient);
+			invoice2.setCustomer(supplier);
+			invoice2.setSupplier(customer);
 			this.invoiceRepo.save(invoice2);
 		}
 
 
 	}
 
-	public void addInvoice(String dateExposure, String dateDue, String dateFruitionPerform, Long symbolVariable, Long symbolConstant) {
-		Invoice invoice = new Invoice((long)getInvoices().size(), dateExposure, dateDue, dateFruitionPerform, symbolVariable, symbolConstant);
+	public void addInvoice(String dateExposure, String dateDue, String dateFruitionPerform, Long symbolVariable, Long symbolConstant, Boolean cancelled) {
+		Invoice invoice = new Invoice((long)getInvoices().size(), dateExposure, dateDue, dateFruitionPerform, symbolVariable, symbolConstant, cancelled);
 		this.invoiceRepo.save(invoice);
 	}
 

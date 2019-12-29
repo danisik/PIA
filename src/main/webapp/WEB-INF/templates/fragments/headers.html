@@ -42,36 +42,24 @@
 						<button class="dropbtn">Účet</button>
 						<div class="dropdown-content">
 							<a th:href="@{/user/info}" class="href-no-underline dropdown-font-size">Údaje</a>
-							<a th:href="@{/user/edit}" class="href-no-underline dropdown-font-size">Úprava údajů</a>
 							<a th:href="@{/user/password}" class="href-no-underline dropdown-font-size">Změna hesla</a>
 						</div>
 					</div>
         		</li>
+
+				<li sec:authorize="hasRole('USER')">
+					<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Faktury</a>
+				</li>
 
 				<!--Admin buttons-->
 				<li sec:authorize="hasRole('ADMIN')">
 					<a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Správa účtů</a>
 				</li>
 
+
 				<!--Purser buttons-->
 				<li sec:authorize="hasRole('PURSER')">
-					<div class="dropdown">
-						<button class="dropbtn">Faktury</button>
-						<div class="dropdown-content">
-							<a th:href="@{/invoice/info}" class="href-no-underline dropdown-font-size">Seznam</a>
-							<a th:href="@{/invoice/new}" class="href-no-underline dropdown-font-size">Nová faktura</a>
-						</div>
-					</div>
-				</li>
-
-				<li sec:authorize="hasRole('PURSER')">
-					<div class="dropdown">
-						<button class="dropbtn">Kontakty</button>
-						<div class="dropdown-content">
-							<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Seznam</a>
-							<a th:href="@{/addressbook/new}" class="href-no-underline dropdown-font-size">Nový kontakt</a>
-						</div>
-					</div>
+					<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Kontakty</a>
 				</li>
 
 				<!--Login / Logout button-->

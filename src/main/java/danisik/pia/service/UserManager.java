@@ -11,10 +11,10 @@ public interface UserManager {
 	void addUser(String username, String password, String name, String birthNumber, String address,
 				 String email, String phoneNumber, String cardNumber);
 
-	User updateUserInfo(String username, String name, String birthNumber, String address,
+	void updateUserInfo(String username, String name, String birthNumber, String address,
 				String email, String phoneNumber, String cardNumber);
 
-	User updateUserInfo(String username, User userValues);
+	void updateUserInfo(String username, User userValues);
 
 	User findUserByUsername(String username);
 

@@ -71,13 +71,13 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public User updateUserInfo(String username, User userValues) {
-		return updateUserInfo(username, userValues.getName(), userValues.getBirthNumber(), userValues.getAddress(),
+	public void updateUserInfo(String username, User userValues) {
+		updateUserInfo(username, userValues.getName(), userValues.getBirthNumber(), userValues.getAddress(),
 				userValues.getEmail(), userValues.getPhoneNumber(), userValues.getCardNumber());
 	}
 
 	@Override
-	public User updateUserInfo(String username, String name, String birthNumber, String address,
+	public void updateUserInfo(String username, String name, String birthNumber, String address,
 						   String email, String phoneNumber, String cardNumber) {
 		User user = findUserByUsername(username);
 		user.setName(name);
@@ -87,7 +87,6 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		user.setPhoneNumber(phoneNumber);
 		user.setCardNumber(cardNumber);
 		this.userRepo.save(user);
-		return user;
 	}
 
 	@Override
@@ -108,7 +107,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 			Role role_purser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_PURSER_CODE);
 
 			Contact supplier = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
-			Contact recipient = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER);
+			Contact customer = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_CUSTOMER_IDENTIFICATION_NUMBER);
 
 			Invoice invoice1 = this.invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE1_ID);
 			Invoice invoice2 = this.invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE2_ID);
@@ -134,10 +133,6 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 			user2.getRoles().add(role_user);
 			user2.getRoles().add(role_purser);
 
-			user2.getInvoices().add(invoice1);
-			user2.getInvoices().add(invoice2);
-			user2.getContacts().add(supplier);
-			user2.getContacts().add(recipient);
 			this.userRepo.save(user2);
 		}
 	}

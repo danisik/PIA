@@ -9,25 +9,47 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<table class="tables object-on-page-center">
+		<div><a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
+		<div><a th:href="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" class="href-no-underline dropdown-font-size">Úprava kontaktu</a></div>
+		<table class="tables">
 			<tr>
-				<th>Jméno</th>
-				<th>Sídlo</th>
-				<th>IČ</th>
-				<th>DIČ</th>
-				<th>Telefon</th>
-				<th>Email</th>
+				<th>Jméno:</th>
+				<td th:text="${contact.name}"></td>
 			</tr>
-			<th:block th:each="contact : ${contacts}">
-				<tr>
-					<td th:text="${contact.name}">...</td>
-					<td th:text="${contact.residence}">...</td>
-					<td th:text="${contact.identificationNumber}">...</td>
-					<td th:text="${contact.taxIdentificationNumber}">...</td>
-					<td th:text="${contact.phoneNumber}">...</td>
-					<td th:text="${contact.email}">...</td>
-				</tr>
-			</th:block>
+
+			<tr>
+				<th>Sídlo:</th>
+				<td th:text="${contact.residence}"></td>
+			</tr>
+
+			<tr>
+				<th>IČ:</th>
+				<td th:text="${contact.identificationNumber}"></td>
+			</tr>
+
+			<tr>
+				<th>DIČ:</th>
+				<td th:text="${contact.taxIdentificationNumber}"></td>
+			</tr>
+
+			<tr>
+				<th>Telefon:</th>
+				<td th:text="${contact.phoneNumber}"></td>
+			</tr>
+
+			<tr>
+				<th>Email:</th>
+				<td th:text="${contact.email}"></td>
+			</tr>
+
+			<tr>
+				<th>Číslo účtu:</th>
+				<td th:text="${contact.bankAccount}"></td>
+			</tr>
 		</table>
+		<br/>
+		<form th:action="@{/addressbook/contact/delete?id={id}(id=${contact.Id})}" method="post">
+			<input type="submit" value="Smazat kontakt" />
+		</form>
 	</body>
 </html>

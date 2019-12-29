@@ -10,6 +10,10 @@
 
 	<body>
 	<nav th:replace="fragments/headers :: nav"></nav>
+		<div>
+			<i class="fa fa-users-cog infos-fa-icon-size"></i>
+			<a th:href="@{/user/edit}" class="href-no-underline dropdown-font-size">Úprava údajů</a>
+		</div>
 		<table class="tables">
 			<tr>
 				<th>Jméno:</th>

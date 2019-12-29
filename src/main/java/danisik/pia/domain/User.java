@@ -40,20 +40,6 @@ public class User extends EntityParent{
 	)
 	private List<Role> roles = new LinkedList<>();
 
-	@ManyToMany
-	@JoinTable(
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "contact_id")
-	)
-	private List<Contact> contacts = new LinkedList<>();
-
-	@ManyToMany
-	@JoinTable(
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "invoice_id")
-	)
-	private List<Invoice> invoices = new LinkedList<>();
-
 	public User(String username, String password, String name, String birthNumber, String address,
 				String email, String phoneNumber, String cardNumber) {
 		this.setUsername(username);

@@ -34,13 +34,13 @@ public class ContactManagerImpl implements ContactManager {
 			log.info("No contacts present, creating 2 contacts");
 
 			// Supplier
-			this.addContact(InitConstants.DEFAULT_RECIPIENT_NAME,
-					InitConstants.DEFAULT_RECIPIENT_RESIDENCE,
-					InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER,
-					InitConstants.DEFAULT_RECIPIENT_TAX_IDENTIFICATION_NUMBER,
-					InitConstants.DEFAULT_RECIPIENT_PHONE_NUMBER,
-					InitConstants.DEFAULT_RECIPIENT_EMAIL,
-					InitConstants.DEFAULT_RECIPIENT_BANK_ACCOUNT);
+			this.addContact(InitConstants.DEFAULT_CUSTOMER_NAME,
+					InitConstants.DEFAULT_CUSTOMER_RESIDENCE,
+					InitConstants.DEFAULT_CUSTOMER_IDENTIFICATION_NUMBER,
+					InitConstants.DEFAULT_CUSTOMER_TAX_IDENTIFICATION_NUMBER,
+					InitConstants.DEFAULT_CUSTOMER_PHONE_NUMBER,
+					InitConstants.DEFAULT_CUSTOMER_EMAIL,
+					InitConstants.DEFAULT_CUSTOMER_BANK_ACCOUNT);
 
 			// Recipient.
 			this.addContact(InitConstants.DEFAULT_SUPPLIER_NAME,
@@ -52,17 +52,26 @@ public class ContactManagerImpl implements ContactManager {
 					InitConstants.DEFAULT_SUPPLIER_BANK_ACCOUNT);
 
 			Contact supplier = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
-			Contact recipient = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER);
+			Contact customer = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_CUSTOMER_IDENTIFICATION_NUMBER);
 
 			this.contactRepo.save(supplier);
-			this.contactRepo.save(recipient);
+			this.contactRepo.save(customer);
 		}
 	}
 
-	public void addContact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
+	@Override
+	public Long addContact(Contact contactValue) {
+		return addContact(contactValue.getName(), contactValue.getResidence(), contactValue.getIdentificationNumber(),
+				contactValue.getTaxIdentificationNumber(), contactValue.getPhoneNumber(),
+				contactValue.getEmail(), contactValue.getBankAccount());
+	}
+
+	@Override
+	public Long addContact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
 						   String phoneNumber, String email, String bankAccount) {
 		Contact contact = new Contact(name, residence, identificationNumber, taxIdentificationNumber, phoneNumber, email, bankAccount);
 		this.contactRepo.save(contact);
+		return contact.getId();
 	}
 
 	@Override
@@ -83,14 +92,14 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public Contact updateContactInfo(Long Id, Contact contactValues) {
-		return updateContactInfo(Id, contactValues.getName(), contactValues.getResidence(), contactValues.getIdentificationNumber(),
+	public void updateContactInfo(Long Id, Contact contactValues) {
+		updateContactInfo(Id, contactValues.getName(), contactValues.getResidence(), contactValues.getIdentificationNumber(),
 				contactValues.getTaxIdentificationNumber(), contactValues.getPhoneNumber(), contactValues.getEmail(),
 				contactValues.getBankAccount());
 	}
 
 	@Override
-	public Contact updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
+	public void updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
 									 String phoneNumber, String email, String bankAccount) {
 		Contact contact = findContactByID(Id);
 		contact.setName(name);
@@ -102,7 +111,11 @@ public class ContactManagerImpl implements ContactManager {
 		contact.setBankAccount(bankAccount);
 
 		this.contactRepo.save(contact);
-		return contact;
+	}
+
+	@Override
+	public void deleteContact(Long Id) {
+		this.contactRepo.delete(findContactByID(Id));
 	}
 
 }

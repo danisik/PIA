@@ -37,6 +37,7 @@ public class InitConstants {
     public static final String DEFAULT_INVOICE1_DATE_FRUITION_PERFORM = "14.7.2019";
     public static final Long DEFAULT_INVOICE1_SYMBOL_VARIABLE = 30303030L;
     public static final Long DEFAULT_INVOICE1_SYMBOL_CONSTANT = 1212L;
+    public static final Boolean DEFAULT_INVOICE1_CANCELLED = false;
 
     public static final Long DEFAULT_INVOICE2_ID = 1L;
     public static final String DEFAULT_INVOICE2_DATE_EXPOSURE = "15.7.2019";
@@ -44,6 +45,7 @@ public class InitConstants {
     public static final String DEFAULT_INVOICE2_DATE_FRUITION_PERFORM = "17.7.2019";
     public static final Long DEFAULT_INVOICE2_SYMBOL_VARIABLE = 40404040L;
     public static final Long DEFAULT_INVOICE2_SYMBOL_CONSTANT = 344334L;
+    public static final Boolean DEFAULT_INVOICE2_CANCELLED = true;
 
 
     // Contact.
@@ -55,13 +57,13 @@ public class InitConstants {
     public static final String DEFAULT_SUPPLIER_EMAIL= "info-plzen@zf.com";
     public static final String DEFAULT_SUPPLIER_BANK_ACCOUNT = "1234567936/0600";
 
-    public static final String DEFAULT_RECIPIENT_NAME = "STS Kadan";
-    public static final String DEFAULT_RECIPIENT_RESIDENCE = "Kadan 302/10, 432 01 Kadan";
-    public static final String DEFAULT_RECIPIENT_IDENTIFICATION_NUMBER = "12345678";
-    public static final String DEFAULT_RECIPIENT_TAX_IDENTIFICATION_NUMBER = "CZ22334567";
-    public static final String DEFAULT_RECIPIENT_PHONE_NUMBER = "323 012 478";
-    public static final String DEFAULT_RECIPIENT_EMAIL= "sts@sts.com";
-    public static final String DEFAULT_RECIPIENT_BANK_ACCOUNT = "1234567890/0800";
+    public static final String DEFAULT_CUSTOMER_NAME = "STS Kadan";
+    public static final String DEFAULT_CUSTOMER_RESIDENCE = "Kadan 302/10, 432 01 Kadan";
+    public static final String DEFAULT_CUSTOMER_IDENTIFICATION_NUMBER = "12345678";
+    public static final String DEFAULT_CUSTOMER_TAX_IDENTIFICATION_NUMBER = "CZ22334567";
+    public static final String DEFAULT_CUSTOMER_PHONE_NUMBER = "323 012 478";
+    public static final String DEFAULT_CUSTOMER_EMAIL= "sts@sts.com";
+    public static final String DEFAULT_CUSTOMER_BANK_ACCOUNT = "1234567890/0800";
 
 
     // Role.

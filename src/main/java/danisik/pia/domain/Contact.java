@@ -28,11 +28,11 @@ public class Contact extends EntityParent{
 
 	private String bankAccount;
 
-	@ManyToMany(mappedBy = "contacts")
-	private List<User> users;
+	@OneToMany(mappedBy = "customer")
+	private List<Invoice> invoicesCustomer;
 
-	@OneToMany(mappedBy = "recipient")
-	private List<Invoice> invoices;
+	@OneToMany(mappedBy = "supplier")
+	private List<Invoice> invoicesSupplier;
 
 	public Contact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
 				   String phoneNumber, String email, String bankAccount) {

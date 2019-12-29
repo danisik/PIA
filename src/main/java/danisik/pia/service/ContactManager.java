@@ -8,16 +8,20 @@ public interface ContactManager {
 
 	List<Contact> getContacts();
 
-	void addContact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
+	Long addContact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
 					String phoneNumber, String email, String bankAccount);
+
+	Long addContact(Contact contactValues);
 
 	Contact findContactByIdentificationNumber(String identificationNumber);
 
 	Contact findContactByID(Long Id);
 
-	Contact updateContactInfo(Long Id, Contact contactValues);
+	void updateContactInfo(Long Id, Contact contactValues);
 
-	Contact updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
+	void updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
 							  String phoneNumber, String email, String bankAccount);
+
+	void deleteContact(Long Id);
 
 }

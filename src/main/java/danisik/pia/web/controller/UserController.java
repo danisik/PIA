@@ -46,8 +46,9 @@ public class UserController {
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User updatedUser = userManager.updateUserInfo(username, userValues);
-		modelMap.addAttribute(ATTRIBUTE_NAME_USER, updatedUser);
+		userManager.updateUserInfo(username, userValues);
+		User user = userManager.findUserByUsername(username);
+		modelMap.addAttribute(ATTRIBUTE_NAME_USER, user);
 
 		return modelAndView;
 	}
@@ -69,13 +70,7 @@ public class UserController {
 	@GetMapping("/user/password")
 	public ModelAndView userChangePassword() {
 
-		ModelAndView modelAndView = new ModelAndView("user/infoUser");
-		ModelMap modelMap = modelAndView.getModelMap();
-
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userManager.findUserByUsername(username);
-
-		modelMap.addAttribute(ATTRIBUTE_NAME_USER, user);
+		ModelAndView modelAndView = new ModelAndView("user/passwordUser");
 
 		return modelAndView;
 	}
