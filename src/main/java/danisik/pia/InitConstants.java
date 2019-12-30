@@ -38,6 +38,8 @@ public class InitConstants {
     public static final Long DEFAULT_INVOICE1_SYMBOL_VARIABLE = 30303030L;
     public static final Long DEFAULT_INVOICE1_SYMBOL_CONSTANT = 1212L;
     public static final Boolean DEFAULT_INVOICE1_CANCELLED = false;
+    public static final String DEFAULT_INVOICE1_ACOUNTING_CASE = "Tržba za vlastní výrobky";
+    public static final String DEFAULT_INVOICE1_POSTING_MD_D = "311 / 601";
 
     public static final Long DEFAULT_INVOICE2_ID = 1L;
     public static final String DEFAULT_INVOICE2_DATE_EXPOSURE = "15.7.2019";
@@ -46,6 +48,8 @@ public class InitConstants {
     public static final Long DEFAULT_INVOICE2_SYMBOL_VARIABLE = 40404040L;
     public static final Long DEFAULT_INVOICE2_SYMBOL_CONSTANT = 344334L;
     public static final Boolean DEFAULT_INVOICE2_CANCELLED = true;
+    public static final String DEFAULT_INVOICE2_ACOUNTING_CASE = "Kurzovní rozdíly";
+    public static final String DEFAULT_INVOICE2_POSTING_MD_D = "221 / 311";
 
 
     // Contact.
@@ -95,4 +99,12 @@ public class InitConstants {
     public static final Float DEFAULT_GOODS3_PRICE_PER_ONE = 2F;
     public static final Float DEFAULT_GOODS3_DISCOUNT = 0F;
     public static final Float DEFAULT_GOODS3_TAX_RATE = 21F;
+
+
+    // InvoiceType.
+    public static final String DEFAULT_INVOICE_TYPE_FAP_CODE = "FAP";
+    public static final String DEFAULT_INVOICE_TYPE_FAP_NAME = "FAP - Faktura přijatá";
+
+    public static final String DEFAULT_INVOICE_TYPE_FAV_CODE = "FAV";
+    public static final String DEFAULT_INVOICE_TYPE_FAV_NAME = "FAV - Faktura vydaná";
 }

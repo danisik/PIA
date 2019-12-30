@@ -31,7 +31,7 @@ public class RoleManagerImpl implements RoleManager {
 	@Order(1)
 	public void setup() {
 		if (this.roleRepo.count() == 0) {
-			log.info("No roles present, creating ADMIN and USER and PURSER.");
+			log.info("No roles presented, creating ADMIN and USER and PURSER.");
 			this.addRole(InitConstants.DEFAULT_ROLE_ADMIN_CODE, InitConstants.DEFAULT_ROLE_ADMIN_NAME);
 			this.addRole(InitConstants.DEFAULT_ROLE_USER_CODE, InitConstants.DEFAULT_ROLE_USER_NAME);
 			this.addRole(InitConstants.DEFAULT_ROLE_PURSER_CODE, InitConstants.DEFAULT_ROLE_PURSER_NAME);

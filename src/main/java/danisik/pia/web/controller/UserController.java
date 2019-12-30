@@ -1,5 +1,6 @@
 package danisik.pia.web.controller;
 
+import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.service.UserManager;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,9 +20,6 @@ public class UserController {
 
 	private UserManager userManager;
 
-	private static final String ATTRIBUTE_NAME_USER = "user";
-	private static final String ATTRIBUTE_NAME_ERROR = "error";
-
 	public UserController(UserManager userManager) {
 		this.userManager = userManager;
 	}
@@ -36,13 +34,13 @@ public class UserController {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userManager.findUserByUsername(username);
 
-		modelMap.addAttribute(ATTRIBUTE_NAME_USER, user);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
 
 		return modelAndView;
 	}
 
 	@PostMapping("/user/edit")
-	public ModelAndView userEditPost(@Valid @ModelAttribute(ATTRIBUTE_NAME_USER) User userValues) {
+	public ModelAndView userEditPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues) {
 
 		ModelAndView modelAndView = new ModelAndView("user/infoUser");
 
@@ -51,7 +49,7 @@ public class UserController {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		userManager.updateUserInfo(username, userValues);
 		User user = userManager.findUserByUsername(username);
-		modelMap.addAttribute(ATTRIBUTE_NAME_USER, user);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
 
 		return modelAndView;
 	}
@@ -65,7 +63,7 @@ public class UserController {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userManager.findUserByUsername(username);
 
-		modelMap.addAttribute(ATTRIBUTE_NAME_USER, user);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
 
 		return modelAndView;
 	}
@@ -87,9 +85,9 @@ public class UserController {
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		String errorMessage = userManager.updatePassword(username, oldPassword, newPassword, newPasswordConfirmation);
+		userManager.updatePassword(username, oldPassword, newPassword, newPasswordConfirmation);
 
-		modelMap.addAttribute(ATTRIBUTE_NAME_ERROR, errorMessage);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, Constants.USER_PASSWORD_CHANGE_MESSAGE);
 		return modelAndView;
 	}
 

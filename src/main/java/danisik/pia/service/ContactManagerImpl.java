@@ -31,7 +31,7 @@ public class ContactManagerImpl implements ContactManager {
 	@Order(1)
 	public void setup() {
 		if (this.contactRepo.count() == 0) {
-			log.info("No contacts present, creating 2 contacts");
+			log.info("No contacts presented, creating 2 contacts");
 
 			// Supplier
 			this.addContact(InitConstants.DEFAULT_CUSTOMER_NAME,
