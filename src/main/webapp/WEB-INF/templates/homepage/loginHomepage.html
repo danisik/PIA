@@ -8,16 +8,20 @@
 		<h1>Login</h1>
 		
 		<p th:if="${param.error}" class="error">Wrong user or password!</p>
-		
+
 		<form th:action="@{/login}" method="post">
+			<table>
+				<tr>
+					<th>Uživatelské jméno:</th>
+					<td><input type="text" name="username" id="username" /></td>
+				</tr>
+				<tr>
+					<th>Heslo:</th>
+					<td><input type="password" name="password" id="password" /></td>
+				</tr>
+			</table>
 			<div>
-				<label for="username">Username: </label><input type="text" name="username" id="username" />
-			</div>
-			<div>
-				<label for="password">Password: </label><input type="password" name="password" id="password" />
-			</div>
-			<div>
-				<input type="submit" value="Login" />
+				<input type="submit" value="Přihlásit" />
 			</div>
 		</form>
 	</body>

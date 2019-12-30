@@ -3,11 +3,13 @@ package danisik.pia.web.controller;
 import danisik.pia.domain.User;
 import danisik.pia.service.UserManager;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -18,6 +20,7 @@ public class UserController {
 	private UserManager userManager;
 
 	private static final String ATTRIBUTE_NAME_USER = "user";
+	private static final String ATTRIBUTE_NAME_ERROR = "error";
 
 	public UserController(UserManager userManager) {
 		this.userManager = userManager;
@@ -68,10 +71,27 @@ public class UserController {
 	}
 
 	@GetMapping("/user/password")
-	public ModelAndView userChangePassword() {
+	public ModelAndView userChangePasswordGet() {
 
 		ModelAndView modelAndView = new ModelAndView("user/passwordUser");
 
 		return modelAndView;
 	}
+
+	@PostMapping("/user/password")
+	public ModelAndView userChangePasswordPost(@RequestParam("oldPassword") String oldPassword,
+											   @RequestParam("newPassword") String newPassword,
+											   @RequestParam("newPasswordConfirmation") String newPasswordConfirmation) {
+
+		ModelAndView modelAndView = new ModelAndView("user/passwordUser");
+		ModelMap modelMap = modelAndView.getModelMap();
+
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String errorMessage = userManager.updatePassword(username, oldPassword, newPassword, newPasswordConfirmation);
+
+		modelMap.addAttribute(ATTRIBUTE_NAME_ERROR, errorMessage);
+		return modelAndView;
+	}
+
+
 }
