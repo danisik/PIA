@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html
-		xmlns:th="http://www.thymeleaf.org"
+		xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
 		lang="cs"
 >
 	<head th:replace="fragments/headers :: head(~{::title})">
@@ -10,7 +10,7 @@
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
 		<div><a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
-		<div><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline dropdown-font-size">Úprava faktury</a></div>
+		<div sec:authorize="hasRole('PURSER')"><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline dropdown-font-size">Úprava faktury</a></div>
 		<table class="tables">
 			<tr>
 				<th>Číslo dokladu:</th>

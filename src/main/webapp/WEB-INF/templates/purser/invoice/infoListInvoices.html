@@ -2,6 +2,7 @@
 
 <html
 		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.w3.org/1999/xhtml"
 		lang="cs"
 >
 <head th:replace="fragments/headers :: head(~{::title})">
@@ -11,10 +12,10 @@
 	<nav th:replace="fragments/headers :: nav"></nav>
 	<table class="tables object-on-page-center">
 		<tr>
-			<td>
+			<td sec:authorize="hasRole('PURSER')">
 				<div>
 					<i class="fa fa-plus infos-fa-icon-size"></i>
-					<a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size">Nová faktura</a>
+					<a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size" >Nová faktura</a>
 				</div>
 			</td>
 		</tr>
@@ -44,10 +45,10 @@
 				<td><a th:href="@{/invoices/invoice/info?id={id}(id=${invoice.Id})}" class="href-no-underline">
 					<i class="fa fa-file-invoice infos-fa-icon-size"></i>
 				</a></td>
-				<td><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline">
+				<td sec:authorize="hasRole('PURSER')"><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline">
 					<i class="fa fa-edit infos-fa-icon-size"></i>
 				</a></td>
-				<form th:action="@{/invoices/info}" method="post">
+				<form sec:authorize="hasRole('PURSER')" th:action="@{/invoices/info}" method="post">
 					<input type="hidden" name="invoiceID" th:value="${invoice.Id}"/>
 					<td><button type="submit" name="action" value="cancelInvoice">Od/Stornovat</button></td>
 				</form>

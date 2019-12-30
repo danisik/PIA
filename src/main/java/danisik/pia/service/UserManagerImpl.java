@@ -110,6 +110,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 					InitConstants.DEFAULT_ADMIN1_PHONE_NUMBER, InitConstants.DEFAULT_ADMIN1_CARD_NUMBER);
 			User admin1 = this.userRepo.findByUsername(InitConstants.DEFAULT_ADMIN1_USERNAME);
 			admin1.getRoles().add(role_admin);
+			admin1.getRoles().add(role_user);
 			this.userRepo.save(admin1);
 
 			this.addUser(InitConstants.DEFAULT_USER1_USERNAME, InitConstants.DEFAULT_USER1_PASSWORD, InitConstants.DEFAULT_USER1_NAME,
