@@ -18,7 +18,11 @@ public interface UserManager {
 
 	User findUserByUsername(String username);
 
+	User findUserById(Long Id);
+
 	void updatePassword(String username, String oldPassword,
 						String newPassword, String newPasswordConfirmation);
+
+	void updatePassword(String username, String newPassword);
 
 }

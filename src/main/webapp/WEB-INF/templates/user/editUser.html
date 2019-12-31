@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html
-		xmlns:th="http://www.thymeleaf.org"
+		xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
 		lang="cs"
 >
 	<head th:replace="fragments/headers :: head(~{::title})">
@@ -9,45 +9,9 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div><a th:href="@{/user/info}" class="href-no-underline dropdown-font-size">Zpět na informace</a></div>
+		<div><a th:href="@{/user/info?id={id}(id=${user.Id})}" class="href-no-underline dropdown-font-size">Uživatelské informace</a></div>
 		<form th:action="@{/user/edit}" method="post">
-			<table>
-				<tr>
-					<th>Jméno*:</th>
-					<td><input type="text" name="name" id="name" th:field="${user.name}" required="required"/></td>
-				</tr>
-
-				<tr>
-					<th>Rodné číslo*:</th>
-					<td><input type="text" name="birthNumber" id="birthNumber" th:field="${user.birthNumber}" required="required"/></td>
-				</tr>
-
-				<tr>
-					<th>Adresa*:</th>
-					<td><input type="text" name="address" id="address" th:field="${user.address}" required="required"/></td>
-				</tr>
-
-				<tr>
-					<th>Email*:</th>
-					<td><input type="text" name="email" id="email" th:field="${user.email}" required="required"/></td>
-				</tr>
-
-				<tr>
-					<th>Telefon:</th>
-					<td><input type="text" name="phoneNumber" id="phoneNumber" th:field="${user.phoneNumber}"/></td>
-				</tr>
-
-				<tr>
-					<th>Číslo karty*:</th>
-					<td><input type="text" name="cardNumber" id="cardNumber" th:field="${user.cardNumber}" required="required"/></td>
-				</tr>
-			</table>
-			<div>
-				<div>Políčka označená * jsou povinná.</div>
-			</div>
-			<div>
-				<input type="submit" value="Upravit" />
-			</div>
+			<div th:include="fragments/tableEditUser"></div>
 		</form>
 	</body>
 </html>

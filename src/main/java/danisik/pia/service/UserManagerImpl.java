@@ -93,6 +93,11 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return userRepo.findByUsername(username);
 	}
 
+	@Override
+	public User findUserById(Long Id) {
+		return userRepo.getById(Id);
+	}
+
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
@@ -156,6 +161,15 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	@Override
 	public void updatePassword(String username, String oldPassword,
 								 String newPassword, String newPasswordConfirmation) {
+
+		User user = findUserByUsername(username);
+
+		user.setPassword(encoder.encode(newPassword));
+		userRepo.save(user);
+	}
+
+	@Override
+	public void updatePassword(String username, String newPassword) {
 
 		User user = findUserByUsername(username);
 

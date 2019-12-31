@@ -11,6 +11,9 @@ public class Constants {
     public static final String ATTRIBUTE_NAME_USERS = "users";
     public static final String ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE = "message";
     public static final String USER_PASSWORD_CHANGE_MESSAGE = "Heslo bylo úspěšně změněno.";
+    public static final String REQUEST_PARAM_USER_OLD_PASSWORD = "oldPassword";
+    public static final String REQUEST_PARAM_USER_NEW_PASSWORD = "newPassword";
+    public static final String REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION = "newPasswordConfirmation";
 
 
     // Contact.

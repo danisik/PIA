@@ -77,9 +77,9 @@ public class UserController {
 	}
 
 	@PostMapping("/user/password")
-	public ModelAndView userChangePasswordPost(@RequestParam("oldPassword") String oldPassword,
-											   @RequestParam("newPassword") String newPassword,
-											   @RequestParam("newPasswordConfirmation") String newPasswordConfirmation) {
+	public ModelAndView userChangePasswordPost(@RequestParam(Constants.REQUEST_PARAM_USER_OLD_PASSWORD) String oldPassword,
+											   @RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD) String newPassword,
+											   @RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION) String newPasswordConfirmation) {
 
 		ModelAndView modelAndView = new ModelAndView("user/passwordUser");
 		ModelMap modelMap = modelAndView.getModelMap();
