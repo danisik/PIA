@@ -32,13 +32,9 @@ public class User extends EntityParent{
 
 	private String cardNumber;
 
-
-	@ManyToMany
-	@JoinTable(
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id")
-	)
-	private List<Role> roles = new LinkedList<>();
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "role_id")
+	private Role role;
 
 	public User(String username, String password, String name, String birthNumber, String address,
 				String email, String phoneNumber, String cardNumber) {

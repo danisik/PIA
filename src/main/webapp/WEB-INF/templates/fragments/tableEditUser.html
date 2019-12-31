@@ -28,6 +28,17 @@
         <th>Číslo karty*:</th>
         <td><input type="text" name="cardNumber" id="cardNumber" th:field="${user.cardNumber}" required="required"/></td>
     </tr>
+
+    <tr sec:authorize="hasAuthority('ADMIN')">
+        <th>Role*:</th>
+        <td>
+            <select th:field="*{user.role.code}">
+                <option th:each="roleItem : ${roles}"
+                        th:value="${roleItem.code}"
+                        th:utext="${roleItem.name}"/>
+            </select>
+        </td>
+    </tr>
 </table>
 <div>
     <div>Políčka označená * jsou povinná.</div>

@@ -9,9 +9,8 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div sec:authorize="hasRole('USER')">Text visible to user.</div>
-        <div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
-		<div sec:authorize="hasRole('PURSER')">Text visible to purser.</div>
+        <div sec:authorize="hasAuthority('ADMIN')">Text visible to admin.</div>
+		<div sec:authorize="hasAuthority('PURSER')">Text visible to purser.</div>
         <div sec:authorize="isAuthenticated()">
             Text visible only to authenticated users.
         </div>

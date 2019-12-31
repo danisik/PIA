@@ -1,7 +1,8 @@
-package danisik.pia.web.controller;
+package danisik.pia.web.controller.user;
 
 import danisik.pia.Constants;
 import danisik.pia.domain.User;
+import danisik.pia.service.RoleManager;
 import danisik.pia.service.UserManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,10 @@ import javax.validation.Valid;
 public class AdminController {
 
 	private UserManager userManager;
+	private RoleManager roleManager;
 
-	public AdminController(UserManager userManager) {
+	public AdminController(UserManager userManager, RoleManager roleManager) {
+		this.roleManager = roleManager;
 		this.userManager = userManager;
 	}
 
@@ -83,6 +86,7 @@ public class AdminController {
 		User user = userManager.findUserById(Id);
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
 
 		return modelAndView;
 	}
@@ -97,8 +101,12 @@ public class AdminController {
 
 		User updateUser = userManager.findUserById(Id);
 		userManager.updateUserInfo(updateUser.getUsername(), userValues);
+		userManager.updateUserRole(updateUser.getUsername(), userValues.getRole().getCode());
+
 		updateUser = userManager.findUserByUsername(updateUser.getUsername());
+
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, updateUser);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
 
 		return modelAndView;
 	}

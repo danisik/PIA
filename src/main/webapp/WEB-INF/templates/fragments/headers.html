@@ -47,20 +47,17 @@
 							<a th:href="@{/user/password}" class="href-no-underline dropdown-font-size">Změna hesla</a>
 						</div>
 					</div>
+					<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Faktury</a>
         		</li>
 
-				<li sec:authorize="hasRole('USER')">
-					<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Faktury</a>
-				</li>
-
 				<!--Admin buttons-->
-				<li sec:authorize="hasRole('ADMIN')">
+				<li sec:authorize="hasAuthority('ADMIN')">
 					<a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Seznam účtů</a>
 				</li>
 
 
 				<!--Purser buttons-->
-				<li sec:authorize="hasRole('PURSER')">
+				<li sec:authorize="hasAuthority('PURSER')">
 					<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Kontakty</a>
 				</li>
 

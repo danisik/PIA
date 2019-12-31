@@ -36,4 +36,9 @@ public class Constants {
     public static final String ATTRIBUTE_NAME_INVOICE_TYPE = "invoiceType";
     public static final String ATTRIBUTE_NAME_INVOICE_TYPES = "invoiceTypes";
     public static final String ATTRIBUTE_NAME_INVOICE_CANCELLED_MESSAGE = "message";
+
+
+    // Role.
+    public static final String ATTRIBUTE_NAME_ROLE = "role";
+    public static final String ATTRIBUTE_NAME_ROLES = "roles";
 }

@@ -1,4 +1,4 @@
-package danisik.pia.web.controller;
+package danisik.pia.web.controller.user;
 
 import danisik.pia.Constants;
 import danisik.pia.domain.User;

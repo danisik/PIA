@@ -1,0 +1,75 @@
+<table class="tables">
+    <tr>
+        <th>Typ*:</th>
+        <td>
+            <select th:field="*{invoice.invoiceType.code}">
+                <option th:each="invoiceTypeItem : ${invoiceTypes}"
+                        th:value="${invoiceTypeItem.code}"
+                        th:utext="${invoiceTypeItem.name}"/>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <th>Účetní případ*:</th>
+        <td><input type="text" name="accountingCase" id="accountingCase" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Zaúčtování MD / D*:</th>
+        <td><input type="text" name="postingMDD" id="postingMDD" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Dodavatel*:</th>
+        <td>
+            <select th:field="*{invoice.supplier.Id}">
+                <option th:each="contactSupplierItem : ${contacts}"
+                        th:value="${contactSupplierItem.Id}"
+                        th:utext="${contactSupplierItem.name}"/>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <th>Odběratel*:</th>
+        <td>
+            <select th:field="*{invoice.customer.Id}">
+                <option th:each="contactCustomerItem : ${contacts}"
+                        th:value="${contactCustomerItem.Id}"
+                        th:utext="${contactCustomerItem.name}"/>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <th>Datum vystavení (formát: dd.MM.yyyy)*:</th>
+        <td><input type="text" name="dateExposure" id="dateExposure" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Datum splatnosti (formát: dd.MM.yyyy)*:</th>
+        <td><input type="text" name="dateDue" id="dateDue" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Datum uskutečnění plnění (formát: dd.MM.yyyy)*:</th>
+        <td><input type="text" name="dateFruitionPerform" id="dateFruitionPerform" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Variabilní symbol:</th>
+        <td><input type="text" name="symbolVariable" id="symbolVariable"/></td>
+    </tr>
+
+    <tr>
+        <th>Konstantní symbol:</th>
+        <td><input type="text" name="symbolConstant" id="symbolConstant"/></td>
+    </tr>
+</table>
+<div>
+    <div>Políčka označená * jsou povinná.</div>
+</div>
+<div>
+    <button type="submit" name="action" value="change">Vytvořit</button>
+</div>

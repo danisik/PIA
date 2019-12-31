@@ -106,38 +106,36 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	public void setup() {
 		if (this.userRepo.count() == 0) {
 			log.info("No user presented, creating admin and users.");
-			Role role_admin = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_ADMIN_CODE);
-			Role role_user = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_USER_CODE);
-			Role role_purser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_PURSER_CODE);
+			Role roleUser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_USER_CODE);
+			Role roleAdmin = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_ADMIN_CODE);
+			Role rolePurser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_PURSER_CODE);
 
 			this.addUser(InitConstants.DEFAULT_ADMIN1_USERNAME, InitConstants.DEFAULT_ADMIN1_PASSWORD, InitConstants.DEFAULT_ADMIN1_NAME,
 					InitConstants.DEFAULT_ADMIN1_BIRTH_NUMBER, InitConstants.DEFAULT_ADMIN1_ADDRESS, InitConstants.DEFAULT_ADMIN1_EMAIL,
 					InitConstants.DEFAULT_ADMIN1_PHONE_NUMBER, InitConstants.DEFAULT_ADMIN1_CARD_NUMBER);
 			User admin1 = this.userRepo.findByUsername(InitConstants.DEFAULT_ADMIN1_USERNAME);
-			admin1.getRoles().add(role_admin);
-			admin1.getRoles().add(role_user);
+			admin1.setRole(roleAdmin);
 			this.userRepo.save(admin1);
 
 			this.addUser(InitConstants.DEFAULT_USER1_USERNAME, InitConstants.DEFAULT_USER1_PASSWORD, InitConstants.DEFAULT_USER1_NAME,
 					InitConstants.DEFAULT_USER1_BIRTH_NUMBER, InitConstants.DEFAULT_USER1_ADDRESS, InitConstants.DEFAULT_USER1_EMAIL,
 					InitConstants.DEFAULT_USER1_PHONE_NUMBER, InitConstants.DEFAULT_USER1_CARD_NUMBER);
 			User user1 = this.userRepo.findByUsername(InitConstants.DEFAULT_USER1_USERNAME);
-			user1.getRoles().add(role_user);
+			user1.setRole(roleUser);
 			this.userRepo.save(user1);
 
 			this.addUser(InitConstants.DEFAULT_USER2_USERNAME, InitConstants.DEFAULT_USER2_PASSWORD, InitConstants.DEFAULT_USER2_NAME,
 					InitConstants.DEFAULT_USER2_BIRTH_NUMBER, InitConstants.DEFAULT_USER2_ADDRESS, InitConstants.DEFAULT_USER2_EMAIL,
 					InitConstants.DEFAULT_USER2_PHONE_NUMBER, InitConstants.DEFAULT_USER2_CARD_NUMBER);
 			User user2 = this.userRepo.findByUsername(InitConstants.DEFAULT_USER2_USERNAME);
-			user2.getRoles().add(role_user);
-			user2.getRoles().add(role_purser);
-
+			user2.setRole(rolePurser);
 			this.userRepo.save(user2);
 		}
 	}
 
 	private String toSpringRole(Role role) {
-		return "ROLE_" + role.getCode();
+		return role.getCode();
+		//return "ROLE_" + role.getCode();
 	}
 
 	@Override
@@ -149,11 +147,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		}
 
 		WebCredentials creds = new WebCredentials(user.getUsername(), user.getPassword());
-
-		user.getRoles()
-		.stream()
-		.map(this::toSpringRole)
-		.forEach(creds::addRole);
+		creds.addRole(user.getRole().getCode());
 
 		return creds;
 	}
@@ -174,6 +168,14 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		User user = findUserByUsername(username);
 
 		user.setPassword(encoder.encode(newPassword));
+		userRepo.save(user);
+	}
+
+	@Override
+	public void updateUserRole(String username, String roleCode) {
+		User user = findUserByUsername(username);
+
+		user.setRole(roleRepo.findByCode(roleCode));
 		userRepo.save(user);
 	}
 

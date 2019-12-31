@@ -28,4 +28,9 @@
         <th>Číslo karty:</th>
         <td th:text="${user.cardNumber}"></td>
     </tr>
+
+    <tr sec:authorize="hasAuthority('ADMIN')">
+        <th>Role:</th>
+        <td th:text="${user.role.name}"></td>
+    </tr>
 </table>

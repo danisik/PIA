@@ -2,6 +2,7 @@ package danisik.pia.service;
 
 import java.util.List;
 
+import danisik.pia.domain.Role;
 import danisik.pia.domain.User;
 
 public interface UserManager {
@@ -15,6 +16,8 @@ public interface UserManager {
 				String email, String phoneNumber, String cardNumber);
 
 	void updateUserInfo(String username, User userValues);
+
+	void updateUserRole(String username, String roleCode);
 
 	User findUserByUsername(String username);
 

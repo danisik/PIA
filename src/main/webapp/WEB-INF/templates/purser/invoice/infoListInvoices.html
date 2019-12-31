@@ -5,55 +5,11 @@
 		xmlns:sec="http://www.w3.org/1999/xhtml"
 		lang="cs"
 >
-<head th:replace="fragments/headers :: head(~{::title})">
-	<title>Index</title>
-</head>
-<body>
-	<nav th:replace="fragments/headers :: nav"></nav>
-	<table class="tables object-on-page-center">
-		<tr>
-			<td sec:authorize="hasRole('PURSER')">
-				<div>
-					<i class="fa fa-plus infos-fa-icon-size"></i>
-					<a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size" >Nová faktura</a>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<th>Číslo dokladu</th>
-			<th>Typ</th>
-			<th>Účetní případ</th>
-			<th>Zaúčtování MD / D</th>
-			<th>Stornováno</th>
-			<th>PDF</th>
-		</tr>
-		<th:block th:each="invoice : ${invoices}">
-			<tr>
-				<td th:text="${invoice.documentSerialNumber}">...</td>
-				<td><div th:text="${invoice.invoiceType.name}"></div></td>
-				<td><div th:text="${invoice.accountingCase}"></div></td>
-				<td><div th:text="${invoice.postingMDD}"></div></td>
-				<td>
-					<div th:if="${invoice.cancelled}">
-						<i class="fa fa-check-circle infos-fa-yes-no-icon-size"></i>
-					</div>
-					<div th:unless="${invoice.cancelled}">
-						<i class="fa fa-times-circle infos-fa-yes-no-icon-size"></i>
-					</div>
-				</td>
-				<td><input type="button" value="PDF"></td>
-				<td><a th:href="@{/invoices/invoice/info?id={id}(id=${invoice.Id})}" class="href-no-underline">
-					<i class="fa fa-file-invoice infos-fa-icon-size"></i>
-				</a></td>
-				<td sec:authorize="hasRole('PURSER')"><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline">
-					<i class="fa fa-edit infos-fa-icon-size"></i>
-				</a></td>
-				<form sec:authorize="hasRole('PURSER')" th:action="@{/invoices/info}" method="post">
-					<input type="hidden" name="invoiceID" th:value="${invoice.Id}"/>
-					<td><button type="submit" name="action" value="cancelInvoice">Od/Stornovat</button></td>
-				</form>
-			</tr>
-		</th:block>
-	</table>
-</body>
+	<head th:replace="fragments/headers :: head(~{::title})">
+		<title>Index</title>
+	</head>
+	<body>
+		<nav th:replace="fragments/headers :: nav"></nav>
+		<div th:include="fragments/tableInfoListInvoices"></div>
+	</body>
 </html>

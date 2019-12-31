@@ -1,4 +1,4 @@
-package danisik.pia.web.controller;
+package danisik.pia.web.controller.purser;
 
 import danisik.pia.Constants;
 import danisik.pia.domain.Contact;

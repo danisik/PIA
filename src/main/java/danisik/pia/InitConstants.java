@@ -74,11 +74,11 @@ public class InitConstants {
     public static final String DEFAULT_ROLE_ADMIN_CODE = "ADMIN";
     public static final String DEFAULT_ROLE_ADMIN_NAME = "Admins";
 
-    public static final String DEFAULT_ROLE_USER_CODE = "USER";
-    public static final String DEFAULT_ROLE_USER_NAME = "Users";
-
     public static final String DEFAULT_ROLE_PURSER_CODE = "PURSER";
     public static final String DEFAULT_ROLE_PURSER_NAME = "Pursers";
+
+    public static final String DEFAULT_ROLE_USER_CODE = "USER";
+    public static final String DEFAULT_ROLE_USER_NAME = "Users";
 
 
     // Goods.
