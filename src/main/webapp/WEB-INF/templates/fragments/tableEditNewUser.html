@@ -1,0 +1,45 @@
+<table class="tables">
+    <tr>
+        <th>Jméno*:</th>
+        <td><input type="text" name="name" id="name" th:field="${user.name}" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Rodné číslo*:</th>
+        <td><input type="text" name="birthNumber" id="birthNumber" th:field="${user.birthNumber}" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Adresa*:</th>
+        <td><input type="text" name="address" id="address" th:field="${user.address}" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Email*:</th>
+        <td><input type="text" name="email" id="email" th:field="${user.email}" required="required"/></td>
+    </tr>
+
+    <tr>
+        <th>Telefon:</th>
+        <td><input type="text" name="phoneNumber" id="phoneNumber" th:field="${user.phoneNumber}"/></td>
+    </tr>
+
+    <tr>
+        <th>Číslo karty*:</th>
+        <td><input type="text" name="cardNumber" id="cardNumber" th:field="${user.cardNumber}" required="required"/></td>
+    </tr>
+
+    <tr sec:authorize="hasAuthority('ADMIN')">
+        <th>Role*:</th>
+        <td>
+            <select th:field="*{user.role.code}">
+                <option th:each="roleItem : ${roles}"
+                        th:value="${roleItem.code}"
+                        th:utext="${roleItem.name}"/>
+            </select>
+        </td>
+    </tr>
+</table>
+<div>
+    <div>Políčka označená * jsou povinná.</div>
+</div>

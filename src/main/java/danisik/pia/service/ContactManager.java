@@ -22,6 +22,6 @@ public interface ContactManager {
 	void updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
 							  String phoneNumber, String email, String bankAccount);
 
-	void deleteContact(Long Id);
+	boolean deleteContact(Long Id);
 
 }

@@ -6,6 +6,13 @@ public class Constants {
 
     public static final String REQUEST_PARAM_ID = "id";
 
+    public static final Integer PASSWORD_LENGTH = 4;
+    public static final Integer USERNAME_LENGTH = 8;
+    public static final String PASSWORD_SYMBOLS = "0123456789";
+    public static final String USERNAME_SYMBOLS = PASSWORD_SYMBOLS + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+    public static final String ATTRIBUTE_NAME_MESSAGE = "message";
+
     // User.
     public static final String ATTRIBUTE_NAME_USER = "user";
     public static final String ATTRIBUTE_NAME_USERS = "users";
@@ -19,6 +26,7 @@ public class Constants {
     // Contact.
     public static final String ATTRIBUTE_NAME_CONTACT = "contact";
     public static final String ATTRIBUTE_NAME_CONTACTS = "contacts";
+    public static final String CONTACT_DELETE_MESSAGE = "Kontakt je stále používán jako dodavatel/odebíratel ve fakturách!";
 
 
     // Invoice.
@@ -35,7 +43,6 @@ public class Constants {
     // InvoiceType.
     public static final String ATTRIBUTE_NAME_INVOICE_TYPE = "invoiceType";
     public static final String ATTRIBUTE_NAME_INVOICE_TYPES = "invoiceTypes";
-    public static final String ATTRIBUTE_NAME_INVOICE_CANCELLED_MESSAGE = "message";
 
 
     // Role.

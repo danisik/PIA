@@ -26,10 +26,6 @@
             <td><a th:href="@{/admin/manage/user/password?id={id}(id=${user.Id})}" class="href-no-underline">
                 <i class="fa fa-lock infos-fa-icon-size"></i>
             </a></td>
-            <form th:action="@{/admin/manage}" method="post">
-                <input type="hidden" name="userID" th:value="${user.Id}"/>
-                <!--<td><button type="submit" name="action" value="cancelInvoice">Od/Stornovat</button></td>-->
-            </form>
         </tr>
     </th:block>
 </table>

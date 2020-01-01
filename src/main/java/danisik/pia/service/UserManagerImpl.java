@@ -1,11 +1,13 @@
 package danisik.pia.service;
 
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import danisik.pia.Constants;
 import danisik.pia.InitConstants;
 
 import danisik.pia.dao.ContactRepository;
@@ -58,15 +60,33 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public void addUser(String username, String password, String name, String birthNumber, String address,
-						String email, String phoneNumber, String cardNumber) {
-		if (this.userRepo.findByUsername(username) != null) {
+	public Long addUser(User userValues) {
+		if (this.userRepo.findByUsername(userValues.getUsername()) != null) {
 			throw new IllegalArgumentException("User already exists!");
 		}
+
+		String generatedUsername = generateRandomString(Constants.USERNAME_LENGTH, Constants.USERNAME_SYMBOLS);
+		String generatedPassword = generateRandomString(Constants.PASSWORD_LENGTH, Constants.PASSWORD_SYMBOLS);
+
+		Long Id = addUser(generatedUsername, generatedPassword, userValues.getName(), userValues.getBirthNumber(),
+				userValues.getAddress(), userValues.getEmail(), userValues.getPhoneNumber(),userValues.getCardNumber());
+
+		User user = findUserById(Id);
+		user.setRole(roleRepo.findByCode(userValues.getRole().getCode()));
+		userRepo.save(user);
+
+		return Id;
+	}
+
+	@Override
+	public Long addUser(String username, String password, String name, String birthNumber, String address,
+						String email, String phoneNumber, String cardNumber) {
+
 
 		String hashed = this.encoder.encode(password);
 		User user = new User(username, hashed, name, birthNumber, address, email, phoneNumber, cardNumber);
 		this.userRepo.save(user);
+		return user.getId();
 	}
 
 	@Override
@@ -172,11 +192,29 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
+	public void deleteUser(Long Id) {
+		User user = findUserById(Id);
+		Role role = roleRepo.findByCode(user.getRole().getCode());
+		role.getUsers().remove(user);
+		userRepo.delete(user);
+	}
+
+	@Override
 	public void updateUserRole(String username, String roleCode) {
 		User user = findUserByUsername(username);
 
 		user.setRole(roleRepo.findByCode(roleCode));
 		userRepo.save(user);
+	}
+
+	private String generateRandomString(int length, final String symbols) {
+		SecureRandom rnd = new SecureRandom();
+
+		StringBuilder sb = new StringBuilder(length);
+		for(int i = 0; i < length; i++) {
+			sb.append(symbols.charAt(rnd.nextInt(symbols.length())));
+		}
+		return sb.toString();
 	}
 
 }

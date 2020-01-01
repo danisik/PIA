@@ -9,7 +9,9 @@ public interface UserManager {
 
 	List<User> getUsers();
 
-	void addUser(String username, String password, String name, String birthNumber, String address,
+	Long addUser(User userValues);
+
+	Long addUser(String username, String password, String name, String birthNumber, String address,
 				 String email, String phoneNumber, String cardNumber);
 
 	void updateUserInfo(String username, String name, String birthNumber, String address,
@@ -27,5 +29,7 @@ public interface UserManager {
 						String newPassword, String newPasswordConfirmation);
 
 	void updatePassword(String username, String newPassword);
+
+	void deleteUser(Long Id);
 
 }

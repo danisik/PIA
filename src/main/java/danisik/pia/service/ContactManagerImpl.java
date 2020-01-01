@@ -114,8 +114,15 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public void deleteContact(Long Id) {
-		this.contactRepo.delete(findContactByID(Id));
+	public boolean deleteContact(Long Id) {
+		Contact contact = findContactByID(Id);
+
+		if (contact.getInvoicesCustomer().size() == 0 || contact.getInvoicesSupplier().size() == 0) {
+			return false;
+		}
+
+		this.contactRepo.delete(contact);
+		return true;
 	}
 
 }

@@ -14,4 +14,8 @@
 		<div><a th:href="@{/admin/manage/user/edit?id={id}(id=${user.Id})}" class="href-no-underline dropdown-font-size">Úprava údajů</a></div>
 		<div th:include="fragments/tableInfoUser"></div>
 	</body>
+	<br/>
+	<form th:action="@{/admin/manage/user/delete?id={id}(id=${user.Id})}" method="post">
+		<input type="submit" value="Smazat kontakt" />
+	</form>
 </html>

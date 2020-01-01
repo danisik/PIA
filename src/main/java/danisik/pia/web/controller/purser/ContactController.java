@@ -91,17 +91,18 @@ public class ContactController {
 		return modelAndView;
 	}
 
-	@GetMapping("/addressbook/contact/delete")
-	public ModelAndView addressBookContactDeleteGet() {
-		ModelAndView modelAndView = new ModelAndView("redirect:/addressbook/info");
-		return modelAndView;
-	}
-
 	@PostMapping("/addressbook/contact/delete")
 	public ModelAndView addressBookContactDeletePost(@RequestParam(value = Constants.REQUEST_PARAM_ID) Long Id) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/addressbook/info");
 
-		contactManager.deleteContact(Id);
+		ModelMap modelMap = modelAndView.getModelMap();
+
+		boolean success = contactManager.deleteContact(Id);
+
+		if (!success) {
+			modelAndView.setViewName("redirect:/addressbook/contact/info?id=" + Id);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, Constants.CONTACT_DELETE_MESSAGE);
+		}
 
 		return modelAndView;
 	}

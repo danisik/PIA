@@ -9,6 +9,9 @@
 	</head>
 	<body>
 	<nav th:replace="fragments/headers :: nav"></nav>
-		<div th:include="fragments/tableCreateUser"></div>
+	<div><a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Zpět na seznam kontaktů</a></div>
+	<form th:action="@{/admin/manage/user/new}" method="post">
+		<div th:include="fragments/tableNewUser"></div>
+	</form>
 	</body>
 </html>

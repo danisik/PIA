@@ -1,9 +1,7 @@
 package danisik.pia.web.controller.purser;
 
 import danisik.pia.Constants;
-import danisik.pia.domain.Contact;
 import danisik.pia.domain.Invoice;
-import danisik.pia.domain.InvoiceType;
 import danisik.pia.service.ContactManager;
 import danisik.pia.service.InvoiceManager;
 import danisik.pia.service.InvoiceTypeManager;
@@ -79,7 +77,7 @@ public class InvoiceController {
 		Invoice invoice = invoiceManager.findInvoiceByID(Id);
 
 		if (invoice.getCancelled()) {
-			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICE_CANCELLED_MESSAGE, Constants.INVOICE_CANCELLED_MESSAGE);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, Constants.INVOICE_CANCELLED_MESSAGE);
 		}
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICE, invoice);

@@ -4,6 +4,7 @@ import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.service.RoleManager;
 import danisik.pia.service.UserManager;
+import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,18 +29,7 @@ public class AdminController {
 
 	@GetMapping("/admin/manage")
 	public ModelAndView adminManageUsersGet() {
-		ModelAndView modelAndView = new ModelAndView("admin/manageUsersAdmin");
-
-		ModelMap modelMap = modelAndView.getModelMap();
-
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USERS, userManager.getUsers());
-
-		return modelAndView;
-	}
-
-	@PostMapping("/admin/manage")
-	public ModelAndView adminManageUsersPost() {
-		ModelAndView modelAndView = new ModelAndView("admin/manageUsersAdmin");
+		ModelAndView modelAndView = new ModelAndView("admin/listUsersAdmin");
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
@@ -50,21 +40,34 @@ public class AdminController {
 
 	@GetMapping("/admin/manage/user/new")
 	public ModelAndView adminCreateUserGet() {
-		ModelAndView modelAndView = new ModelAndView("admin/createUserAdmin");
+		ModelAndView modelAndView = new ModelAndView("admin/newUserAdmin");
+
+		ModelMap modelMap = modelAndView.getModelMap();
+
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, new User());
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
 
 		return modelAndView;
 	}
 
 
 	@PostMapping("/admin/manage/user/new")
-	public ModelAndView adminCreateUserPost() {
-		ModelAndView modelAndView = new ModelAndView("admin/manageUsersAdmin");
+	public ModelAndView adminCreateUserPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues) {
+		ModelAndView modelAndView = new ModelAndView();
+
+		ModelMap modelMap = modelAndView.getModelMap();
+
+		Long Id = userManager.addUser(userValues);
+
+		modelAndView.setViewName("redirect:/admin/manage/user/info?id=" + Id);
+
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, this.userManager.findUserById(Id));
 
 		return modelAndView;
 	}
 
 	@GetMapping("/admin/manage/user/info")
-	public ModelAndView adminInfoUser(@RequestParam(Constants.REQUEST_PARAM_ID) Long Id) {
+	public ModelAndView adminInfoUserGet(@RequestParam(Constants.REQUEST_PARAM_ID) Long Id) {
 		ModelAndView modelAndView = new ModelAndView("admin/infoUserAdmin");
 
 		ModelMap modelMap = modelAndView.getModelMap();
@@ -72,6 +75,15 @@ public class AdminController {
 		User user = userManager.findUserById(Id);
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
+
+		return modelAndView;
+	}
+
+	@PostMapping("/admin/manage/user/delete")
+	public ModelAndView adminInfoUserPost(@RequestParam(value = Constants.REQUEST_PARAM_ID) Long Id) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/admin/manage");
+
+		userManager.deleteUser(Id);
 
 		return modelAndView;
 	}
