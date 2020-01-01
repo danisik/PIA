@@ -1,17 +1,11 @@
-package danisik.pia.domain;
+package danisik.pia.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import danisik.pia.Constants;
-import danisik.pia.InitConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,8 +46,12 @@ public class Invoice extends EntityParent{
 	@JoinColumn(name="invoice_type_id")
 	private InvoiceType invoiceType;
 
-	@OneToMany(mappedBy = "invoice")
-	private List<Goods> wares;
+	@ManyToMany
+	@JoinTable(
+			joinColumns = @JoinColumn(name = "invoice_id"),
+			inverseJoinColumns = @JoinColumn(name = "goods_id")
+	)
+	private List<Goods> wares = new LinkedList<>();
 
 	public Invoice(Long documentSerialNumber, String dateExposure, String dateDue, String dateFruitionPerform,
 				   Long symbolVariable, Long symbolConstant, Boolean cancelled,

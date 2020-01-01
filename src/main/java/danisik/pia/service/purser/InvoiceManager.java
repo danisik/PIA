@@ -1,8 +1,6 @@
-package danisik.pia.service;
+package danisik.pia.service.purser;
 
-import danisik.pia.domain.Contact;
-import danisik.pia.domain.Invoice;
-import danisik.pia.domain.InvoiceType;
+import danisik.pia.model.Invoice;
 
 import java.text.ParseException;
 import java.util.List;

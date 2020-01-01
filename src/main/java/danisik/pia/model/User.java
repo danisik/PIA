@@ -1,7 +1,4 @@
-package danisik.pia.domain;
-
-import java.util.LinkedList;
-import java.util.List;
+package danisik.pia.model;
 
 import javax.persistence.*;
 

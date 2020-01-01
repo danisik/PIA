@@ -1,11 +1,10 @@
-package danisik.pia.domain;
+package danisik.pia.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity

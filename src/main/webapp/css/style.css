@@ -72,10 +72,15 @@ nav a {
 }
 
 .tables {
+	text-align: left;
+}
+
+.tables-content-center {
 	text-align: center;
 }
 
 .object-on-page-center {
+	text-align: center;
 	margin: 0px auto;
 }
 

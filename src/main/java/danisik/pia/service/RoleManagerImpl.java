@@ -11,8 +11,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import danisik.pia.dao.RoleRepository;
-import danisik.pia.domain.Role;
+import danisik.pia.model.Role;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.transaction.Transactional;
 
 @Service
 @Slf4j
@@ -29,6 +31,7 @@ public class RoleManagerImpl implements RoleManager {
 			ContextRefreshedEvent.class
 	})
 	@Order(1)
+	@Transactional
 	public void setup() {
 		if (this.roleRepo.count() == 0) {
 			log.info("No roles presented, creating ADMIN and PURSER.");

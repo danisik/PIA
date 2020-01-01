@@ -1,9 +1,9 @@
 package danisik.pia.web.controller.purser;
 
 import danisik.pia.Constants;
-import danisik.pia.domain.Contact;
-import danisik.pia.service.ContactManager;
-import danisik.pia.service.UserManager;
+import danisik.pia.model.Contact;
+import danisik.pia.service.purser.ContactManager;
+import danisik.pia.service.user.UserManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;

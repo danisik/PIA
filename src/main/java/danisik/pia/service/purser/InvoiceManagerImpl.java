@@ -1,22 +1,26 @@
-package danisik.pia.service;
+package danisik.pia.service.purser;
 
 import danisik.pia.Constants;
 import danisik.pia.InitConstants;
 import danisik.pia.dao.ContactRepository;
+import danisik.pia.dao.GoodsRepository;
 import danisik.pia.dao.InvoiceRepository;
 import danisik.pia.dao.InvoiceTypeRepository;
-import danisik.pia.domain.Contact;
-import danisik.pia.domain.Invoice;
-import danisik.pia.domain.InvoiceType;
+import danisik.pia.model.Contact;
+import danisik.pia.model.Goods;
+import danisik.pia.model.Invoice;
+import danisik.pia.model.InvoiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,24 +31,38 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	private final InvoiceRepository invoiceRepo;
 	private final ContactRepository contactRepo;
 	private final InvoiceTypeRepository invoiceTypeRepo;
+	private final GoodsRepository goodsRepo;
 
 	@Autowired
-	public InvoiceManagerImpl(InvoiceRepository invoiceRepo, ContactRepository contactRepo, InvoiceTypeRepository invoiceTypeRepo) {
+	public InvoiceManagerImpl(InvoiceRepository invoiceRepo, ContactRepository contactRepo,
+							  InvoiceTypeRepository invoiceTypeRepo, GoodsRepository goodsRepo) {
 		this.invoiceRepo = invoiceRepo;
 		this.contactRepo = contactRepo;
 		this.invoiceTypeRepo = invoiceTypeRepo;
+		this.goodsRepo = goodsRepo;
 	}
 
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
 	@Order(2)
+	@Transactional
 	public void setup() throws ParseException {
 		if (this.invoiceRepo.count() == 0) {
 			log.info("No invoices presented, creating 2 invoices.");
 
 			Contact supplier = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_SUPPLIER_IDENTIFICATION_NUMBER);
 			Contact customer = this.contactRepo.findByIdentificationNumber(InitConstants.DEFAULT_CUSTOMER_IDENTIFICATION_NUMBER);
+
+			List<Goods> wares = goodsRepo.findFirst3ByOrderById();
+			Goods[] waresArray = new Goods[Constants.INVOICE_DEFAULT_INIT_COUNT_GOODS];
+
+			int i = 0;
+			for (Goods goodsIt : wares) {
+				waresArray[i] = goodsIt;
+				i++;
+				if (i >= Constants.INVOICE_DEFAULT_INIT_COUNT_GOODS) break;
+			}
 
 			InvoiceType typeFAV = invoiceTypeRepo.findByCode(InitConstants.DEFAULT_INVOICE_TYPE_FAV_CODE);
 			InvoiceType typeFAP = invoiceTypeRepo.findByCode(InitConstants.DEFAULT_INVOICE_TYPE_FAP_CODE);
@@ -65,6 +83,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
 			invoice1.setSupplier(supplier);
 			invoice1.setCustomer(customer);
 			invoice1.setInvoiceType(typeFAP);
+			invoice1.getWares().add(waresArray[0]);
 			this.invoiceRepo.save(invoice1);
 
 			documentSerialNumber = InitConstants.DEFAULT_INVOICE2_ID;
@@ -83,10 +102,10 @@ public class InvoiceManagerImpl implements InvoiceManager {
 			invoice2.setCustomer(supplier);
 			invoice2.setSupplier(customer);
 			invoice2.setInvoiceType(typeFAV);
+			invoice2.getWares().add(waresArray[1]);
+			invoice2.getWares().add(waresArray[2]);
 			this.invoiceRepo.save(invoice2);
 		}
-
-
 	}
 
 	@Override

@@ -1,10 +1,10 @@
 package danisik.pia.web.controller.purser;
 
 import danisik.pia.Constants;
-import danisik.pia.domain.Invoice;
-import danisik.pia.service.ContactManager;
-import danisik.pia.service.InvoiceManager;
-import danisik.pia.service.InvoiceTypeManager;
+import danisik.pia.model.Invoice;
+import danisik.pia.service.purser.ContactManager;
+import danisik.pia.service.purser.InvoiceManager;
+import danisik.pia.service.purser.InvoiceTypeManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,6 +64,7 @@ public class InvoiceController {
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICE, invoiceManager.findInvoiceByID(Id));
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_WARES, invoiceManager.findInvoiceByID(Id).getWares());
 
 		return modelAndView;
 	}
@@ -97,7 +98,7 @@ public class InvoiceController {
 	}
 
 	@GetMapping("/invoices/info")
-	public ModelAndView invoiceInfoGet() {
+	public ModelAndView invoicesInfoGet() {
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/infoListInvoices");
 
 		ModelMap modelMap = modelAndView.getModelMap();
@@ -109,7 +110,7 @@ public class InvoiceController {
 	}
 
 	@PostMapping("/invoices/info")
-	public ModelAndView invoiceInfoPost(@RequestParam(value= Constants.ATTRIBUTE_NAME_INVOICES_INVOICE_ID, required=true) Long Id,
+	public ModelAndView invoicesInfoPost(@RequestParam(value= Constants.ATTRIBUTE_NAME_INVOICES_INVOICE_ID, required=true) Long Id,
 										@RequestParam(value=Constants.ATTRIBUTE_NAME_INVOICES_BUTTON_NAME, required=true) String action) {
 
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/infoListInvoices");

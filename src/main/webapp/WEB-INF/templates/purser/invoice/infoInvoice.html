@@ -11,6 +11,10 @@
 		<nav th:replace="fragments/headers :: nav"></nav>
 		<div><a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
 		<div sec:authorize="hasAuthority('PURSER')"><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline dropdown-font-size">Úprava faktury</a></div>
-		<div th:include="fragments/tableInfoInvoice"></div>
+		<div th:include="fragments/info/tableInfoInvoice"></div>
+		<br/>
+		<br/>
+		<br/>
+		<div th:include="fragments/info/tableInfoListWaresInvoice"></div>
 	</body>
 </html>

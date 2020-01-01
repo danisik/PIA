@@ -1,7 +1,6 @@
-package danisik.pia.service;
+package danisik.pia.service.purser;
 
-import danisik.pia.domain.InvoiceType;
-import danisik.pia.domain.Role;
+import danisik.pia.model.InvoiceType;
 
 import java.util.List;
 

@@ -1,9 +1,8 @@
-package danisik.pia.service;
+package danisik.pia.service.user;
 
 import java.util.List;
 
-import danisik.pia.domain.Role;
-import danisik.pia.domain.User;
+import danisik.pia.model.User;
 
 public interface UserManager {
 

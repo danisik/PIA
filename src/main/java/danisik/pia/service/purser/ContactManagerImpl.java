@@ -1,4 +1,4 @@
-package danisik.pia.service;
+package danisik.pia.service.purser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,8 +11,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import danisik.pia.dao.ContactRepository;
-import danisik.pia.domain.Contact;
+import danisik.pia.model.Contact;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.transaction.Transactional;
 
 @Service
 @Slf4j
@@ -29,6 +31,7 @@ public class ContactManagerImpl implements ContactManager {
 			ContextRefreshedEvent.class
 	})
 	@Order(1)
+	@Transactional
 	public void setup() {
 		if (this.contactRepo.count() == 0) {
 			log.info("No contacts presented, creating 2 contacts");

@@ -12,7 +12,7 @@
 		<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a>
 		<div><a th:href="@{/addressbook/contact/info?id={id}(id=${contact.Id})}" class="href-no-underline dropdown-font-size">Zpět na informace</a></div>
 		<form th:action="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" method="post">
-			<div th:include="fragments/tableEditContact"></div>
+			<div th:include="fragments/edit/tableEditContact"></div>
 		</form>
 	</body>
 </html>

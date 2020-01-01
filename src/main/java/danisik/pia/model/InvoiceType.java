@@ -1,4 +1,4 @@
-package danisik.pia.domain;
+package danisik.pia.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

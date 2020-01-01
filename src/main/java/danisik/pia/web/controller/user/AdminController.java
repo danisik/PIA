@@ -1,11 +1,9 @@
 package danisik.pia.web.controller.user;
 
 import danisik.pia.Constants;
-import danisik.pia.domain.User;
+import danisik.pia.model.User;
 import danisik.pia.service.RoleManager;
-import danisik.pia.service.UserManager;
-import net.bytebuddy.matcher.CollectionOneToOneMatcher;
-import org.springframework.security.core.context.SecurityContextHolder;
+import danisik.pia.service.user.UserManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;

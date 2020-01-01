@@ -47,7 +47,13 @@
 							<a th:href="@{/user/password}" class="href-no-underline dropdown-font-size">Změna hesla</a>
 						</div>
 					</div>
-					<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Faktury</a>
+					<div class="dropdown">
+						<button class="dropbtn">Faktury</button>
+						<div class="dropdown-content">
+							<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Seznam faktur</a>
+							<a th:href="@{/wares/info}" class="href-no-underline dropdown-font-size">Seznam zboží</a>
+						</div>
+					</div>
         		</li>
 
 				<!--Admin buttons-->

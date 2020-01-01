@@ -11,7 +11,7 @@
 	<nav th:replace="fragments/headers :: nav"></nav>
 	<div><a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Zpět na seznam kontaktů</a></div>
 	<form th:action="@{/admin/manage/user/new}" method="post">
-		<div th:include="fragments/tableNewUser"></div>
+		<div th:include="fragments/new/tableNewUser"></div>
 	</form>
 	</body>
 </html>

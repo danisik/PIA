@@ -13,7 +13,6 @@
         <th>Účetní případ</th>
         <th>Zaúčtování MD / D</th>
         <th>Stornováno</th>
-        <th>PDF</th>
     </tr>
     <th:block th:each="invoice : ${invoices}">
         <tr>
@@ -29,7 +28,6 @@
                     <i class="fa fa-times-circle infos-fa-yes-no-icon-size"></i>
                 </div>
             </td>
-            <td><input type="button" value="PDF"></td>
             <td><a th:href="@{/invoices/invoice/info?id={id}(id=${invoice.Id})}" class="href-no-underline">
                 <i class="fa fa-file-invoice infos-fa-icon-size"></i>
             </a></td>

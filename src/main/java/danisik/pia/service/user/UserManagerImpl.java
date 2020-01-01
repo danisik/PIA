@@ -1,4 +1,4 @@
-package danisik.pia.service;
+package danisik.pia.service.user;
 
 import java.security.SecureRandom;
 import java.util.Collections;
@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 
 import danisik.pia.dao.RoleRepository;
 import danisik.pia.dao.UserRepository;
-import danisik.pia.domain.Role;
-import danisik.pia.domain.User;
+import danisik.pia.model.Role;
+import danisik.pia.model.User;
 import danisik.pia.model.WebCredentials;
 import lombok.extern.slf4j.Slf4j;
 
@@ -125,7 +125,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	@Transactional
 	public void setup() {
 		if (this.userRepo.count() == 0) {
-			log.info("No user presented, creating admin and users.");
+			log.info("No user presented, creating admin and user and purser.");
 			Role roleUser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_USER_CODE);
 			Role roleAdmin = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_ADMIN_CODE);
 			Role rolePurser = this.roleRepo.findByCode(InitConstants.DEFAULT_ROLE_PURSER_CODE);

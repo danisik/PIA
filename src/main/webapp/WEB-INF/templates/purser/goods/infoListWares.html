@@ -7,13 +7,8 @@
 	<head th:replace="fragments/headers :: head(~{::title})">
 		<title>Index</title>
 	</head>
-
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div th:text="${message}">
-		</div>
-		<form th:action="@{/user/password}" method="post">
-			<div th:include="fragments/edit/tableEditPasswordUser"></div>
-		</form>
+		<div th:include="fragments/info/tableInfoListWares"></div>
 	</body>
 </html>

@@ -1,7 +1,6 @@
 package danisik.pia.dao;
 
-import danisik.pia.domain.Invoice;
-import danisik.pia.domain.InvoiceType;
+import danisik.pia.model.InvoiceType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

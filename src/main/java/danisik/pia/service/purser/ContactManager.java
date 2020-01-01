@@ -1,8 +1,8 @@
-package danisik.pia.service;
+package danisik.pia.service.purser;
 
 import java.util.List;
 
-import danisik.pia.domain.Contact;
+import danisik.pia.model.Contact;
 
 public interface ContactManager {
 

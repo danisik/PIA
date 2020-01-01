@@ -12,7 +12,7 @@
 		<div><a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Zpět na seznam kontaktů</a></div>
 		<div><a th:href="@{/admin/manage/user/info?id={id}(id=${user.Id})}" class="href-no-underline dropdown-font-size">Uživatelské informace</a></div>
 		<form th:action="@{/admin/manage/user/edit?id={id}(id=${user.Id})}" method="post">
-			<div th:include="fragments/tableEditUser"></div>
+			<div th:include="fragments/edit/tableEditUser"></div>
 		</form>
 	</body>
 </html>

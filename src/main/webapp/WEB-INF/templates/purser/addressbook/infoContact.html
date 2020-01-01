@@ -11,7 +11,7 @@
 		<nav th:replace="fragments/headers :: nav"></nav>
 		<div><a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
 		<div><a th:href="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" class="href-no-underline dropdown-font-size">Úprava kontaktu</a></div>
-		<div th:include="fragments/tableInfoContact"></div>
+		<div th:include="fragments/info/tableInfoContact"></div>
 		<br/>
 		<form th:action="@{/addressbook/contact/delete?id={id}(id=${contact.Id})}" method="post">
 			<input type="submit" value="Smazat kontakt" />

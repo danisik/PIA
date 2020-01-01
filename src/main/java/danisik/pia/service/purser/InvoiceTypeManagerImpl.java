@@ -1,10 +1,8 @@
-package danisik.pia.service;
+package danisik.pia.service.purser;
 
 import danisik.pia.InitConstants;
 import danisik.pia.dao.InvoiceTypeRepository;
-import danisik.pia.dao.RoleRepository;
-import danisik.pia.domain.InvoiceType;
-import danisik.pia.domain.Role;
+import danisik.pia.model.InvoiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -12,6 +10,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,6 +29,7 @@ public class InvoiceTypeManagerImpl implements InvoiceTypeManager {
 			ContextRefreshedEvent.class
 	})
 	@Order(1)
+	@Transactional
 	public void setup() {
 		if (this.invoiceTypeRepo.count() == 0) {
 			log.info("No invoice types presented, creating FAP and FAV");

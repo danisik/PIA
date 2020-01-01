@@ -14,7 +14,7 @@
 		<div th:text="${message}">
 		</div>
 		<form th:action="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" method="post">
-			<div th:include="fragments/tableEditInvoice"></div>
+			<div th:include="fragments/edit/tableEditInvoice"></div>
 		</form>
 	</body>
 </html>
