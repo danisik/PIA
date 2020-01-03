@@ -31,10 +31,10 @@
 			</ul>
 			<ul>
 				<!--Unauthorized user buttons-->
-				<li sec:authorize="!isAuthenticated()">
+				<li>
 					<a th:href="@{/services}" class="href-no-underline header-font-size">Služby</a>
 				</li>
-				<li sec:authorize="!isAuthenticated()">
+				<li>
 					<a th:href="@{/info}" class="href-no-underline header-font-size">Info</a>
 				</li>
 

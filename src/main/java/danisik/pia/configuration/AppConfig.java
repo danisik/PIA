@@ -1,5 +1,6 @@
 package danisik.pia.configuration;
 
+import danisik.pia.InitConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -77,6 +78,12 @@ public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 				.antMatchers("/").permitAll()
 				.antMatchers("/services").permitAll()
 				.antMatchers("/info").permitAll()
+				.antMatchers("/user/**").authenticated()
+				.antMatchers("/invoices/info").authenticated()
+				.antMatchers("/invoices/invoice/info").authenticated()
+				.antMatchers("/invoices/**").hasAuthority(InitConstants.DEFAULT_ROLE_PURSER_CODE)
+				.antMatchers("/admin/**").hasAuthority(InitConstants.DEFAULT_ROLE_ADMIN_CODE)
+				.antMatchers("/addressbook/**").hasAuthority(InitConstants.DEFAULT_ROLE_PURSER_CODE)
 			.anyRequest().authenticated()
 			.and()
 		.formLogin()
