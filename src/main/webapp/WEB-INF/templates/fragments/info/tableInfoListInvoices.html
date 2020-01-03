@@ -1,37 +1,3 @@
-<table class="tables object-on-page-center">
-    <tr>
-        <th>Časový interval:</th>
-    </tr>
-    <tr>
-        <td>Od:</td>
-        <td><input type="date" id="fromDate" name="fromDate"></td>
-    </tr>
-    <tr>
-        <td>Do:</td>
-        <td><input type="date" id="toDate" name="toDate"></td>
-    </tr>
-    <tr>
-        <th>Přijaté / Vydané faktury:</th>
-    </tr>
-    <tr>
-        <td>Typ:</td>
-        <td>
-            <select name="invoiceType" id="invoiceType">
-                <option value="all">Vše</option>
-                <option th:each="invoiceTypeItem : ${invoiceTypes}"
-                        th:value="${invoiceTypeItem.code}"
-                        th:utext="${invoiceTypeItem.name}"/>
-            </select>
-        </td>
-    </tr>
-
-    <tr>
-        <form th:action="@{/invoices/info}" method="post">
-            <td><button type="submit" name="action" value="filterInvoices">Filtrovat</button></td>
-        </form>
-    </tr>
-</table>
-
 <table id="invoices" class="tables object-on-page-center">
     <thead>
     <tr>

@@ -2,7 +2,7 @@
 
 ## Spuštění
 
-V root složce spustit skript "run.sh.
+V root složce spustit skript "run.sh".
 
 ## Údaje při prvním spuštění
 
