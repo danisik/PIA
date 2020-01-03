@@ -1,7 +1,7 @@
 package danisik.pia.web.controller.purser;
 
 import danisik.pia.Constants;
-import danisik.pia.model.Invoice;
+import danisik.pia.domain.Invoice;
 import danisik.pia.service.purser.ContactManager;
 import danisik.pia.service.purser.InvoiceManager;
 import danisik.pia.service.purser.InvoiceTypeManager;
@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.List;
 
 @Controller
 public class InvoiceController {
@@ -85,6 +86,7 @@ public class InvoiceController {
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICE_TYPES, invoiceTypeManager.getInvoiceTypes());
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_CONTACTS, contactManager.getContacts());
 
+
 		return modelAndView;
 	}
 
@@ -93,6 +95,7 @@ public class InvoiceController {
 												@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_INVOICE) Invoice invoiceValues)
 												throws ParseException {
 		ModelAndView modelAndView = new ModelAndView("redirect:/invoices/invoice/info?id="+ Id);
+		System.out.println(invoiceValues.toString());
 		invoiceManager.updateInvoice(Id, invoiceValues);
 		return modelAndView;
 	}
@@ -104,24 +107,33 @@ public class InvoiceController {
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICES, invoiceManager.getInvoices());
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICE_TYPES, invoiceTypeManager.getInvoiceTypes());
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICES_INVOICE_ID, 0);
 
 		return modelAndView;
 	}
 
 	@PostMapping("/invoices/info")
-	public ModelAndView invoicesInfoPost(@RequestParam(value= Constants.ATTRIBUTE_NAME_INVOICES_INVOICE_ID, required=true) Long Id,
+	public ModelAndView invoicesInfoPost(@RequestParam(value= Constants.ATTRIBUTE_NAME_INVOICES_INVOICE_ID, required=false) Long Id,
 										@RequestParam(value=Constants.ATTRIBUTE_NAME_INVOICES_BUTTON_NAME, required=true) String action) {
 
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/infoListInvoices");
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
-		if (action.equals(Constants.INVOICE_CANCEL_STRING)) {
-			invoiceManager.updateInvoiceCancelled(Id);
+		List<Invoice> invoices = null;
+
+		switch(action) {
+			case Constants.INVOICE_FILTER_STRING:
+				invoices = invoiceManager.getInvoices();
+				break;
+			case Constants.INVOICE_CANCEL_STRING:
+				invoiceManager.updateInvoiceCancelled(Id);
+			default:
+				invoices = invoiceManager.getInvoices();
 		}
 
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICES, invoiceManager.getInvoices());
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_INVOICES, invoices);
 
 		return modelAndView;
 	}

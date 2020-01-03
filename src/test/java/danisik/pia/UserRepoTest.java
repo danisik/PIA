@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import danisik.pia.dao.UserRepository;
-import danisik.pia.model.User;
+import danisik.pia.domain.User;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest

@@ -1,7 +1,7 @@
 package danisik.pia.web.controller.user;
 
 import danisik.pia.Constants;
-import danisik.pia.model.User;
+import danisik.pia.domain.User;
 import danisik.pia.service.RoleManager;
 import danisik.pia.service.user.UserManager;
 import org.springframework.stereotype.Controller;
@@ -87,7 +87,8 @@ public class AdminController {
 	}
 
 	@GetMapping("/admin/manage/user/edit")
-	public ModelAndView userEditGet(@RequestParam(Constants.REQUEST_PARAM_ID) Long Id) {
+	public ModelAndView userEditGet(@RequestParam(Constants.REQUEST_PARAM_ID) Long Id,
+									@RequestParam(value = Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, required = false) String message) {
 
 		ModelAndView modelAndView = new ModelAndView("admin/editUserAdmin");
 
@@ -97,6 +98,7 @@ public class AdminController {
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, message);
 
 		return modelAndView;
 	}
@@ -110,8 +112,14 @@ public class AdminController {
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		User updateUser = userManager.findUserById(Id);
+
 		userManager.updateUserInfo(updateUser.getUsername(), userValues);
-		userManager.updateUserRole(updateUser.getUsername(), userValues.getRole().getCode());
+		boolean success = userManager.updateUserRole(updateUser.getUsername(), userValues.getRole().getCode());
+
+		if (!success) {
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, Constants.ADMIN_EDIT_USER_ROLE_MESSAGE);
+			modelAndView.setViewName("redirect:/admin/manage/user/edit?id=" + Id);
+		}
 
 		updateUser = userManager.findUserByUsername(updateUser.getUsername());
 

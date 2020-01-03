@@ -1,13 +1,15 @@
 <table class="tables">
+    <thead></thead>
+    <tbody>
     <tr>
         <th>Číslo dokladu**:</th>
-        <td><input type="text" name="documentSerialNumber" id="documentSerialNumber" th:field="${invoice.documentSerialNumber}" disabled="true"/></td>
+        <td><input type="number" th:field="${invoice.documentSerialNumber}" disabled="true"/></td>
     </tr>
 
     <tr>
         <th>Typ*:</th>
         <td>
-            <select th:disabled="${invoice.cancelled}" th:field="*{invoice.invoiceType.code}">
+            <select th:disabled="${invoice.cancelled}" th:field="${invoice.invoiceType.code}">
                 <option th:each="invoiceType : ${invoiceTypes}"
                         th:value="${invoiceType.code}"
                         th:utext="${invoiceType.name}"/>
@@ -17,18 +19,18 @@
 
     <tr>
         <th>Účetní případ*:</th>
-        <td><input type="text" name="accountingCase" id="accountingCase" th:disabled="${invoice.cancelled}" th:field="${invoice.accountingCase}" required="required"/></td>
+        <td><input type="text" th:disabled="${invoice.cancelled}" th:field="${invoice.accountingCase}" required="required"/></td>
     </tr>
 
     <tr>
         <th>Zaúčtování MD / D*:</th>
-        <td><input type="text" name="postingMDD" id="postingMDD" th:disabled="${invoice.cancelled}" th:field="${invoice.postingMDD}" required="required"/></td>
+        <td><input type="text" th:disabled="${invoice.cancelled}" th:field="${invoice.postingMDD}" required="required"/></td>
     </tr>
 
     <tr>
         <th>Dodavatel*:</th>
         <td>
-            <select th:disabled="${invoice.cancelled}" th:field="*{invoice.supplier.Id}">
+            <select th:disabled="${invoice.cancelled}" th:field="${invoice.supplier.Id}">
                 <option th:each="contactSupplier : ${contacts}"
                         th:value="${contactSupplier.Id}"
                         th:utext="${contactSupplier.name}"/>
@@ -39,7 +41,7 @@
     <tr>
         <th>Odběratel*:</th>
         <td>
-            <select th:disabled="${invoice.cancelled}" th:field="*{invoice.customer.Id}">
+            <select th:disabled="${invoice.cancelled}" th:field="${invoice.customer.Id}">
                 <option th:each="contactCustomer : ${contacts}"
                         th:value="${contactCustomer.Id}"
                         th:utext="${contactCustomer.name}"/>
@@ -49,27 +51,27 @@
 
     <tr>
         <th>Datum vystavení (formát: dd.MM.yyyy)*:</th>
-        <td><input type="text" name="dateExposure" id="dateExposure" th:disabled="${invoice.cancelled}" th:field="${{invoice.dateExposure}}" required="required"/></td>
+        <td><input type="text" th:disabled="${invoice.cancelled}" th:field="${{invoice.dateExposure}}" required="required"/></td>
     </tr>
 
     <tr>
         <th>Datum splatnosti (formát: dd.MM.yyyy)*:</th>
-        <td><input type="text" name="dateDue" id="dateDue" th:disabled="${invoice.cancelled}" th:field="${{invoice.dateDue}}" required="required"/></td>
+        <td><input type="text" th:disabled="${invoice.cancelled}" th:field="${{invoice.dateDue}}" required="required"/></td>
     </tr>
 
     <tr>
         <th>Datum uskutečnění plnění (formát: dd.MM.yyyy)*:</th>
-        <td><input type="text" name="dateFruitionPerform" id="dateFruitionPerform" th:disabled="${invoice.cancelled}" th:field="${{invoice.dateFruitionPerform}}" required="required"/></td>
+        <td><input type="text" th:disabled="${invoice.cancelled}" th:field="${{invoice.dateFruitionPerform}}" required="required"/></td>
     </tr>
 
     <tr>
         <th>Variabilní symbol:</th>
-        <td><input type="text" name="symbolVariable" id="symbolVariable" th:disabled="${invoice.cancelled}" th:field="${invoice.symbolVariable}"/></td>
+        <td><input type="number" th:disabled="${invoice.cancelled}" th:field="${invoice.symbolVariable}"/></td>
     </tr>
 
     <tr>
         <th>Konstantní symbol:</th>
-        <td><input type="text" name="symbolConstant" id="symbolConstant" th:disabled="${invoice.cancelled}" th:field="${invoice.symbolConstant}"/></td>
+        <td><input type="number"  th:disabled="${invoice.cancelled}" th:field="${invoice.symbolConstant}"/></td>
     </tr>
 
     <tr>
@@ -83,7 +85,9 @@
             </div>
         </td>
     </tr>
+    </tbody>
 </table>
+<div th:include="fragments/edit/tableEditGoods"></div>
 <div>
     <div>Políčka označená * jsou povinná.</div>
     <div>Políčka označená ** nelze měnit.</div>
@@ -91,3 +95,5 @@
 <div>
     <button type="submit" name="action" th:disabled="${invoice.cancelled}" value="change">Upravit</button>
 </div>
+
+

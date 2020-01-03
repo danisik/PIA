@@ -6,21 +6,20 @@ import danisik.pia.dao.ContactRepository;
 import danisik.pia.dao.GoodsRepository;
 import danisik.pia.dao.InvoiceRepository;
 import danisik.pia.dao.InvoiceTypeRepository;
-import danisik.pia.model.Contact;
-import danisik.pia.model.Goods;
-import danisik.pia.model.Invoice;
-import danisik.pia.model.InvoiceType;
+import danisik.pia.domain.Contact;
+import danisik.pia.domain.Goods;
+import danisik.pia.domain.Invoice;
+import danisik.pia.domain.InvoiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -83,7 +82,6 @@ public class InvoiceManagerImpl implements InvoiceManager {
 			invoice1.setSupplier(supplier);
 			invoice1.setCustomer(customer);
 			invoice1.setInvoiceType(typeFAP);
-			invoice1.getWares().add(waresArray[0]);
 			this.invoiceRepo.save(invoice1);
 
 			documentSerialNumber = InitConstants.DEFAULT_INVOICE2_ID;
@@ -102,8 +100,6 @@ public class InvoiceManagerImpl implements InvoiceManager {
 			invoice2.setCustomer(supplier);
 			invoice2.setSupplier(customer);
 			invoice2.setInvoiceType(typeFAV);
-			invoice2.getWares().add(waresArray[1]);
-			invoice2.getWares().add(waresArray[2]);
 			this.invoiceRepo.save(invoice2);
 		}
 	}
@@ -117,6 +113,9 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		invoice.setInvoiceType(invoiceTypeRepo.findByCode(invoiceValues.getInvoiceType().getCode()));
 		invoice.setSupplier(contactRepo.getById(invoiceValues.getSupplier().getId()));
 		invoice.setCustomer(contactRepo.getById(invoiceValues.getCustomer().getId()));
+
+		manageGoods(invoice, invoiceValues.getWares());
+
 		this.invoiceRepo.save(invoice);
 		return Id;
 	}
@@ -147,13 +146,13 @@ public class InvoiceManagerImpl implements InvoiceManager {
 				invoiceValues.getDateDue(), invoiceValues.getDateFruitionPerform(),
 				invoiceValues.getSymbolVariable(), invoiceValues.getSymbolConstant(),
 				invoiceValues.getAccountingCase(), invoiceValues.getPostingMDD(),
-				invoiceValues.getSupplier().getId(), invoiceValues.getCustomer().getId());
+				invoiceValues.getSupplier().getId(), invoiceValues.getCustomer().getId(), invoiceValues.getWares());
 	}
 
 	@Override
 	public void updateInvoice(Long Id, String invoiceTypeCode, String dateExposure, String dateDue, String dateFruitionPerform,
 					   Long symbolVariable, Long symbolConstant, String accountingCase, String postingMDD,
-			           Long supplierID, Long customerID)
+			           Long supplierID, Long customerID, List<Goods> wares)
 						throws ParseException {
 		Invoice invoice = findInvoiceByID(Id);
 
@@ -171,7 +170,30 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		invoice.setPostingMDD(postingMDD);
 		invoice.setCustomer(customer);
 		invoice.setSupplier(supplier);
+
+		manageGoods(invoice, wares);
+
 		invoiceRepo.save(invoice);
+	}
+
+	private void manageGoods(Invoice invoice, List<Goods> wares) {
+
+		List<Goods> newWares = new ArrayList<Goods>();
+		if (wares != null) {
+			for (Goods goods : wares) {
+				if (goods.getId() != null) {
+					goodsRepo.delete(goodsRepo.getById(goods.getId()));
+					System.out.println(goods.getId());
+				}
+				if (goods.getName() != null && goods.getQuantity() != null && goods.getPricePerOne() != null &&
+						goods.getDiscount() != null && goods.getTaxRate() != null) {
+					Goods newGoods = new Goods(goods.getName(), goods.getQuantity(), goods.getPricePerOne(), goods.getDiscount(), goods.getTaxRate());
+					newGoods.setInvoice(invoice);
+					goodsRepo.save(newGoods);
+				}
+			}
+		}
+		invoice.setWares(newWares);
 	}
 
 	@Override

@@ -9,10 +9,28 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-        <div sec:authorize="hasAuthority('ADMIN')">Text visible to admin.</div>
-		<div sec:authorize="hasAuthority('PURSER')">Text visible to purser.</div>
-        <div sec:authorize="isAuthenticated()">
-            Text visible only to authenticated users.
-        </div>
+		<div class="multicolumn-div-row">
+			<div class="multicolumn-div-column">
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+					odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Donec iaculis gravida
+					nulla. Nullam eget nisl. Sed ac dolor sit amet purus malesuada congue. Fusce dui leo, imperdiet in, aliquam sit amet,
+					feugiat eu, orci. Donec ipsum massa, ullamcorper in, auctor et, scelerisque sed, est. Sed ac dolor sit amet purus malesuada
+					congue. Duis condimentum augue id magna semper rutrum. Aliquam in lorem sit amet leo accumsan lacinia. Morbi leo mi,
+					nonummy eget tristique non, rhoncus non leo. Integer pellentesque quam vel velit. Nullam justo enim, consectetuer nec,
+					ullamcorper ac, vestibulum in, elit. In rutrum. Vivamus porttitor turpis ac leo. Duis pulvinar. Aliquam erat volutpat.
+					Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Aliquam id dolor.</p>
+			</div>
+			<div class="multicolumn-div-column">
+				<p>Phasellus faucibus molestie nisl. Etiam egestas wisi a erat. Nunc tincidunt ante vitae massa. Maecenas sollicitudin.
+					In laoreet, magna id viverra tincidunt, sem odio bibendum justo, vel imperdiet sapien wisi sed libero. Cras pede libero,
+					dapibus nec, pretium sit amet, tempor quis. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, et
+					sollicitudin sem purus in lacus. In rutrum. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Proin
+					pede metus, vulputate nec, fermentum fringilla, vehicula vitae, justo. Nam sed tellus id magna elementum tincidunt. Vivamus
+					porttitor turpis ac leo. Aliquam in lorem sit amet leo accumsan lacinia. Vestibulum erat nulla, ullamcorper nec, rutrum non,
+					nonummy ac, erat. Suspendisse nisl. Nam sed tellus id magna elementum tincidunt. Etiam bibendum elit eget erat. Aenean placerat.
+					Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et
+					molestiae non recusandae.</p>
+			</div>
+		</div>
 	</body>
 </html>

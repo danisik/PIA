@@ -2,7 +2,7 @@ package danisik.pia.service;
 
 import java.util.List;
 
-import danisik.pia.model.Role;
+import danisik.pia.domain.Role;
 
 public interface RoleManager {
 

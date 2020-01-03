@@ -2,7 +2,7 @@ package danisik.pia.service.user;
 
 import java.util.List;
 
-import danisik.pia.model.User;
+import danisik.pia.domain.User;
 
 public interface UserManager {
 
@@ -18,7 +18,7 @@ public interface UserManager {
 
 	void updateUserInfo(String username, User userValues);
 
-	void updateUserRole(String username, String roleCode);
+	boolean updateUserRole(String username, String roleCode);
 
 	User findUserByUsername(String username);
 

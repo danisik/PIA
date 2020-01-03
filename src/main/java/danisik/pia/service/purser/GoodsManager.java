@@ -1,6 +1,6 @@
 package danisik.pia.service.purser;
 
-import danisik.pia.model.Goods;
+import danisik.pia.domain.Goods;
 
 import java.util.List;
 

@@ -1,8 +1,6 @@
 package danisik.pia.dao;
 
-import danisik.pia.model.Goods;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import danisik.pia.domain.Goods;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

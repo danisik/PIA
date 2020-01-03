@@ -1,4 +1,4 @@
-package danisik.pia.model;
+package danisik.pia.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -46,12 +46,8 @@ public class Invoice extends EntityParent{
 	@JoinColumn(name="invoice_type_id")
 	private InvoiceType invoiceType;
 
-	@ManyToMany
-	@JoinTable(
-			joinColumns = @JoinColumn(name = "invoice_id"),
-			inverseJoinColumns = @JoinColumn(name = "goods_id")
-	)
-	private List<Goods> wares = new LinkedList<>();
+	@OneToMany(mappedBy = "invoice")
+	private List<Goods> wares;
 
 	public Invoice(Long documentSerialNumber, String dateExposure, String dateDue, String dateFruitionPerform,
 				   Long symbolVariable, Long symbolConstant, Boolean cancelled,

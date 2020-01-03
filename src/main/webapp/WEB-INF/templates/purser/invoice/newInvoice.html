@@ -10,6 +10,7 @@
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
 		<div><a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
+		<script th:src="@{/js/displayInvoiceFilter.js}"></script>
 		<form th:action="@{/invoices/invoice/new}" method="post">
 			<div th:include="fragments/new/tableNewInvoice"></div>
 		</form>

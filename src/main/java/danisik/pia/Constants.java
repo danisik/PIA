@@ -1,5 +1,7 @@
 package danisik.pia;
 
+import java.text.DecimalFormat;
+
 public class Constants {
     // For all.
     public static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
@@ -21,6 +23,7 @@ public class Constants {
     public static final String REQUEST_PARAM_USER_OLD_PASSWORD = "oldPassword";
     public static final String REQUEST_PARAM_USER_NEW_PASSWORD = "newPassword";
     public static final String REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION = "newPasswordConfirmation";
+    public static final String ADMIN_EDIT_USER_ROLE_MESSAGE = "Informations updated, but you can't change your role!";
 
 
     // Contact.
@@ -37,6 +40,7 @@ public class Constants {
     public static final String ATTRIBUTE_NAME_INVOICES_BUTTON_NAME = "action";
     public static final String ATTRIBUTE_NAME_INVOICES_INVOICE_ID = "invoiceID";
     public static final String INVOICE_CANCEL_STRING = "cancelInvoice";
+    public static final String INVOICE_FILTER_STRING = "filterInvoices";
     public static final String INVOICE_CANCELLED_MESSAGE = "Faktura je stornovaná, nelze ji upravovat!";
     public static final Integer INVOICE_DEFAULT_INIT_COUNT_GOODS = 3;
 

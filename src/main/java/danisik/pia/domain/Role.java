@@ -1,4 +1,4 @@
-package danisik.pia.model;
+package danisik.pia.domain;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package danisik.pia.model;
+package danisik.pia.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,13 +29,11 @@ public class Goods extends EntityParent{
 
 	private Float priceFull;
 
-	@ManyToMany(mappedBy = "wares")
-	private List<Invoice> invoices;
+	@ManyToOne
+	@JoinColumn(name="invoice_id")
+	private Invoice invoice;
 
 	public Goods(String name, Long quantity, Float pricePerOne, Float discount, Float taxRate) {
-		discount = discount / 100;
-		taxRate = taxRate / 100;
-
 		this.setName(name);
 		this.setQuantity(quantity);
 		this.setPricePerOne(pricePerOne);
@@ -43,8 +41,8 @@ public class Goods extends EntityParent{
 		this.setTaxRate(taxRate);
 
 		Float priceQuantity = pricePerOne * quantity;
-		Float priceQuantityDiscount = priceQuantity - (priceQuantity * discount);
-		Float dph = priceQuantityDiscount * taxRate;
+		Float priceQuantityDiscount = priceQuantity - (priceQuantity * (discount / 100));
+		Float dph = priceQuantityDiscount * (taxRate / 100);
 		Float priceFull = priceQuantityDiscount + dph;
 
 		this.setPriceQuantityDiscount(priceQuantityDiscount);

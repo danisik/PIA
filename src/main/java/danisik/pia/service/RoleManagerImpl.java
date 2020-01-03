@@ -11,7 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import danisik.pia.dao.RoleRepository;
-import danisik.pia.model.Role;
+import danisik.pia.domain.Role;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.transaction.Transactional;

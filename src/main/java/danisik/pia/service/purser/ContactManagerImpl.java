@@ -11,7 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import danisik.pia.dao.ContactRepository;
-import danisik.pia.model.Contact;
+import danisik.pia.domain.Contact;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.transaction.Transactional;
@@ -120,7 +120,7 @@ public class ContactManagerImpl implements ContactManager {
 	public boolean deleteContact(Long Id) {
 		Contact contact = findContactByID(Id);
 
-		if (contact.getInvoicesCustomer().size() == 0 || contact.getInvoicesSupplier().size() == 0) {
+		if (contact.getInvoicesCustomer().size() != 0 || contact.getInvoicesSupplier().size() != 0) {
 			return false;
 		}
 

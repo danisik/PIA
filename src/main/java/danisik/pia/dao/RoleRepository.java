@@ -3,7 +3,7 @@ package danisik.pia.dao;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import danisik.pia.model.Role;
+import danisik.pia.domain.Role;
 
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long> {

@@ -1,7 +1,7 @@
 package danisik.pia.web.controller.purser;
 
 import danisik.pia.Constants;
-import danisik.pia.model.Contact;
+import danisik.pia.domain.Contact;
 import danisik.pia.service.purser.ContactManager;
 import danisik.pia.service.user.UserManager;
 import org.springframework.stereotype.Controller;
@@ -34,12 +34,29 @@ public class ContactController {
 	}
 
 	@GetMapping("/addressbook/contact/info")
-	public ModelAndView addressBookContactInfo(@RequestParam(value = Constants.REQUEST_PARAM_ID) Long Id) {
+	public ModelAndView addressBookContactInfoGet(@RequestParam(value = Constants.REQUEST_PARAM_ID) Long Id,
+												  @RequestParam(value = Constants.ATTRIBUTE_NAME_MESSAGE, required = false) String message) {
 		ModelAndView modelAndView = new ModelAndView("purser/addressbook/infoContact");
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_CONTACT, contactManager.findContactByID(Id));
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, message);
+
+		return modelAndView;
+	}
+
+	@PostMapping("/addressbook/contact/info")
+	public ModelAndView addressBookContactInfoPost(@RequestParam(value = Constants.REQUEST_PARAM_ID) Long Id) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/addressbook/info");
+
+		ModelMap modelMap = modelAndView.getModelMap();
+
+		boolean success = contactManager.deleteContact(Id);
+
+		if (!success) {
+			modelAndView.setViewName("redirect:/addressbook/contact/info?id=" + Id + "&" + Constants.ATTRIBUTE_NAME_MESSAGE + "=" + Constants.CONTACT_DELETE_MESSAGE);
+		}
 
 		return modelAndView;
 	}

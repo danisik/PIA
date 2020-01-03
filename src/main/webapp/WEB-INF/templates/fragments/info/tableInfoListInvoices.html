@@ -1,25 +1,69 @@
 <table class="tables object-on-page-center">
     <tr>
+        <th>Časový interval:</th>
+    </tr>
+    <tr>
+        <td>Od:</td>
+        <td><input type="date" id="fromDate" name="fromDate"></td>
+    </tr>
+    <tr>
+        <td>Do:</td>
+        <td><input type="date" id="toDate" name="toDate"></td>
+    </tr>
+    <tr>
+        <th>Přijaté / Vydané faktury:</th>
+    </tr>
+    <tr>
+        <td>Typ:</td>
+        <td>
+            <select name="invoiceType" id="invoiceType">
+                <option value="all">Vše</option>
+                <option th:each="invoiceTypeItem : ${invoiceTypes}"
+                        th:value="${invoiceTypeItem.code}"
+                        th:utext="${invoiceTypeItem.name}"/>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <form th:action="@{/invoices/info}" method="post">
+            <td><button type="submit" name="action" value="filterInvoices">Filtrovat</button></td>
+        </form>
+    </tr>
+</table>
+
+<table id="invoices" class="tables object-on-page-center">
+    <thead>
+    <tr>
         <td sec:authorize="hasAuthority('PURSER')">
-            <div>
+            <div sec:authorize="hasAuthority('PURSER')">
                 <i class="fa fa-plus infos-fa-icon-size"></i>
                 <a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size" >Nová faktura</a>
             </div>
         </td>
     </tr>
-    <tr>
-        <th>Číslo dokladu</th>
-        <th>Typ</th>
-        <th>Účetní případ</th>
-        <th>Zaúčtování MD / D</th>
-        <th>Stornováno</th>
-    </tr>
+        <tr>
+            <th>Číslo dokladu</th>
+            <th>Typ</th>
+            <th>Účetní případ</th>
+            <th>Zaúčtování MD / D</th>
+            <th>Datum vystavení</th>
+            <th>Datum plnění</th>
+            <th>Stornováno</th>
+            <th>Info</th>
+            <th sec:authorize="hasAuthority('PURSER')">Úprava</th>
+            <th sec:authorize="hasAuthority('PURSER')">Storno</th>
+        </tr>
+    </thead>
+    <tbody>
     <th:block th:each="invoice : ${invoices}">
         <tr>
             <td th:text="${invoice.documentSerialNumber}">...</td>
             <td><div th:text="${invoice.invoiceType.name}"></div></td>
             <td><div th:text="${invoice.accountingCase}"></div></td>
             <td><div th:text="${invoice.postingMDD}"></div></td>
+            <td><div th:text="${invoice.dateExposure}"></div></td>
+            <td><div th:text="${invoice.dateFruitionPerform}"></div></td>
             <td>
                 <div th:if="${invoice.cancelled}">
                     <i class="fa fa-check-circle infos-fa-yes-no-icon-size"></i>
@@ -36,8 +80,10 @@
             </a></td>
             <form sec:authorize="hasAuthority('PURSER')" th:action="@{/invoices/info}" method="post">
                 <input type="hidden" name="invoiceID" th:value="${invoice.Id}"/>
-                <td><button type="submit" name="action" value="cancelInvoice">Od/Stornovat</button></td>
+                <td th:if="${invoice.cancelled}"><button type="submit" name="action" value="cancelInvoice">Odstornovat</button></td>
+                <td th:unless="${invoice.cancelled}"><button type="submit" name="action" value="cancelInvoice">Stornovat</button></td>
             </form>
         </tr>
     </th:block>
+    </tbody>
 </table>

@@ -2,7 +2,7 @@ package danisik.pia.service.purser;
 
 import java.util.List;
 
-import danisik.pia.model.Contact;
+import danisik.pia.domain.Contact;
 
 public interface ContactManager {
 

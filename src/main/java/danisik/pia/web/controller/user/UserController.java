@@ -1,7 +1,7 @@
 package danisik.pia.web.controller.user;
 
 import danisik.pia.Constants;
-import danisik.pia.model.User;
+import danisik.pia.domain.User;
 import danisik.pia.service.user.UserManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -34,6 +34,7 @@ public class UserController {
 		User user = userManager.findUserByUsername(username);
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, user);
 
 		return modelAndView;
 	}

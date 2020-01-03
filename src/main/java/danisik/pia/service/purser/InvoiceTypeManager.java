@@ -1,6 +1,6 @@
 package danisik.pia.service.purser;
 
-import danisik.pia.model.InvoiceType;
+import danisik.pia.domain.InvoiceType;
 
 import java.util.List;
 

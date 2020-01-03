@@ -2,7 +2,7 @@ package danisik.pia.service.purser;
 
 import danisik.pia.InitConstants;
 import danisik.pia.dao.InvoiceTypeRepository;
-import danisik.pia.model.InvoiceType;
+import danisik.pia.domain.InvoiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;

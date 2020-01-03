@@ -1,6 +1,6 @@
 package danisik.pia.dao;
 
-import danisik.pia.model.Contact;
+import danisik.pia.domain.Contact;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,7 @@
 package danisik.pia.service.purser;
 
-import danisik.pia.model.Invoice;
+import danisik.pia.domain.Goods;
+import danisik.pia.domain.Invoice;
 
 import java.text.ParseException;
 import java.util.List;
@@ -20,7 +21,7 @@ public interface InvoiceManager {
 
 	void updateInvoice(Long Id, String invoiceTypeCode, String dateExposure, String dateDue, String dateFruitionPerform,
 					   Long symbolVariable, Long symbolConstant, String accountingCase, String postingMDD,
-					   Long supplierID, Long customerID) throws ParseException;
+					   Long supplierID, Long customerID, List<Goods> wares) throws ParseException;
 
 	void updateInvoiceCancelled(Long Id);
 

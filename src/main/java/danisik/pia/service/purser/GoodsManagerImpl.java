@@ -3,8 +3,8 @@ package danisik.pia.service.purser;
 import danisik.pia.InitConstants;
 import danisik.pia.dao.GoodsRepository;
 import danisik.pia.dao.InvoiceRepository;
-import danisik.pia.model.Goods;
-import danisik.pia.model.Invoice;
+import danisik.pia.domain.Goods;
+import danisik.pia.domain.Invoice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -21,20 +21,25 @@ import java.util.List;
 public class GoodsManagerImpl implements GoodsManager {
 
 	private final GoodsRepository goodsRepo;
+	private final InvoiceRepository invoiceRepo;
 
 	@Autowired
 	public GoodsManagerImpl(GoodsRepository goodsRepo, InvoiceRepository invoiceRepo) {
+		this.invoiceRepo = invoiceRepo;
 		this.goodsRepo = goodsRepo;
 	}
 
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
-	@Order(1)
+	@Order(3)
 	@Transactional
 	public void setup() {
 		if (this.goodsRepo.count() == 0) {
 			log.info("No goods presented, creating 3 goods.");
+
+			Invoice invoice1 = invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE1_ID);
+			Invoice invoice2 = invoiceRepo.findByDocumentSerialNumber(InitConstants.DEFAULT_INVOICE2_ID);
 
 			this.addGoods(InitConstants.DEFAULT_GOODS1_NAME,
 					InitConstants.DEFAULT_GOODS1_QUANTITY,
@@ -53,6 +58,12 @@ public class GoodsManagerImpl implements GoodsManager {
 					InitConstants.DEFAULT_GOODS3_PRICE_PER_ONE,
 					InitConstants.DEFAULT_GOODS3_DISCOUNT,
 					InitConstants.DEFAULT_GOODS3_TAX_RATE);
+
+			List<Goods> wares = goodsRepo.findFirst3ByOrderById();
+
+			wares.get(0).setInvoice(invoice1);
+			wares.get(1).setInvoice(invoice2);
+			wares.get(2).setInvoice(invoice2);
 		}
 	}
 

@@ -1,0 +1,28 @@
+<br/>
+<table class="tables tables-content-center" th:object="${invoice.wares}" name="editWares" id="editWares">
+    <thead>
+    <tr>
+        <th>Jméno</th>
+        <th>Množství</th>
+        <th>J.cena</th>
+        <th>Sleva (%)</th>
+        <th>DPH (%)</th>
+        <th>Smazat</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="goods, stat : ${invoice.wares}">
+        <tr>
+            <input type="hidden" th:field="${invoice.wares[__${stat.index}__].Id}">
+            <td><input type="text" th:field="${invoice.wares[__${stat.index}__].name}" th:disabled="${invoice.cancelled}"></td>
+            <td><input type="number" step="1" min="0" th:field="${invoice.wares[__${stat.index}__].quantity}" th:disabled="${invoice.cancelled}"></td>
+            <td><input type="number" step="1" min="0" th:field="${invoice.wares[__${stat.index}__].pricePerOne}" th:disabled="${invoice.cancelled}"></td>
+            <td><input type="number" step="0.01" min="0" max="100" th:field="${invoice.wares[__${stat.index}__].discount}" th:disabled="${invoice.cancelled}"></td>
+            <td><input type="number" step="0.01" min="0" max="100" th:field="${invoice.wares[__${stat.index}__].taxRate}" th:disabled="${invoice.cancelled}"></td>
+            <td><button type="button" onclick="deleteRow(this)" th:disabled="${invoice.cancelled}">Smazat</button></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<div><button th:disabled="${invoice.cancelled}" type="button" onclick="addRow()" id="addRowButton">Přidat řádek</button></div>
+<br/>
