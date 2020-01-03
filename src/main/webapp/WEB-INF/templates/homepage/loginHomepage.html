@@ -11,14 +11,17 @@
 
 		<form th:action="@{/login}" method="post">
 			<table>
-				<tr>
-					<th>Uživatelské jméno:</th>
-					<td><input type="text" name="username" id="username" /></td>
-				</tr>
-				<tr>
-					<th>Heslo:</th>
-					<td><input type="password" name="password" id="password" /></td>
-				</tr>
+				<thead></thead>
+				<tbody>
+					<tr>
+						<th>Uživatelské jméno:</th>
+						<td><input type="text" name="username" id="username" /></td>
+					</tr>
+					<tr>
+						<th>Heslo:</th>
+						<td><input type="password" name="password" id="password" /></td>
+					</tr>
+				</tbody>
 			</table>
 			<div>
 				<input type="submit" value="Přihlásit" />

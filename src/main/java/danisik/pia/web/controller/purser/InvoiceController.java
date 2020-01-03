@@ -98,7 +98,10 @@ public class InvoiceController extends BasicController {
 												@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_INVOICE) Invoice invoiceValues)
 			throws ParseException, ParseIDException, ObjectNotFoundException {
 		ModelAndView modelAndView = new ModelAndView("redirect:/invoices/invoice/info?id="+ Id);
-		System.out.println(invoiceValues.toString());
+		Invoice invoice = invoiceManager.findInvoiceByID(parseId(Id));
+		if (invoice.getCancelled()) {
+			return modelAndView;
+		}
 		invoiceManager.updateInvoice(parseId(Id), invoiceValues);
 		return modelAndView;
 	}

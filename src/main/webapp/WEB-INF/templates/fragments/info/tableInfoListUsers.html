@@ -1,34 +1,38 @@
 <table class="tables object-on-page-center">
-    <tr>
-        <td>
-            <div>
-                <i class="fa fa-plus infos-fa-icon-size"></i>
-                <a th:href="@{/admin/manage/user/new}" class="href-no-underline dropdown-font-size" >Nový uživatel</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <th>ID</th>
-        <th>Přihlašovací jméno</th>
-        <th>Jméno</th>
-        <th>Info</th>
-        <th>Úprava</th>
-        <th>Nové heslo</th>
-    </tr>
-    <th:block th:each="user : ${users}">
+    <thead>
         <tr>
-            <td><div th:text="${user.Id}"></div></td>
-            <td><div th:text="${user.username}"></div></td>
-            <td><div th:text="${user.name}"></div></td>
-            <td><a th:href="@{/admin/manage/user/info?id={id}(id=${user.Id})}" class="href-no-underline">
-                <i class="fa fa-user infos-fa-icon-size"></i>
-            </a></td>
-            <td><a th:href="@{/admin/manage/user/edit?id={id}(id=${user.Id})}" class="href-no-underline">
-                <i class="fa fa-user-edit infos-fa-icon-size"></i>
-            </a></td>
-            <td><a th:href="@{/admin/manage/user/password?id={id}(id=${user.Id})}" class="href-no-underline">
-                <i class="fa fa-lock infos-fa-icon-size"></i>
-            </a></td>
+            <td>
+                <div>
+                    <i class="fa fa-plus infos-fa-icon-size"></i>
+                    <a th:href="@{/admin/manage/user/new}" class="href-no-underline dropdown-font-size" >Nový uživatel</a>
+                </div>
+            </td>
         </tr>
-    </th:block>
+        <tr>
+            <th>ID</th>
+            <th>Přihlašovací jméno</th>
+            <th>Jméno</th>
+            <th>Info</th>
+            <th>Úprava</th>
+            <th>Nové heslo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td><div th:text="${user.Id}"></div></td>
+                <td><div th:text="${user.username}"></div></td>
+                <td><div th:text="${user.name}"></div></td>
+                <td><a th:href="@{/admin/manage/user/info?id={id}(id=${user.Id})}" class="href-no-underline">
+                    <i class="fa fa-user infos-fa-icon-size"></i>
+                </a></td>
+                <td><a th:href="@{/admin/manage/user/edit?id={id}(id=${user.Id})}" class="href-no-underline">
+                    <i class="fa fa-user-edit infos-fa-icon-size"></i>
+                </a></td>
+                <td><a th:href="@{/admin/manage/user/password?id={id}(id=${user.Id})}" class="href-no-underline">
+                    <i class="fa fa-lock infos-fa-icon-size"></i>
+                </a></td>
+            </tr>
+        </th:block>
+    </tbody>
 </table>

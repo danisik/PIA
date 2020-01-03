@@ -154,7 +154,6 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 
 	private String toSpringRole(Role role) {
 		return role.getCode();
-		//return "ROLE_" + role.getCode();
 	}
 
 	@Override

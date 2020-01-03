@@ -1,36 +1,39 @@
 <table class="tables">
-    <tr>
-        <th>Jméno:</th>
-        <td th:text="${user.name}"></td>
-    </tr>
+    <thead></thead>
+    <tbody>
+        <tr>
+            <th>Jméno:</th>
+            <td th:text="${user.name}"></td>
+        </tr>
 
-    <tr>
-        <th>Rodné číslo:</th>
-        <td th:text="${user.birthNumber}"></td>
-    </tr>
+        <tr>
+            <th>Rodné číslo:</th>
+            <td th:text="${user.birthNumber}"></td>
+        </tr>
 
-    <tr>
-        <th>Adresa:</th>
-        <td th:text="${user.address}"></td>
-    </tr>
+        <tr>
+            <th>Adresa:</th>
+            <td th:text="${user.address}"></td>
+        </tr>
 
-    <tr>
-        <th>Email:</th>
-        <td th:text="${user.email}"></td>
-    </tr>
+        <tr>
+            <th>Email:</th>
+            <td th:text="${user.email}"></td>
+        </tr>
 
-    <tr>
-        <th>Telefon:</th>
-        <td th:text="${user.phoneNumber}"></td>
-    </tr>
+        <tr>
+            <th>Telefon:</th>
+            <td th:text="${user.phoneNumber}"></td>
+        </tr>
 
-    <tr>
-        <th>Číslo karty:</th>
-        <td th:text="${user.cardNumber}"></td>
-    </tr>
+        <tr>
+            <th>Číslo karty:</th>
+            <td th:text="${user.cardNumber}"></td>
+        </tr>
 
-    <tr sec:authorize="hasAuthority('ADMIN')">
-        <th>Role:</th>
-        <td th:text="${user.role.name}"></td>
-    </tr>
+        <tr sec:authorize="hasAuthority('ADMIN')">
+            <th>Role:</th>
+            <td th:text="${user.role.name}"></td>
+        </tr>
+    </tbody>
 </table>

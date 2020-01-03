@@ -186,7 +186,6 @@ public class InvoiceManagerImpl implements InvoiceManager {
 			for (Goods goods : wares) {
 				if (goods.getId() != null) {
 					goodsRepo.delete(goodsRepo.getById(goods.getId()));
-					System.out.println(goods.getId());
 				}
 				if (goods.getName() != null && goods.getQuantity() != null && goods.getPricePerOne() != null &&
 						goods.getDiscount() != null && goods.getTaxRate() != null) {

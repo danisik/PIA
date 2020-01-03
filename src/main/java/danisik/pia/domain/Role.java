@@ -25,8 +25,8 @@ public class Role extends EntityParent {
 	private List<User> users;
 
 	public Role(String code, String name) {
-		this.code = code;
-		this.name = name;
+		this.setCode(code);
+		this.setName(name);
 	}
 
 }

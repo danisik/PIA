@@ -1,30 +1,34 @@
 <table class="tables object-on-page-center">
-    <tr>
-        <td>
-            <div>
-                <i class="fa fa-user-plus infos-fa-icon-size"></i>
-                <a th:href="@{/addressbook/contact/new}" class="href-no-underline dropdown-font-size">Nový kontakt</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <th>Jméno</th>
-        <th>IČ</th>
-        <th>DIČ</th>
-        <th>Info</th>
-        <th>Úprava</th>
-    </tr>
-    <th:block th:each="contact : ${contacts}">
+    <thead>
         <tr>
-            <td th:text="${contact.name}">...</td>
-            <td th:text="${contact.identificationNumber}">...</td>
-            <td th:text="${contact.taxIdentificationNumber}">...</td>
-            <td><a th:href="@{/addressbook/contact/info?id={id}(id=${contact.Id})}" class="href-no-underline">
-                <i class="fa fa-user infos-fa-icon-size"></i>
-            </a></td>
-            <td><a th:href="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" class="href-no-underline">
-                <i class="fa fa-user-edit infos-fa-icon-size"></i>
-            </a></td>
+            <td>
+                <div>
+                    <i class="fa fa-user-plus infos-fa-icon-size"></i>
+                    <a th:href="@{/addressbook/contact/new}" class="href-no-underline dropdown-font-size">Nový kontakt</a>
+                </div>
+            </td>
         </tr>
-    </th:block>
+        <tr>
+            <th>Jméno</th>
+            <th>IČ</th>
+            <th>DIČ</th>
+            <th>Info</th>
+            <th>Úprava</th>
+        </tr>
+    </thead>
+    <tbody>
+        <th:block th:each="contact : ${contacts}">
+            <tr>
+                <td th:text="${contact.name}">...</td>
+                <td th:text="${contact.identificationNumber}">...</td>
+                <td th:text="${contact.taxIdentificationNumber}">...</td>
+                <td><a th:href="@{/addressbook/contact/info?id={id}(id=${contact.Id})}" class="href-no-underline">
+                    <i class="fa fa-user infos-fa-icon-size"></i>
+                </a></td>
+                <td><a th:href="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" class="href-no-underline">
+                    <i class="fa fa-user-edit infos-fa-icon-size"></i>
+                </a></td>
+            </tr>
+        </th:block>
+    </tbody>
 </table>
