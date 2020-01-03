@@ -1,10 +1,10 @@
 # pia
 
-##Spuštění
+## Spuštění
 
 V root složce spustit skript "run.sh.
 
-##Údaje při prvním spuštění
+## Údaje při prvním spuštění
 
 Nachází se zde 3 uživatelé, každý uživatel má jinou roli.
     
