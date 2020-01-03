@@ -59,12 +59,12 @@
 
     <tr>
         <th>Variabilní symbol:</th>
-        <td><input type="text" name="symbolVariable" id="symbolVariable"/></td>
+        <td><input type="number" step="1" min="0" name="symbolVariable" id="symbolVariable"/></td>
     </tr>
 
     <tr>
         <th>Konstantní symbol:</th>
-        <td><input type="text" name="symbolConstant" id="symbolConstant"/></td>
+        <td><input type="number" step="1" min="0" name="symbolConstant" id="symbolConstant"/></td>
     </tr>
 </table>
 <div th:include="fragments/edit/tableEditGoods"></div>

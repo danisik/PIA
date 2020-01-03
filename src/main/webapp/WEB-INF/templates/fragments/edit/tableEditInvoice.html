@@ -66,12 +66,12 @@
 
     <tr>
         <th>Variabilní symbol:</th>
-        <td><input type="number" th:disabled="${invoice.cancelled}" th:field="${invoice.symbolVariable}"/></td>
+        <td><input type="number" step="1" min="0" th:disabled="${invoice.cancelled}" th:field="${invoice.symbolVariable}"/></td>
     </tr>
 
     <tr>
         <th>Konstantní symbol:</th>
-        <td><input type="number"  th:disabled="${invoice.cancelled}" th:field="${invoice.symbolConstant}"/></td>
+        <td><input type="number" step="1" min="0"  th:disabled="${invoice.cancelled}" th:field="${invoice.symbolConstant}"/></td>
     </tr>
 
     <tr>
