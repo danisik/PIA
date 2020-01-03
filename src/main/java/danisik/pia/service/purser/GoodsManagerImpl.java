@@ -5,6 +5,7 @@ import danisik.pia.dao.GoodsRepository;
 import danisik.pia.dao.InvoiceRepository;
 import danisik.pia.domain.Goods;
 import danisik.pia.domain.Invoice;
+import danisik.pia.exceptions.ObjectNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -78,8 +79,12 @@ public class GoodsManagerImpl implements GoodsManager {
 	}
 
 	@Override
-	public Goods findGoodsByID(Long Id) {
-		return goodsRepo.getById(Id);
+	public Goods findGoodsByID(Long Id) throws ObjectNotFoundException {
+		Goods goods = goodsRepo.getById(Id);
+		if (goods == null) {
+			throw new ObjectNotFoundException();
+		}
+		return goods;
 	}
 
 }

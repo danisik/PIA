@@ -10,6 +10,7 @@ import danisik.pia.domain.Contact;
 import danisik.pia.domain.Goods;
 import danisik.pia.domain.Invoice;
 import danisik.pia.domain.InvoiceType;
+import danisik.pia.exceptions.ObjectNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -103,7 +104,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	}
 
 	@Override
-	public Long addInvoice(Invoice invoiceValues) throws ParseException {
+	public Long addInvoice(Invoice invoiceValues) throws ParseException, ObjectNotFoundException {
 		Long Id = addInvoice(invoiceValues.getDateExposure(), invoiceValues.getDateDue(), invoiceValues.getDateFruitionPerform(),
 				invoiceValues.getSymbolVariable(), invoiceValues.getSymbolConstant(), false,
 				invoiceValues.getAccountingCase(), invoiceValues.getPostingMDD());
@@ -134,12 +135,16 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	}
 
 	@Override
-	public Invoice findInvoiceByID(Long Id) {
-		return invoiceRepo.getById(Id);
+	public Invoice findInvoiceByID(Long Id) throws ObjectNotFoundException {
+		Invoice invoice = invoiceRepo.getById(Id);
+		if (invoice == null) {
+			throw new ObjectNotFoundException();
+		}
+		return invoice;
 	}
 
 	@Override
-	public void updateInvoice(Long Id, Invoice invoiceValues) throws ParseException {
+	public void updateInvoice(Long Id, Invoice invoiceValues) throws ParseException, ObjectNotFoundException {
 		updateInvoice(Id, invoiceValues.getInvoiceType().getCode(), invoiceValues.getDateExposure(),
 				invoiceValues.getDateDue(), invoiceValues.getDateFruitionPerform(),
 				invoiceValues.getSymbolVariable(), invoiceValues.getSymbolConstant(),
@@ -151,7 +156,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	public void updateInvoice(Long Id, String invoiceTypeCode, String dateExposure, String dateDue, String dateFruitionPerform,
 					   Long symbolVariable, Long symbolConstant, String accountingCase, String postingMDD,
 			           Long supplierID, Long customerID, List<Goods> wares)
-						throws ParseException {
+			throws ParseException, ObjectNotFoundException {
 		Invoice invoice = findInvoiceByID(Id);
 
 		InvoiceType invoiceType = invoiceTypeRepo.findByCode(invoiceTypeCode);
@@ -195,7 +200,7 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	}
 
 	@Override
-	public void updateInvoiceCancelled(Long Id) {
+	public void updateInvoiceCancelled(Long Id) throws ObjectNotFoundException {
 		Invoice invoice = findInvoiceByID(Id);
 		invoice.setCancelled(!invoice.getCancelled());
 		invoiceRepo.save(invoice);

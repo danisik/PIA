@@ -40,7 +40,6 @@ public class Constants {
     public static final String ATTRIBUTE_NAME_INVOICES_BUTTON_NAME = "action";
     public static final String ATTRIBUTE_NAME_INVOICES_INVOICE_ID = "invoiceID";
     public static final String INVOICE_CANCEL_STRING = "cancelInvoice";
-    public static final String INVOICE_FILTER_STRING = "filterInvoices";
     public static final String INVOICE_CANCELLED_MESSAGE = "Faktura je stornovaná, nelze ji upravovat!";
     public static final Integer INVOICE_DEFAULT_INIT_COUNT_GOODS = 3;
 

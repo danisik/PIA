@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import danisik.pia.Constants;
 import danisik.pia.InitConstants;
 
+import danisik.pia.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -50,7 +51,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public Long addUser(User userValues) {
+	public Long addUser(User userValues) throws ObjectNotFoundException {
 		if (this.userRepo.findByUsername(userValues.getUsername()) != null) {
 			throw new IllegalArgumentException("User already exists!");
 		}
@@ -80,14 +81,14 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public void updateUserInfo(String username, User userValues) {
+	public void updateUserInfo(String username, User userValues) throws ObjectNotFoundException {
 		updateUserInfo(username, userValues.getName(), userValues.getBirthNumber(), userValues.getAddress(),
 				userValues.getEmail(), userValues.getPhoneNumber(), userValues.getCardNumber());
 	}
 
 	@Override
 	public void updateUserInfo(String username, String name, String birthNumber, String address,
-						   String email, String phoneNumber, String cardNumber) {
+						   String email, String phoneNumber, String cardNumber) throws ObjectNotFoundException {
 		User user = findUserByUsername(username);
 		user.setName(name);
 		user.setBirthNumber(birthNumber);
@@ -99,13 +100,21 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public User findUserByUsername(String username) {
-		return userRepo.findByUsername(username);
+	public User findUserByUsername(String username) throws ObjectNotFoundException {
+		User user = userRepo.findByUsername(username);
+		if (user == null) {
+			throw new ObjectNotFoundException();
+		}
+		return user;
 	}
 
 	@Override
-	public User findUserById(Long Id) {
-		return userRepo.getById(Id);
+	public User findUserById(Long Id) throws ObjectNotFoundException {
+		User user = userRepo.getById(Id);
+		if (user == null) {
+			throw new ObjectNotFoundException();
+		}
+		return user;
 	}
 
 	@EventListener(classes = {
@@ -164,7 +173,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 
 	@Override
 	public void updatePassword(String username, String oldPassword,
-								 String newPassword, String newPasswordConfirmation) {
+								 String newPassword, String newPasswordConfirmation) throws ObjectNotFoundException {
 
 		User user = findUserByUsername(username);
 
@@ -173,7 +182,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public void updatePassword(String username, String newPassword) {
+	public void updatePassword(String username, String newPassword) throws ObjectNotFoundException {
 
 		User user = findUserByUsername(username);
 
@@ -182,7 +191,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public void deleteUser(Long Id) {
+	public void deleteUser(Long Id) throws ObjectNotFoundException {
 		User user = findUserById(Id);
 		Role role = roleRepo.findByCode(user.getRole().getCode());
 		role.getUsers().remove(user);
@@ -190,7 +199,7 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public boolean updateUserRole(String username, String roleCode) {
+	public boolean updateUserRole(String username, String roleCode) throws ObjectNotFoundException {
 		User user = findUserByUsername(username);
 
 		if (!user.getRole().getCode().equals(roleCode) && user.getRole().getCode().equals(InitConstants.DEFAULT_ROLE_ADMIN_CODE)) {

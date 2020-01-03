@@ -3,6 +3,8 @@ package danisik.pia.service.purser;
 import java.util.List;
 
 import danisik.pia.domain.Contact;
+import danisik.pia.exceptions.ObjectNotFoundException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 public interface ContactManager {
 
@@ -15,13 +17,13 @@ public interface ContactManager {
 
 	Contact findContactByIdentificationNumber(String identificationNumber);
 
-	Contact findContactByID(Long Id);
+	Contact findContactByID(Long Id) throws MissingServletRequestParameterException, ObjectNotFoundException;
 
-	void updateContactInfo(Long Id, Contact contactValues);
+	void updateContactInfo(Long Id, Contact contactValues) throws MissingServletRequestParameterException, ObjectNotFoundException;
 
 	void updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
-							  String phoneNumber, String email, String bankAccount);
+							  String phoneNumber, String email, String bankAccount) throws MissingServletRequestParameterException, ObjectNotFoundException;
 
-	boolean deleteContact(Long Id);
+	boolean deleteContact(Long Id) throws ObjectNotFoundException;
 
 }

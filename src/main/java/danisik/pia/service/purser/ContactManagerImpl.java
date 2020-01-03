@@ -4,15 +4,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import danisik.pia.InitConstants;
+import danisik.pia.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.stereotype.Service;
 
 import danisik.pia.dao.ContactRepository;
 import danisik.pia.domain.Contact;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.transaction.Transactional;
 
@@ -86,12 +89,16 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public Contact findContactByID(Long Id) {
-		return contactRepo.getById(Id);
+	public Contact findContactByID(Long Id) throws ObjectNotFoundException {
+		Contact contact = contactRepo.getById(Id);
+		if (contact == null) {
+			throw new ObjectNotFoundException();
+		}
+		return contact;
 	}
 
 	@Override
-	public void updateContactInfo(Long Id, Contact contactValues) {
+	public void updateContactInfo(Long Id, Contact contactValues) throws ObjectNotFoundException {
 		updateContactInfo(Id, contactValues.getName(), contactValues.getResidence(), contactValues.getIdentificationNumber(),
 				contactValues.getTaxIdentificationNumber(), contactValues.getPhoneNumber(), contactValues.getEmail(),
 				contactValues.getBankAccount());
@@ -99,7 +106,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void updateContactInfo(Long Id, String name, String residence, String identificationNumber, String taxIdentificationNumber,
-									 String phoneNumber, String email, String bankAccount) {
+									 String phoneNumber, String email, String bankAccount) throws ObjectNotFoundException {
 		Contact contact = findContactByID(Id);
 		contact.setName(name);
 		contact.setResidence(residence);
@@ -113,7 +120,7 @@ public class ContactManagerImpl implements ContactManager {
 	}
 
 	@Override
-	public boolean deleteContact(Long Id) {
+	public boolean deleteContact(Long Id) throws ObjectNotFoundException {
 		Contact contact = findContactByID(Id);
 
 		if (contact.getInvoicesCustomer().size() != 0 || contact.getInvoicesSupplier().size() != 0) {

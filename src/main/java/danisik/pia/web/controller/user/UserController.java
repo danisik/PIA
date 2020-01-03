@@ -2,7 +2,9 @@ package danisik.pia.web.controller.user;
 
 import danisik.pia.Constants;
 import danisik.pia.domain.User;
+import danisik.pia.exceptions.ObjectNotFoundException;
 import danisik.pia.service.user.UserManager;
+import danisik.pia.web.controller.BasicController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,13 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-public class UserController {
+public class UserController extends BasicController {
 
 	@Autowired
 	private UserManager userManager;
 
 	@GetMapping("/user/edit")
-	public ModelAndView userEditGet() {
+	public ModelAndView userEditGet() throws ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("user/editUser");
 
@@ -38,7 +40,7 @@ public class UserController {
 	}
 
 	@PostMapping("/user/edit")
-	public ModelAndView userEditPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues) {
+	public ModelAndView userEditPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues) throws ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("user/infoUser");
 
@@ -53,7 +55,7 @@ public class UserController {
 	}
 
 	@GetMapping("/user/info")
-	public ModelAndView userInfo() {
+	public ModelAndView userInfo() throws ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("user/infoUser");
 		ModelMap modelMap = modelAndView.getModelMap();
@@ -77,7 +79,7 @@ public class UserController {
 	@PostMapping("/user/password")
 	public ModelAndView userChangePasswordPost(@RequestParam(Constants.REQUEST_PARAM_USER_OLD_PASSWORD) String oldPassword,
 											   @RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD) String newPassword,
-											   @RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION) String newPasswordConfirmation) {
+											   @RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION) String newPasswordConfirmation) throws ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("user/passwordUser");
 		ModelMap modelMap = modelAndView.getModelMap();
