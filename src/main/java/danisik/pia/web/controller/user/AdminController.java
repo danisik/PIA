@@ -4,6 +4,7 @@ import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.service.RoleManager;
 import danisik.pia.service.user.UserManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +18,11 @@ import javax.validation.Valid;
 @Controller
 public class AdminController {
 
+	@Autowired
 	private UserManager userManager;
-	private RoleManager roleManager;
 
-	public AdminController(UserManager userManager, RoleManager roleManager) {
-		this.roleManager = roleManager;
-		this.userManager = userManager;
-	}
+	@Autowired
+	private RoleManager roleManager;
 
 	@GetMapping("/admin/manage")
 	public ModelAndView adminManageUsersGet() {

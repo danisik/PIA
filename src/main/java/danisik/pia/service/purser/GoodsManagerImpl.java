@@ -20,14 +20,11 @@ import java.util.List;
 @Slf4j
 public class GoodsManagerImpl implements GoodsManager {
 
-	private final GoodsRepository goodsRepo;
-	private final InvoiceRepository invoiceRepo;
+	@Autowired
+	private GoodsRepository goodsRepo;
 
 	@Autowired
-	public GoodsManagerImpl(GoodsRepository goodsRepo, InvoiceRepository invoiceRepo) {
-		this.invoiceRepo = invoiceRepo;
-		this.goodsRepo = goodsRepo;
-	}
+	private InvoiceRepository invoiceRepo;
 
 	@EventListener(classes = {
 			ContextRefreshedEvent.class

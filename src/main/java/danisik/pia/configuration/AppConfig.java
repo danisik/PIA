@@ -31,12 +31,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 @EnableAutoConfiguration
 public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
-	private UserDetailsService userDetailsService;
-
 	@Autowired
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
+	private UserDetailsService userDetailsService;
 
     @Bean
     public SpringResourceTemplateResolver templateResolver(){

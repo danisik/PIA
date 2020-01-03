@@ -10,8 +10,6 @@ import javax.transaction.Transactional;
 import danisik.pia.Constants;
 import danisik.pia.InitConstants;
 
-import danisik.pia.dao.ContactRepository;
-import danisik.pia.dao.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -33,22 +31,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserManagerImpl implements UserManager, UserDetailsService {
 
-	private final PasswordEncoder encoder;
-
-	private final UserRepository userRepo;
-	private final RoleRepository roleRepo;
-	private final ContactRepository contactRepo;
-	private final InvoiceRepository invoiceRepo;
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Autowired
-	public UserManagerImpl(PasswordEncoder encoder, UserRepository userRepo, RoleRepository roleRepo,
-						   ContactRepository contactRepo, InvoiceRepository invoiceRepo) {
-		this.encoder = encoder;
-		this.userRepo = userRepo;
-		this.roleRepo = roleRepo;
-		this.contactRepo = contactRepo;
-		this.invoiceRepo = invoiceRepo;
-	}
+	private UserRepository userRepo;
+
+	@Autowired
+	private RoleRepository roleRepo;
 
 	@Override
 	public List<User> getUsers() {

@@ -20,12 +20,8 @@ import javax.transaction.Transactional;
 @Slf4j
 public class ContactManagerImpl implements ContactManager {
 
-	private final ContactRepository contactRepo;
-
 	@Autowired
-	public ContactManagerImpl(ContactRepository contactRepo) {
-		this.contactRepo = contactRepo;
-	}
+	private ContactRepository contactRepo;
 
 	@EventListener(classes = {
 			ContextRefreshedEvent.class

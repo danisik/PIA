@@ -27,19 +27,17 @@ import java.util.List;
 @Slf4j
 public class InvoiceManagerImpl implements InvoiceManager {
 
-	private final InvoiceRepository invoiceRepo;
-	private final ContactRepository contactRepo;
-	private final InvoiceTypeRepository invoiceTypeRepo;
-	private final GoodsRepository goodsRepo;
+	@Autowired
+	private InvoiceRepository invoiceRepo;
 
 	@Autowired
-	public InvoiceManagerImpl(InvoiceRepository invoiceRepo, ContactRepository contactRepo,
-							  InvoiceTypeRepository invoiceTypeRepo, GoodsRepository goodsRepo) {
-		this.invoiceRepo = invoiceRepo;
-		this.contactRepo = contactRepo;
-		this.invoiceTypeRepo = invoiceTypeRepo;
-		this.goodsRepo = goodsRepo;
-	}
+	private ContactRepository contactRepo;
+
+	@Autowired
+	private InvoiceTypeRepository invoiceTypeRepo;
+
+	@Autowired
+	private GoodsRepository goodsRepo;
 
 	@EventListener(classes = {
 			ContextRefreshedEvent.class

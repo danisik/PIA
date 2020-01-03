@@ -3,6 +3,7 @@ package danisik.pia.web.controller.user;
 import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.service.user.UserManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,11 +18,8 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 
+	@Autowired
 	private UserManager userManager;
-
-	public UserController(UserManager userManager) {
-		this.userManager = userManager;
-	}
 
 	@GetMapping("/user/edit")
 	public ModelAndView userEditGet() {

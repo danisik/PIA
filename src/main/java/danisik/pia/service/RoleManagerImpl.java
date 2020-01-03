@@ -20,12 +20,8 @@ import javax.transaction.Transactional;
 @Slf4j
 public class RoleManagerImpl implements RoleManager {
 
-	private final RoleRepository roleRepo;
-
 	@Autowired
-	public RoleManagerImpl(RoleRepository roleRepo) {
-		this.roleRepo = roleRepo;
-	}
+	private RoleRepository roleRepo;
 
 	@EventListener(classes = {
 			ContextRefreshedEvent.class

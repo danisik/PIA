@@ -5,6 +5,7 @@ import danisik.pia.domain.Invoice;
 import danisik.pia.service.purser.ContactManager;
 import danisik.pia.service.purser.InvoiceManager;
 import danisik.pia.service.purser.InvoiceTypeManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +21,14 @@ import java.util.List;
 @Controller
 public class InvoiceController {
 
+	@Autowired
 	private InvoiceManager invoiceManager;
-	private InvoiceTypeManager invoiceTypeManager;
-	private ContactManager contactManager;
 
-	public InvoiceController(InvoiceManager invoiceManager, InvoiceTypeManager invoiceTypeManager, ContactManager contactManager) {
-		this.invoiceTypeManager = invoiceTypeManager;
-		this.invoiceManager = invoiceManager;
-		this.contactManager = contactManager;
-	}
+	@Autowired
+	private InvoiceTypeManager invoiceTypeManager;
+
+	@Autowired
+	private ContactManager contactManager;
 
 	@GetMapping("invoices/invoice/new")
 	public ModelAndView invoicesInvoiceNewGet() {

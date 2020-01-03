@@ -18,12 +18,8 @@ import java.util.List;
 @Slf4j
 public class InvoiceTypeManagerImpl implements InvoiceTypeManager {
 
-	private final InvoiceTypeRepository invoiceTypeRepo;
-
 	@Autowired
-	public InvoiceTypeManagerImpl(InvoiceTypeRepository invoiceTypeRepo) {
-		this.invoiceTypeRepo = invoiceTypeRepo;
-	}
+	private InvoiceTypeRepository invoiceTypeRepo;
 
 	@EventListener(classes = {
 			ContextRefreshedEvent.class

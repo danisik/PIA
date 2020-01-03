@@ -4,6 +4,7 @@ import danisik.pia.Constants;
 import danisik.pia.domain.Contact;
 import danisik.pia.service.purser.ContactManager;
 import danisik.pia.service.user.UserManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +15,8 @@ import javax.validation.Valid;
 @Controller
 public class ContactController {
 
-	private UserManager userManager;
+	@Autowired
 	private ContactManager contactManager;
-
-	public ContactController(ContactManager contactManager, UserManager userManager) {
-		this.contactManager = contactManager;
-		this.userManager = userManager;
-	}
 
 	@GetMapping("/addressbook/info")
 	public ModelAndView addressBookInfo() {
