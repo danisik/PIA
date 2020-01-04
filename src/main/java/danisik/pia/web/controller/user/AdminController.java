@@ -21,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
+/**
+ * Controller for User with role admin.
+ */
 @Controller
 public class AdminController extends BasicController {
 
@@ -33,11 +36,19 @@ public class AdminController extends BasicController {
 	@Autowired
 	private UserValidator userValidator;
 
+	/**
+	 * Bind user validator.
+	 * @param binder Binder.
+	 */
 	@InitBinder("user")
 	protected void initBinder(WebDataBinder binder) {
 		binder.addValidators(this.userValidator);
 	}
 
+	/**
+	 * Get mapping method for admin manage page.
+	 * @return Model and view for admin manage page.
+	 */
 	@GetMapping("/admin/manage")
 	public ModelAndView adminManageUsersGet() {
 		ModelAndView modelAndView = new ModelAndView("admin/listUsersAdmin");
@@ -49,6 +60,10 @@ public class AdminController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Get mapping method for new user page.
+	 * @return Model and view for new user page.
+	 */
 	@GetMapping("/admin/manage/user/new")
 	public ModelAndView adminCreateUserGet() {
 		ModelAndView modelAndView = new ModelAndView("admin/newUserAdmin");
@@ -62,6 +77,13 @@ public class AdminController extends BasicController {
 	}
 
 
+	/**
+	 * Post mapping method for new user page.
+	 * @param userValues Object representing user values.
+	 * @param result Result from validator
+	 * @return Model and view for new user page in case of errors, else info user page..
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@PostMapping("/admin/manage/user/new")
 	public ModelAndView adminCreateUserPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues, BindingResult result) throws ObjectNotFoundException {
 		ModelAndView modelAndView = new ModelAndView();
@@ -86,6 +108,13 @@ public class AdminController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Get mapping method of info user admin.
+	 * @param Id ID of user.
+	 * @return Model and view for info user admin.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@GetMapping("/admin/manage/user/info")
 	public ModelAndView adminInfoUserGet(@RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 		ModelAndView modelAndView = new ModelAndView("admin/infoUserAdmin");
@@ -99,6 +128,13 @@ public class AdminController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Post mapping method for Delete user.
+	 * @param Id Id of User.
+	 * @return Model and view for admin manage.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@PostMapping("/admin/manage/user/delete")
 	public ModelAndView adminInfoUserPost(@RequestParam(value = Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 		ModelAndView modelAndView = new ModelAndView("redirect:/admin/manage");
@@ -108,6 +144,14 @@ public class AdminController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Get mapping method for edit user admin.
+	 * @param Id ID of user.
+	 * @param message Displayed message.
+	 * @return Model and view of edit user admin.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@GetMapping("/admin/manage/user/edit")
 	public ModelAndView adminEditUserGet(@RequestParam(Constants.REQUEST_PARAM_ID) String Id,
 									@RequestParam(value = Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, required = false) String message) throws ParseIDException, ObjectNotFoundException {
@@ -124,6 +168,15 @@ public class AdminController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Post mapping method for Edit user.
+	 * @param userValues Object user containing user values.
+	 * @param result Validation result.
+	 * @param Id ID of user.
+	 * @return Model and view of edit user page in case of no success, else return model and view of info user page.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@PostMapping("/admin/manage/user/edit")
 	public ModelAndView adminEditUserPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues, BindingResult result,
 									 @RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
@@ -166,6 +219,13 @@ public class AdminController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Get mapping method for changing password of user.
+	 * @param Id ID of user.
+	 * @return Model and view of password user admin.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@GetMapping("/admin/manage/user/password")
 	public ModelAndView adminChangeUserPasswordGet(@RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 
@@ -181,6 +241,14 @@ public class AdminController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Post mapping method for Change password of user.
+	 * @param changePasswordObject Object changePasswordObject containing changePasswordObject values.
+	 * @param Id User id.
+	 * @return Model and view of password user admin.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@PostMapping("/admin/manage/user/password")
 	public ModelAndView adminChangeUserPasswordPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT) ChangePasswordObject changePasswordObject,
 											   @RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {

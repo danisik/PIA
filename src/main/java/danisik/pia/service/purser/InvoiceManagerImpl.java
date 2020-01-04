@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Implementation for Invoice manager.
+ */
 @Service
 @Slf4j
 public class InvoiceManagerImpl implements InvoiceManager {
@@ -40,6 +43,9 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	@Autowired
 	private GoodsRepository goodsRepo;
 
+	/**
+	 * Initialization setup for invoice manager. Check if invoice repository contains records and if not, initialize default values.
+	 */
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
@@ -103,6 +109,13 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		}
 	}
 
+	/**
+	 * Add newly created invoice into database.
+	 * @param invoiceValues Invoice object containing invoice values getted from template.
+	 * @return ID of newly created invoice.
+	 * @throws ParseException Parse exception.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public Long addInvoice(Invoice invoiceValues) throws ParseException, ObjectNotFoundException {
 		Long Id = addInvoice(invoiceValues.getDateExposure(), invoiceValues.getDateDue(), invoiceValues.getDateFruitionPerform(),
@@ -119,6 +132,19 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		return Id;
 	}
 
+	/**
+	 * Add new invoice into database.
+	 * @param dateExposure Date exposure of invoice.
+	 * @param dateDue Date due of invoice.
+	 * @param dateFruitionPerform Date fruition perform of invoice.
+	 * @param symbolVariable Variable symbol  of invoice.
+	 * @param symbolConstant Constant symbol of invoice.
+	 * @param cancelled Represents if invoice is cancelled or not.
+	 * @param accountingCase Accounting case  of invoice.
+	 * @param postingMDD Posting MD / D  of invoice.
+	 * @return ID of newly created invoice.
+	 * @throws ParseException Parse exception.
+	 */
 	public Long addInvoice(String dateExposure, String dateDue, String dateFruitionPerform, Long symbolVariable,
 						   Long symbolConstant, Boolean cancelled, String accountingCase, String postingMDD) throws ParseException {
 		Invoice invoice = new Invoice((long)getInvoices().size(), dateExposure, dateDue, dateFruitionPerform,
@@ -127,6 +153,10 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		return invoice.getId();
 	}
 
+	/**
+	 * Get all invoices from database.
+	 * @return List of invoices.
+	 */
 	@Override
 	public List<Invoice> getInvoices() {
 		List<Invoice> retVal = new LinkedList<>();
@@ -134,6 +164,12 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		return retVal;
 	}
 
+	/**
+	 * Find Invoice by ID.
+	 * @param Id ID of invoice.
+	 * @return Invoice if ID is presented in database.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public Invoice findInvoiceByID(Long Id) throws ObjectNotFoundException {
 		Invoice invoice = invoiceRepo.getById(Id);
@@ -143,6 +179,13 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		return invoice;
 	}
 
+	/**
+	 * Update invoice,
+	 * @param Id ID of invoice.
+	 * @param invoiceValues Invoice object containing invoice values getted from template.
+	 * @throws ParseException Parse exception.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public void updateInvoice(Long Id, Invoice invoiceValues) throws ParseException, ObjectNotFoundException {
 		updateInvoice(Id, invoiceValues.getInvoiceType().getCode(), invoiceValues.getDateExposure(),
@@ -152,6 +195,23 @@ public class InvoiceManagerImpl implements InvoiceManager {
 				invoiceValues.getSupplier().getId(), invoiceValues.getCustomer().getId(), invoiceValues.getWares());
 	}
 
+	/**
+	 * Update invoice.
+	 * @param Id Invoice ID.
+	 * @param invoiceTypeCode Invoice type code.
+	 * @param dateExposure Date exposure of invoice.
+	 * @param dateDue Date due of invoice.
+	 * @param dateFruitionPerform Date fruition perform of invoice.
+	 * @param symbolVariable Variable symbol  of invoice.
+	 * @param symbolConstant Constant symbol of invoice.
+	 * @param accountingCase Accounting case  of invoice.
+	 * @param postingMDD Posting MD / D  of invoice.
+	 * @param supplierID ID of supplier.
+	 * @param customerID ID of customer.
+	 * @param wares Wares.
+	 * @throws ParseException Parse exception.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public void updateInvoice(Long Id, String invoiceTypeCode, String dateExposure, String dateDue, String dateFruitionPerform,
 					   Long symbolVariable, Long symbolConstant, String accountingCase, String postingMDD,
@@ -179,6 +239,11 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		invoiceRepo.save(invoice);
 	}
 
+	/**
+	 * Update goods for invoice.
+	 * @param invoice Invoice object.
+	 * @param wares Wares.
+	 */
 	private void manageGoods(Invoice invoice, List<Goods> wares) {
 
 		List<Goods> newWares = new ArrayList<Goods>();
@@ -198,6 +263,11 @@ public class InvoiceManagerImpl implements InvoiceManager {
 		invoice.setWares(newWares);
 	}
 
+	/**
+	 * Set opposite value of cancelled of invoice.
+	 * @param Id Invoice ID.
+	 * @throws ParseException Parse exception.
+	 */
 	@Override
 	public void updateInvoiceCancelled(Long Id) throws ObjectNotFoundException {
 		Invoice invoice = findInvoiceByID(Id);

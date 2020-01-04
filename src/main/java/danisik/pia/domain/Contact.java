@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Domain entity representing Contact in application. Contact is used in Invoice as Customer / Supplier.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -33,6 +36,16 @@ public class Contact extends EntityParent{
 	@OneToMany(mappedBy = "supplier")
 	private List<Invoice> invoicesSupplier;
 
+	/**
+	 * Constructor for domain entity Contact.
+	 * @param name Name of contact.
+	 * @param residence Residence of contact
+	 * @param identificationNumber Identification number of contact.
+	 * @param taxIdentificationNumber Tax identification number of contact.
+	 * @param phoneNumber Phone number used by contact
+	 * @param email Email used by contact.
+	 * @param bankAccount Bank account used by contact.
+	 */
 	public Contact(String name, String residence, String identificationNumber, String taxIdentificationNumber,
 				   String phoneNumber, String email, String bankAccount) {
 		this.setName(name);

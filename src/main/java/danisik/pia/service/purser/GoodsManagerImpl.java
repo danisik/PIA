@@ -17,6 +17,9 @@ import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Implementation for Goods manager.
+ */
 @Service
 @Slf4j
 public class GoodsManagerImpl implements GoodsManager {
@@ -27,6 +30,9 @@ public class GoodsManagerImpl implements GoodsManager {
 	@Autowired
 	private InvoiceRepository invoiceRepo;
 
+	/**
+	 * Initialization setup for goods manager. Check if goods repository contains records and if not, initialize default values.
+	 */
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
@@ -65,12 +71,24 @@ public class GoodsManagerImpl implements GoodsManager {
 		}
 	}
 
+	/**
+	 * Add new goods into database.
+	 * @param name Name of goods.
+	 * @param quantity Quantity of goods.
+	 * @param pricePerOne Price of goods per one.
+	 * @param discount Discount of goods.
+	 * @param taxRate Tax rate of goods.
+	 */
 	@Override
 	public void addGoods(String name, Long quantity, Float pricePerOne, Float discount, Float taxRate) {
 		Goods goods = new Goods(name, quantity, pricePerOne, discount, taxRate);
 		this.goodsRepo.save(goods);
 	}
 
+	/**
+	 * Get wares from database.
+	 * @return List of wares.
+	 */
 	@Override
 	public List<Goods> getGoods() {
 		List<Goods> retVal = new LinkedList<>();
@@ -78,6 +96,12 @@ public class GoodsManagerImpl implements GoodsManager {
 		return retVal;
 	}
 
+	/**
+	 * Fint goods by his ID.
+	 * @param Id ID of goods.
+	 * @return Goods if ID is presented in database.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public Goods findGoodsByID(Long Id) throws ObjectNotFoundException {
 		Goods goods = goodsRepo.getById(Id);

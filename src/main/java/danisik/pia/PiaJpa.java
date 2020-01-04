@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Import;
 import danisik.pia.configuration.AppConfig;
 import danisik.pia.configuration.DbConfig;
 
+/**
+ * Main class.
+ */
 @SpringBootApplication
 @Import({
 	AppConfig.class,
@@ -14,6 +17,10 @@ import danisik.pia.configuration.DbConfig;
 })
 public class PiaJpa {
 
+	/**
+	 * Main method.
+	 * @param args Arguments for app.
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(PiaJpa.class, args);
 	}

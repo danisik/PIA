@@ -1,6 +1,5 @@
 package danisik.pia.validators;
 
-import danisik.pia.Constants;
 import danisik.pia.InitConstants;
 import danisik.pia.domain.User;
 import danisik.pia.model.ChangePasswordObject;
@@ -14,8 +13,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.util.regex.Pattern;
-
+/**
+ * Password validator for all password inputs.
+ */
 @Component
 public class PasswordValidator implements Validator {
 
@@ -25,10 +25,20 @@ public class PasswordValidator implements Validator {
     @Autowired
     private UserManager userManager;
 
+    /**
+     * Determine which class this validator supports.
+     * @param clazz Tested class.
+     * @return True if clazz is supported or not.
+     */
     public boolean supports(Class clazz) {
         return ChangePasswordObject.class.equals(clazz);
     }
 
+    /**
+     * Validate password object.
+     * @param obj Object to be validated.
+     * @param e Error object.
+     */
     @SneakyThrows
     public void validate(Object obj, Errors e) {
 

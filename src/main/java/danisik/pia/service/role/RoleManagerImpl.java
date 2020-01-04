@@ -16,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.transaction.Transactional;
 
+/**
+ * Implementation for Role manager.
+ */
 @Service
 @Slf4j
 public class RoleManagerImpl implements RoleManager {
@@ -23,6 +26,9 @@ public class RoleManagerImpl implements RoleManager {
 	@Autowired
 	private RoleRepository roleRepo;
 
+	/**
+	 * Initialization setup for role manager. Check if role repository contains records and if not, initialize default values.
+	 */
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
@@ -37,11 +43,20 @@ public class RoleManagerImpl implements RoleManager {
 		}
 	}
 
+	/**
+	 * Add newly created role into database.
+	 * @param code Code of role.
+	 * @param name Name of role.
+	 */
 	public void addRole(String code, String name) {
 		Role role = new Role(code, name);
 		this.roleRepo.save(role);
 	}
 
+	/**
+	 * Get all roles from database.
+	 * @return List of roles.
+	 */
 	@Override
 	public List<Role> getRoles() {
 		List<Role> retVal = new LinkedList<>();

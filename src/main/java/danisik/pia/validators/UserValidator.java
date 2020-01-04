@@ -2,7 +2,6 @@ package danisik.pia.validators;
 
 import danisik.pia.Constants;
 import danisik.pia.domain.User;
-import javafx.scene.shape.PathElement;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -10,13 +9,26 @@ import org.springframework.validation.Validator;
 
 import java.util.regex.Pattern;
 
+/**
+ * User validator for all users input.
+ */
 @Component
 public class UserValidator implements Validator {
 
+    /**
+     * Determine which class this validator supports.
+     * @param clazz Tested class.
+     * @return True if clazz is supported or not.
+     */
     public boolean supports(Class clazz) {
         return User.class.equals(clazz);
     }
 
+    /**
+     * Validate user object.
+     * @param obj Object to be validated.
+     * @param e Error object.
+     */
     public void validate(Object obj, Errors e) {
         ValidationUtils.rejectIfEmptyOrWhitespace(e, "name", "field.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(e, "birthNumber", "field.required");

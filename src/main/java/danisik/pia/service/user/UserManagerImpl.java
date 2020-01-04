@@ -28,6 +28,9 @@ import danisik.pia.domain.User;
 import danisik.pia.model.WebCredentials;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Implementation for User manager.
+ */
 @Service
 @Slf4j
 public class UserManagerImpl implements UserManager, UserDetailsService {
@@ -41,6 +44,10 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	@Autowired
 	private RoleRepository roleRepo;
 
+	/**
+	 * Get all users from database.
+	 * @return List of users.
+	 */
 	@Override
 	public List<User> getUsers() {
 		List<User> retVal = new LinkedList<>();
@@ -50,6 +57,12 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return Collections.unmodifiableList(retVal);
 	}
 
+	/**
+	 * Add new user into database.
+	 * @param userValues User object containing user values getted from template.
+	 * @return ID of newly created user.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public Long addUser(User userValues) throws ObjectNotFoundException {
 		if (this.userRepo.findByUsername(userValues.getUsername()) != null) {
@@ -69,6 +82,18 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return Id;
 	}
 
+	/**
+	 * Add new user into database.
+	 * @param username Username of user.
+	 * @param password Password of user.
+	 * @param name Name of user.
+	 * @param birthNumber Birth number of user.
+	 * @param address Address of user.
+	 * @param email Email of user.
+	 * @param phoneNumber Phone number of user.
+	 * @param cardNumber Card number of user.
+	 * @return ID of newly created user.
+	 */
 	@Override
 	public Long addUser(String username, String password, String name, String birthNumber, String address,
 						String email, String phoneNumber, String cardNumber) {
@@ -80,12 +105,29 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return user.getId();
 	}
 
+	/**
+	 * Update user info.
+	 * @param username Username of user.
+	 * @param userValues User object containing user values getted from template.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public void updateUserInfo(String username, User userValues) throws ObjectNotFoundException {
 		updateUserInfo(username, userValues.getName(), userValues.getBirthNumber(), userValues.getAddress(),
 				userValues.getEmail(), userValues.getPhoneNumber(), userValues.getCardNumber());
 	}
 
+	/**
+	 * Update user info.
+	 * @param username Username of user.
+	 * @param name Name of user.
+	 * @param birthNumber Birth number of user.
+	 * @param address Address of user.
+	 * @param email Email of user.
+	 * @param phoneNumber Phone number of user.
+	 * @param cardNumber Card number of user.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public void updateUserInfo(String username, String name, String birthNumber, String address,
 						   String email, String phoneNumber, String cardNumber) throws ObjectNotFoundException {
@@ -99,6 +141,12 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		this.userRepo.save(user);
 	}
 
+	/**
+	 * Find user by username in database.
+	 * @param username Username of user.
+	 * @return User if username is presented in database.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public User findUserByUsername(String username) throws ObjectNotFoundException {
 		User user = userRepo.findByUsername(username);
@@ -108,6 +156,12 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return user;
 	}
 
+	/**
+	 * Find user by ID in database.
+	 * @param Id ID of user.
+	 * @return User if ID is presented in database.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public User findUserById(Long Id) throws ObjectNotFoundException {
 		User user = userRepo.getById(Id);
@@ -117,6 +171,9 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return user;
 	}
 
+	/**
+	 * Initialization setup for user manager. Check if user repository contains records and if not, initialize default values.
+	 */
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
@@ -152,10 +209,21 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		}
 	}
 
+	/**
+	 * Return spring role code in string.
+	 * @param role role.
+	 * @return String containing spring role code.
+	 */
 	private String toSpringRole(Role role) {
 		return role.getCode();
 	}
 
+	/**
+	 * Load user details by his username.
+	 * @param username Username of user.
+	 * @return UserDetails of user.
+	 * @throws UsernameNotFoundException Exception.
+	 */
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -170,6 +238,12 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return creds;
 	}
 
+	/**
+	 * Update user password.
+	 * @param username Username of user.
+	 * @param newPassword New password.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public void updatePassword(String username, String newPassword) throws ObjectNotFoundException {
 
@@ -179,6 +253,11 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		userRepo.save(user);
 	}
 
+	/**
+	 * Delete user.
+	 * @param Id ID of user.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public void deleteUser(Long Id) throws ObjectNotFoundException {
 		User user = findUserById(Id);
@@ -187,6 +266,13 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		userRepo.delete(user);
 	}
 
+	/**
+	 * Update user role.
+	 * @param username Username of user.
+	 * @param roleCode Code of role.
+	 * @return
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@Override
 	public boolean updateUserRole(String username, String roleCode) throws ObjectNotFoundException {
 		User user = findUserByUsername(username);
@@ -201,6 +287,12 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 		return true;
 	}
 
+	/**
+	 * Generate random string.
+	 * @param length Length of string.
+	 * @param symbols Symbols to be used in string.
+	 * @return Generated random string.
+	 */
 	private String generateRandomString(int length, final String symbols) {
 		SecureRandom rnd = new SecureRandom();
 

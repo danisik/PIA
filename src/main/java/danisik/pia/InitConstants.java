@@ -1,5 +1,8 @@
 package danisik.pia;
 
+/**
+ * CLass containings all init constants used in app.
+ */
 public class InitConstants {
     // User.
     public static final String DEFAULT_ADMIN1_USERNAME = "Admin001";

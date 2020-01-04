@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Domain entity representing Goods in application. Goods is used in Invoice.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -33,6 +36,14 @@ public class Goods extends EntityParent{
 	@JoinColumn(name="invoice_id")
 	private Invoice invoice;
 
+	/**
+	 * Constructor for domain entity Contact.
+	 * @param name Name of goods.
+	 * @param quantity Quantity of goods.
+	 * @param pricePerOne Price of goods for 1.
+	 * @param discount Discount of goods.
+	 * @param taxRate Tax rate of goods.
+	 */
 	public Goods(String name, Long quantity, Float pricePerOne, Float discount, Float taxRate) {
 		this.setName(name);
 		this.setQuantity(quantity);

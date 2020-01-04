@@ -21,6 +21,9 @@ import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * Controller for invoice.
+ */
 @Controller
 public class InvoiceController extends BasicController {
 
@@ -33,6 +36,10 @@ public class InvoiceController extends BasicController {
 	@Autowired
 	private ContactManager contactManager;
 
+	/**
+	 * Get mapping method for invoices invoice new.
+	 * @return Model and view of invoices invoice new.
+	 */
 	@GetMapping("invoices/invoice/new")
 	public ModelAndView invoicesInvoiceNewGet() {
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/newInvoice");
@@ -46,6 +53,13 @@ public class InvoiceController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Post mapping method for invoices invoice new.
+	 * @param invoiceValues Object invoice containing invoice values.
+	 * @return Model and view of invoices invoice new.
+	 * @throws ParseException Exception.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@PostMapping("invoices/invoice/new")
 	public ModelAndView invoicesInvoiceNewPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_INVOICE) Invoice invoiceValues)
 			throws ParseException, ObjectNotFoundException {
@@ -61,6 +75,13 @@ public class InvoiceController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Get mapping method for invoices invoice info.
+	 * @param Id ID of invoice.
+	 * @return Model and view of invoices invoice info
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@GetMapping("invoices/invoice/info")
 	public ModelAndView invoicesInvoiceInfo(@RequestParam(value = Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/infoInvoice");
@@ -73,6 +94,13 @@ public class InvoiceController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Get mapping method for invoices invoice edit.
+	 * @param Id ID of invoice.
+	 * @return Model and view of invoices invoice edit.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@GetMapping("invoices/invoice/edit")
 	public ModelAndView invoicesInvoiceEditGet(@RequestParam(value = Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/editInvoice");
@@ -93,6 +121,15 @@ public class InvoiceController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Post mapping method for invoices invoice info.
+	 * @param Id ID of invoice.
+	 * @param invoiceValues Object invoice containing invoice values.
+	 * @return Model and view of invoices invoice info.
+	 * @throws ParseException Exception.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@PostMapping("invoices/invoice/edit")
 	public ModelAndView invoicesInvoiceEditPost(@RequestParam(value = Constants.REQUEST_PARAM_ID) String Id,
 												@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_INVOICE) Invoice invoiceValues)
@@ -106,6 +143,10 @@ public class InvoiceController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Get mapping method for invoices info.
+	 * @return Model and view of invoices info.
+	 */
 	@GetMapping("/invoices/info")
 	public ModelAndView invoicesInfoGet() {
 		ModelAndView modelAndView = new ModelAndView("purser/invoice/infoListInvoices");
@@ -119,6 +160,14 @@ public class InvoiceController extends BasicController {
 		return modelAndView;
 	}
 
+	/**
+	 * Post mapping method for invoices info.
+	 * @param Id ID of invoice.
+	 * @param action Name of button.
+	 * @return Model and view of invoices info list.
+	 * @throws ParseIDException Exception if ID from url is not valid.
+	 * @throws ObjectNotFoundException If sent ID is not presented in database.
+	 */
 	@PostMapping("/invoices/info")
 	public ModelAndView invoicesInfoPost(@RequestParam(value= Constants.ATTRIBUTE_NAME_INVOICES_INVOICE_ID, required=false) String Id,
 										@RequestParam(value=Constants.ATTRIBUTE_NAME_INVOICES_BUTTON_NAME, required=true) String action) throws ParseIDException, ObjectNotFoundException {

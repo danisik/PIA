@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -25,6 +24,9 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+/**
+ * Class providing application configuration (security, paths to templates, ...).
+ */
 @Configuration
 @ComponentScan
 @EnableWebMvc
@@ -35,6 +37,10 @@ public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	/**
+	 * Set prefix and sufix for all templates.
+	 * @return Template resolver with setted prefix and sufix.
+	 */
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -48,7 +54,11 @@ public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
         return templateResolver;
     }
 
-    @Bean
+	/**
+	 * Set engine for thymeleaf templates.
+	 * @return Template engine.
+	 */
+	@Bean
     public SpringTemplateEngine templateEngine(){
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
@@ -57,18 +67,31 @@ public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
         return templateEngine;
     }
 
-    @Bean
+	/**
+	 * Set template engine into resolver.
+	 * @return Thymeleaf resolver for templates.
+	 */
+	@Bean
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
     }
 
-    @Bean
+	/**
+	 * Create password encoder.
+	 * @return Instance of BCryptPasswordEncoder.
+	 */
+	@Bean
     public PasswordEncoder passwordEncoder() {
     	return new BCryptPasswordEncoder();
     }
 
+	/**
+	 * Security configuration and login and logout security.
+	 * @param http HttpSecurity instance for web.
+	 * @throws Exception exception.
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -99,6 +122,11 @@ public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 			.permitAll();
 	}
 
+	/**
+	 * Set user details service and password encoder for authentication web manager.
+	 * @param auth Authentication builder.
+	 * @throws Exception exception.
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -106,6 +134,10 @@ public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 		.passwordEncoder(passwordEncoder());
 	}
 
+	/**
+	 * Add resource handlers for css, webfonts and js.
+	 * @param registry Resource handler registers.
+	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry

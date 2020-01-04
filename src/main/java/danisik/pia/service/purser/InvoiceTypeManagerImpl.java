@@ -14,6 +14,9 @@ import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Implementation for Invoice type manager.
+ */
 @Service
 @Slf4j
 public class InvoiceTypeManagerImpl implements InvoiceTypeManager {
@@ -21,6 +24,9 @@ public class InvoiceTypeManagerImpl implements InvoiceTypeManager {
 	@Autowired
 	private InvoiceTypeRepository invoiceTypeRepo;
 
+	/**
+	 * Initialization setup for invoice type manager. Check if invoice type repository contains records and if not, initialize default values.
+	 */
 	@EventListener(classes = {
 			ContextRefreshedEvent.class
 	})
@@ -34,11 +40,20 @@ public class InvoiceTypeManagerImpl implements InvoiceTypeManager {
 		}
 	}
 
+	/**
+	 * Add newly created invoice type into database.
+	 * @param code Code of invoice type.
+	 * @param name Name of invoice type.
+	 */
 	public void addInvoiceType(String code, String name) {
 		InvoiceType invoiceType = new InvoiceType(code, name);
 		this.invoiceTypeRepo.save(invoiceType);
 	}
 
+	/**
+	 * Get all invoice types from database.
+	 * @return List of invoice types.
+	 */
 	@Override
 	public List<InvoiceType> getInvoiceTypes() {
 		List<InvoiceType> retVal = new LinkedList<>();

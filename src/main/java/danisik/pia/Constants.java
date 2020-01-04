@@ -1,11 +1,10 @@
 package danisik.pia;
 
-import java.text.DecimalFormat;
-
+/**
+ * Class containings all constants used in app.
+ */
 public class Constants {
     // For all.
-    public static final String DEFAULT_DATE_FORMAT = "dd.MM.yyyy";
-
     public static final String REQUEST_PARAM_ID = "id";
 
     public static final Integer PASSWORD_LENGTH = 4;
@@ -25,9 +24,6 @@ public class Constants {
     public static final String ATTRIBUTE_NAME_USERS = "users";
     public static final String ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE = "message";
     public static final String USER_PASSWORD_CHANGE_MESSAGE = "Heslo bylo úspěšně změněno.";
-    public static final String REQUEST_PARAM_USER_OLD_PASSWORD = "oldPassword";
-    public static final String REQUEST_PARAM_USER_NEW_PASSWORD = "newPassword";
-    public static final String REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION = "newPasswordConfirmation";
     public static final String ADMIN_EDIT_USER_ROLE_MESSAGE = "Informations updated, but you can't change your role!";
     public static final String ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT = "changePasswordObject";
 
@@ -41,8 +37,6 @@ public class Constants {
     // Invoice.
     public static final String ATTRIBUTE_NAME_INVOICE = "invoice";
     public static final String ATTRIBUTE_NAME_INVOICES = "invoices";
-    public static final String ATTRIBUTE_NAME_INVOICES_SUPPLIER = "contactSupplier";
-    public static final String ATTRIBUTE_NAME_INVOICES_CUSTOMER = "contactCustomer";
     public static final String ATTRIBUTE_NAME_INVOICES_BUTTON_NAME = "action";
     public static final String ATTRIBUTE_NAME_INVOICES_INVOICE_ID = "invoiceID";
     public static final String INVOICE_CANCEL_STRING = "cancelInvoice";
@@ -51,16 +45,13 @@ public class Constants {
 
 
     // InvoiceType.
-    public static final String ATTRIBUTE_NAME_INVOICE_TYPE = "invoiceType";
     public static final String ATTRIBUTE_NAME_INVOICE_TYPES = "invoiceTypes";
 
 
     // Role.
-    public static final String ATTRIBUTE_NAME_ROLE = "role";
     public static final String ATTRIBUTE_NAME_ROLES = "roles";
 
 
     // Goods.
-    public static final String ATTRIBUTE_NAME_GOODS = "goods";
     public static final String ATTRIBUTE_NAME_WARES = "wares";
 }

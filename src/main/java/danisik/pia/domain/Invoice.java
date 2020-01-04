@@ -9,6 +9,9 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Domain entity representing Invoice in application.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -49,9 +52,21 @@ public class Invoice extends EntityParent{
 	@OneToMany(mappedBy = "invoice")
 	private List<Goods> wares;
 
+	/**
+	 * Constructor for domain entity Invoice.
+	 * @param documentSerialNumber Document serial number of Invoice.
+	 * @param dateExposure Date exposure of invoice.
+	 * @param dateDue Date due of invoice.
+	 * @param dateFruitionPerform Date fruition perform of invoice.
+	 * @param symbolVariable Variable symbol  of invoice.
+	 * @param symbolConstant Constant symbol of invoice.
+	 * @param cancelled Represents if invoice is cancelled or not.
+	 * @param accountingCase Accounting case  of invoice.
+	 * @param postingMDD Posting MD / D  of invoice.
+	 */
 	public Invoice(Long documentSerialNumber, String dateExposure, String dateDue, String dateFruitionPerform,
 				   Long symbolVariable, Long symbolConstant, Boolean cancelled,
-				   String accountingCase, String postingMDD) throws ParseException {
+				   String accountingCase, String postingMDD) {
 
 		this.setDocumentSerialNumber(documentSerialNumber);
 		this.setDateExposure(dateExposure);
