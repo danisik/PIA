@@ -5,12 +5,12 @@
 		lang="cs"
 >
 	<head th:fragment="head(title)">
-		<title th:replace="${title}">PIA ukázka</title>
+		<title th:replace="${title}"></title>
 		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
 		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
 	</head>
 	<body>
-		<nav th:fragment="nav">
+		<nav class="title-nav">
 			<ul>
 				<li>
 					<h2>
@@ -19,9 +19,8 @@
 				</li>
 			</ul>
 		</nav>
-		<nav th:fragment="nav">
+		<nav class="header-nav-align">
 			<ul>
-				<!--Home button-->
 				<li>
 					<a th:href="@{/}"><i class="fa fa-home header-fa-icon-size"></i></a>
 				</li>
@@ -30,7 +29,6 @@
 				</li>
 			</ul>
 			<ul>
-				<!--Unauthorized user buttons-->
 				<li>
 					<a th:href="@{/services}" class="href-no-underline header-font-size">Služby</a>
 				</li>
@@ -38,30 +36,25 @@
 					<a th:href="@{/info}" class="href-no-underline header-font-size">Info</a>
 				</li>
 
-				<!--User buttons-->
 				<li sec:authorize="isAuthenticated()">
 					<div class="dropdown">
-						<button class="dropbtn">Účet</button>
+						<button class="dropbtn header-font-size">Účet</button>
 						<div class="dropdown-content">
 							<a th:href="@{/user/info}" class="href-no-underline dropdown-font-size">Údaje</a>
 							<a th:href="@{/user/password}" class="href-no-underline dropdown-font-size">Změna hesla</a>
 						</div>
 					</div>
-					<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Faktury</a>
+					<a th:href="@{/invoices/info}" class="href-no-underline header-font-size">Faktury</a>
         		</li>
 
-				<!--Admin buttons-->
 				<li sec:authorize="hasAuthority('ADMIN')">
-					<a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Seznam účtů</a>
+					<a th:href="@{/admin/manage}" class="href-no-underline header-font-size">Seznam účtů</a>
 				</li>
 
-
-				<!--Purser buttons-->
 				<li sec:authorize="hasAuthority('PURSER')">
-					<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Kontakty</a>
+					<a th:href="@{/addressbook/info}" class="href-no-underline header-font-size">Kontakty</a>
 				</li>
 
-				<!--Login / Logout button-->
 				<li sec:authorize="!isAuthenticated()">
 					<a th:href="@{/login}"><i class="fa fa-sign-in-alt header-fa-icon-size"></i></a>
 				</li>

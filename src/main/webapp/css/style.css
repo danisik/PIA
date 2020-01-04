@@ -2,11 +2,10 @@ body, html {
 	margin: 0px;
 }
 
-nav {
-	display: flex;
-	justify-content: space-between;
+p, h1, h2, h3, div, table {
+	padding-left: 10px;
+	padding-right: 10px;
 }
-
 nav ul li {
 	display: inline-block;
 }
@@ -14,7 +13,6 @@ nav ul li {
 nav a {
 	color: black;
 	font-size: 2em;
-	padding-left: 1em;
 	padding-right: 1em;
 }
 
@@ -22,9 +20,9 @@ nav a {
 /* DROPDOWN */
 /*----------*/
 .dropbtn {
-	background-color: #4CAF50;
-	color: white;
-	padding: 16px;
+	background-color: #8d8d8d;
+	color: black;
+	padding: 10px 18px 10px 16px;
 	font-size: 16px;
 	border: none;
 }
@@ -53,80 +51,60 @@ nav a {
 	display: block;
 }
 .dropdown:hover .dropbtn {
-	background-color: #3e8e41;
-}
-
-/*----------*/
-/* TOOLTIP  */
-/*----------*/
-.tooltip {
-	position: relative;
-	display: inline-block;
-}
-.tooltip .tooltiptext {
-	visibility: hidden;
-	width: 120px;
-	background-color: black;
-	color: #fff;
-	text-align: center;
-	padding: 5px 0;
-	border-radius: 6px;
-	position: absolute;
-	z-index: 1;
-}
-.tooltip:hover .tooltiptext {
-	visibility: visible;
+	background-color: #bdbdbd;
 }
 
 /*----------*/
 /*   OTHERS */
 /*----------*/
-
+.title-nav {
+	background-color: #8d8d8d;
+	display: flex;
+}
+.header-nav-align {
+	display: flex;
+	justify-content: space-between;
+	background-color: #bdbdbd;
+}
+.body-color {
+	background-color: #efefef;
+}
 .header-fa-icon-size {
 	font-size: 0.73em;
 }
-
 .invoice-fa-icon-size {
 	font-size: 1.5em;
 }
-
 .header-font-size {
 	font-size: 22px;
 }
-
 .dropdown-font-size {
 	font-size: 18px;
 }
-
 .infos-fa-icon-size {
 	font-size: 22px;
 }
-
 .infos-fa-yes-no-icon-size {
 	font-size: 20px;
 }
-
 .href-no-underline {
 	text-decoration: none;
 }
-
 .tables {
 	text-align: left;
+	display: block;
+	border-collapse: collapse;
 }
-
 .tables-content-center {
 	text-align: center;
 }
-
 .object-on-page-center {
 	text-align: center;
 	margin: 0px auto;
 }
-
 .multicolumn-div-column {
 	float: left;
 	width: 50%;
-	padding: 10px;
 	box-sizing: border-box;
 }
 .multicolumn-div-row:after {
@@ -136,6 +114,28 @@ nav a {
 }
 .div-new-line {
 	white-space: pre;
+}
+.error-message {
+	color: #cc0000;
+}
+.body-h1 {
+}
+.row-header {
+	/*color: white;
+	background-color: #8d8d8d;*/
+}
+input[type=submit] {
+	background-color: #8d8d8d;
+	border: none;
+	color: black;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+input[type=submit]:hover {
+	background-color: #bdbdbd;
 }
 
 

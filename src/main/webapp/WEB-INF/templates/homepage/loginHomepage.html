@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" lang="cs">
-	<head>
-		<title>PIA Login</title>
+<html
+		xmlns:th="http://www.thymeleaf.org"
+	  lang="cs"
+>
+	<head th:replace="fragments/headers :: head(~{::title})">
+		<title>Přihlášení</title>
 	</head>
-	<body>
-		<h1>Login</h1>
-		
-		<p th:if="${param.error}" class="error">Wrong user or password!</p>
+	<body class="body-color">
+		<nav th:replace="fragments/headers :: nav"></nav>
+		<h1 class="body-h1">Přihlášení do systému</h1>
+
+		<p th:if="${param.error}" class="error-message">Špatné jméno nebo heslo!</p>
 
 		<form th:action="@{/login}" method="post">
-			<table>
+			<table class="tables">
 				<thead></thead>
 				<tbody>
 					<tr>
-						<th>Uživatelské jméno:</th>
+						<th>Uživatelské jméno</th>
+					</tr>
+					<tr>
 						<td><input type="text" name="username" id="username" /></td>
 					</tr>
 					<tr>
-						<th>Heslo:</th>
+						<th>Heslo</th>
+					</tr>
+					<tr>
 						<td><input type="password" name="password" id="password" /></td>
+					</tr>
+					<tr>
+						<td><br/><input type="submit" value="Přihlásit" /></td>
 					</tr>
 				</tbody>
 			</table>
-			<div>
-				<input type="submit" value="Přihlásit" />
-			</div>
 		</form>
 	</body>
 </html>
