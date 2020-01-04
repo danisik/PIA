@@ -4,12 +4,14 @@
 		xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
 		lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Informace o uživateli</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
-
-	<body>
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<body class="body-color">
+	<nav th:include="fragments/headers"></nav>
 		<h1 class="body-h1">Informace o uživateli</h1>
 		<div><a th:href="@{/admin/manage}" class="href-no-underline body-a-href">Zpět na seznam kontaktů</a></div>
 		<br/>
@@ -19,7 +21,7 @@
 	</body>
 	<br/>
 	<form th:action="@{/admin/manage/user/delete?id={id}(id=${user.Id})}" method="post">
-		<input type="submit" value="Smazat kontakt" />
+		<input class="div-responsive-table" type="submit" value="Smazat kontakt" />
 	</form>
 	<br/>
 </html>

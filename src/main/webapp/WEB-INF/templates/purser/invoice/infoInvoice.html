@@ -4,19 +4,22 @@
 		xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
 		lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Informace o faktuře</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
-	<body>
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<body class="body-color">
+	<nav th:include="fragments/headers"></nav>
 		<h1 class="body-h1">Informace o faktuře</h1>
 		<div><a th:href="@{/invoices/info}" class="href-no-underline body-a-href">Zpět na seznam</a></div>
 		<br/>
 		<div sec:authorize="hasAuthority('PURSER')"><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline body-a-href">Úprava faktury</a></div>
 		<br/>
-		<div th:include="fragments/info/tableInfoInvoice"></div>
+		<div class="div-responsive-table" th:include="fragments/info/tableInfoInvoice"></div>
 		<br/>
-		<div th:include="fragments/info/tableInfoListWaresInvoice"></div>
+		<div class="div-responsive-table" th:include="fragments/info/tableInfoListWaresInvoice"></div>
 	</body>
 	<br/>
 </html>

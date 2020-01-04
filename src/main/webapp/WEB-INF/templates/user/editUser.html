@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 
 <html
-		xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
 		lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Úprava údajů</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
 	<body class="body-color">
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<nav th:include="fragments/headers"></nav>
 		<h1 class="body-h1">Úprava údajů</h1>
 		<div class="div-new-line" th:text="${message}"></div>
 		<div><a th:href="@{/user/info?id={id}(id=${user.Id})}" class="href-no-underline body-a-href">Uživatelské informace</a></div>
 		<br/>
 		<form th:action="@{/user/edit}" method="post">
-			<div th:include="fragments/edit/tableEditUser"></div>
+			<div class="div-responsive-table" th:include="fragments/edit/tableEditUser"></div>
 		</form>
 	</body>
 </html>

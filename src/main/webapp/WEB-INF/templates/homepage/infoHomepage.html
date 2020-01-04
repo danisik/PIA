@@ -4,11 +4,14 @@
 	xmlns:th="http://www.thymeleaf.org"
 	lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Informace</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
 	<body class="body-color">
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<nav th:include="fragments/headers"></nav>
 		<h1 class="body-h1">Informace o firmě</h1>
 		<p>Fusce wisi. In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Nullam dapibus fermentum ipsum.
 			Fusce consectetuer risus a nunc. Maecenas fermentum, sem in pharetra pellentesque, velit turpis volutpat

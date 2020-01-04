@@ -4,11 +4,14 @@
 	xmlns:th="http://www.thymeleaf.org"
 	lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Úprava faktury</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
-	<body>
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<body class="body-color">
+	<nav th:include="fragments/headers"></nav>
 		<h1 class="body-h1">Úprava faktury</h1>
 		<div><a th:href="@{/invoices/info}" class="href-no-underline body-a-href">Zpět na seznam</a></div>
 		<br/>
@@ -18,7 +21,7 @@
 		<div th:text="${message}">
 		</div>
 		<form th:object="${invoice}" th:action="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" method="post">
-			<div th:include="fragments/edit/tableEditInvoice"></div>
+			<div class="div-responsive-table" th:include="fragments/edit/tableEditInvoice"></div>
 		</form>
 	</body>
 	<br/>

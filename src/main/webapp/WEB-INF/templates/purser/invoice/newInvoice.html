@@ -4,17 +4,20 @@
 		xmlns:th="http://www.thymeleaf.org"
 		lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Vytvoření faktury</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
-	<body>
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<body class="body-color">
+	<nav th:include="fragments/headers"></nav>
 		<h1 class="body-h1">Vytvoření faktury</h1>
 		<div><a th:href="@{/invoices/info}" class="href-no-underline body-a-href">Zpět na seznam</a></div>
 		<script th:src="@{/js/displayInvoiceFilter.js}"></script>
 		<br/>
 		<form th:action="@{/invoices/invoice/new}" method="post">
-			<div th:include="fragments/new/tableNewInvoice"></div>
+			<div class="div-responsive-table" th:include="fragments/new/tableNewInvoice"></div>
 		</form>
 	</body>
 	<br/>

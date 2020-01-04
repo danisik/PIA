@@ -4,16 +4,20 @@
 		xmlns:th="http://www.thymeleaf.org"
 	  lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Přihlášení</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
 	<body class="body-color">
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<nav th:include="fragments/headers"></nav>
 		<h1 class="body-h1">Přihlášení do systému</h1>
 
 		<p th:if="${param.error}" class="error-message">Špatné jméno nebo heslo!</p>
 
 		<form th:action="@{/login}" method="post">
+			<div class="div-responsive-table">
 			<table class="tables">
 				<thead></thead>
 				<tbody>
@@ -34,6 +38,7 @@
 					</tr>
 				</tbody>
 			</table>
+			</div>
 		</form>
 	</body>
 	<br/>

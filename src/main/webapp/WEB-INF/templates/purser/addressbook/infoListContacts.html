@@ -4,15 +4,18 @@
 	xmlns:th="http://www.thymeleaf.org"
 	lang="cs"
 >
-	<head th:replace="fragments/headers :: head(~{::title})">
+	<head>
 		<title>Kontakty</title>
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}">
+		<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/all.min.css}">
+		<div th:include="fragments/responsiveOptions"></div>
 	</head>
-	<body>
-		<nav th:replace="fragments/headers :: nav"></nav>
+	<body class="body-color">
+	<nav th:include="fragments/headers"></nav>
 		<br/>
 		<h1 class="body-h1 object-on-page-center">Seznam kontaktů</h1>
 		<br/>
-		<div th:include="fragments/info/tableInfoListContacts"></div>
+		<div class="div-responsive-table" th:include="fragments/info/tableInfoListContacts"></div>
 	</body>
 	<br/>
 </html>
