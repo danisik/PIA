@@ -4,15 +4,15 @@ import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.exceptions.ObjectNotFoundException;
 import danisik.pia.service.user.UserManager;
+import danisik.pia.validators.UserValidator;
 import danisik.pia.web.controller.BasicController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -22,6 +22,14 @@ public class UserController extends BasicController {
 
 	@Autowired
 	private UserManager userManager;
+
+	@Autowired
+	private UserValidator userValidator;
+
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.addValidators(this.userValidator);
+	}
 
 	@GetMapping("/user/edit")
 	public ModelAndView userEditGet() throws ObjectNotFoundException {
@@ -40,16 +48,28 @@ public class UserController extends BasicController {
 	}
 
 	@PostMapping("/user/edit")
-	public ModelAndView userEditPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues) throws ObjectNotFoundException {
+	public ModelAndView userEditPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues, BindingResult result) throws ObjectNotFoundException {
 
-		ModelAndView modelAndView = new ModelAndView("user/infoUser");
+		ModelAndView modelAndView = new ModelAndView();
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		userManager.updateUserInfo(username, userValues);
-		User user = userManager.findUserByUsername(username);
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
+		if (result.hasErrors()) {
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, userValues);
+
+			String message = getFullErrorMessage(result);
+
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, message);
+
+			modelAndView.setViewName("user/editUser");
+		}
+		else {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			userManager.updateUserInfo(username, userValues);
+			User user = userManager.findUserByUsername(username);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
+			modelAndView.setViewName("user/infoUser");
+		}
 
 		return modelAndView;
 	}

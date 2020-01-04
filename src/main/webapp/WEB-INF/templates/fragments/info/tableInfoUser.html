@@ -31,9 +31,9 @@
             <td th:text="${user.cardNumber}"></td>
         </tr>
 
-        <tr sec:authorize="hasAuthority('ADMIN')">
+        <tr>
             <th>Role:</th>
-            <td th:text="${user.role.name}"></td>
+            <td th:text="${user.role.code}"></td>
         </tr>
     </tbody>
 </table>

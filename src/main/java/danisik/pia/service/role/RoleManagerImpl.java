@@ -1,4 +1,4 @@
-package danisik.pia.service;
+package danisik.pia.service.role;
 
 import java.util.LinkedList;
 import java.util.List;

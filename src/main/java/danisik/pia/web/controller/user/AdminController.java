@@ -4,16 +4,18 @@ import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.exceptions.ObjectNotFoundException;
 import danisik.pia.exceptions.ParseIDException;
-import danisik.pia.service.RoleManager;
+import danisik.pia.service.role.RoleManager;
 import danisik.pia.service.user.UserManager;
+import danisik.pia.validators.UserValidator;
 import danisik.pia.web.controller.BasicController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -26,6 +28,14 @@ public class AdminController extends BasicController {
 
 	@Autowired
 	private RoleManager roleManager;
+
+	@Autowired
+	private UserValidator userValidator;
+
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.addValidators(this.userValidator);
+	}
 
 	@GetMapping("/admin/manage")
 	public ModelAndView adminManageUsersGet() {
@@ -52,16 +62,25 @@ public class AdminController extends BasicController {
 
 
 	@PostMapping("/admin/manage/user/new")
-	public ModelAndView adminCreateUserPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues) throws ObjectNotFoundException {
+	public ModelAndView adminCreateUserPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues, BindingResult result) throws ObjectNotFoundException {
 		ModelAndView modelAndView = new ModelAndView();
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
-		Long Id = userManager.addUser(userValues);
+		if (result.hasErrors()) {
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, userValues);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
 
-		modelAndView.setViewName("redirect:/admin/manage/user/info?id=" + Id);
+			String message = getFullErrorMessage(result);
 
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, this.userManager.findUserById(Id));
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, message);
+			modelAndView.setViewName("admin/newUserAdmin");
+		}
+		else {
+			Long Id = userManager.addUser(userValues);
+			modelAndView.setViewName("redirect:/admin/manage/user/info?id=" + Id);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, this.userManager.findUserById(Id));
+		}
 
 		return modelAndView;
 	}
@@ -89,7 +108,7 @@ public class AdminController extends BasicController {
 	}
 
 	@GetMapping("/admin/manage/user/edit")
-	public ModelAndView userEditGet(@RequestParam(Constants.REQUEST_PARAM_ID) String Id,
+	public ModelAndView adminEditUserGet(@RequestParam(Constants.REQUEST_PARAM_ID) String Id,
 									@RequestParam(value = Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, required = false) String message) throws ParseIDException, ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("admin/editUserAdmin");
@@ -100,39 +119,54 @@ public class AdminController extends BasicController {
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, message);
 
 		return modelAndView;
 	}
 
 	@PostMapping("/admin/manage/user/edit")
-	public ModelAndView userEditPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues,
+	public ModelAndView adminEditUserPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_USER) User userValues, BindingResult result,
 									 @RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 
-		ModelAndView modelAndView = new ModelAndView("redirect:/admin/manage/user/info?id=" + Id);
+		ModelAndView modelAndView = new ModelAndView();
 
 		ModelMap modelMap = modelAndView.getModelMap();
 
-		User updateUser = userManager.findUserById(parseId(Id));
+		if (result.hasErrors()) {
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, userValues);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
 
-		userManager.updateUserInfo(updateUser.getUsername(), userValues);
-		boolean success = userManager.updateUserRole(updateUser.getUsername(), userValues.getRole().getCode());
+			String message = getFullErrorMessage(result);
 
-		if (!success) {
-			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, Constants.ADMIN_EDIT_USER_ROLE_MESSAGE);
-			modelAndView.setViewName("redirect:/admin/manage/user/edit?id=" + Id);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, message);
+
+			modelAndView.setViewName("admin/editUserAdmin");
+		}
+		else {
+			User updateUser = userManager.findUserById(parseId(Id));
+
+			userManager.updateUserInfo(updateUser.getUsername(), userValues);
+			boolean success = userManager.updateUserRole(updateUser.getUsername(), userValues.getRole().getCode());
+
+			if (!success) {
+				modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, Constants.ADMIN_EDIT_USER_ROLE_MESSAGE);
+				modelAndView.setViewName("redirect:/admin/manage/user/edit?id=" + Id);
+			}
+			else {
+				modelAndView.setViewName("redirect:/admin/manage/user/info?id=" + Id);
+			}
+
+			updateUser = userManager.findUserByUsername(updateUser.getUsername());
+
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, updateUser);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
 		}
 
-		updateUser = userManager.findUserByUsername(updateUser.getUsername());
-
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, updateUser);
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_ROLES, roleManager.getRoles());
 
 		return modelAndView;
 	}
 
 	@GetMapping("/admin/manage/user/password")
-	public ModelAndView userChangePasswordGet(@RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
+	public ModelAndView adminChangeUserPasswordGet(@RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("admin/passwordUserAdmin");
 
@@ -146,7 +180,7 @@ public class AdminController extends BasicController {
 	}
 
 	@PostMapping("/admin/manage/user/password")
-	public ModelAndView userChangePasswordPost(@RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD) String newPassword,
+	public ModelAndView adminChangeUserPasswordPost(@RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD) String newPassword,
 											   @RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("admin/passwordUserAdmin");

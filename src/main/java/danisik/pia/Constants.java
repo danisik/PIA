@@ -15,6 +15,11 @@ public class Constants {
 
     public static final String ATTRIBUTE_NAME_MESSAGE = "message";
 
+    public static final String VALIDATE_CARD_NUMBER_REGEX = "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$";
+    public static final String VALIDATE_BIRTH_NUMBER_REGEX = "^(?:\\d{6}\\/\\d{4})$";
+    public static final String VALIDATE_ADDRESS_REGEX = "^(.*[^0-9]+) (([1-9][0-9]*)\\/)?([1-9][0-9]*[a-cA-C]?)?([0-9]{3} [0-9]{2}) (.*[^0-9]+)$";
+    public static final String VALIDATE_EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])$";
+    public static final String VALIDATE_PHONE_NUMBER_REGEX = "^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$";
     // User.
     public static final String ATTRIBUTE_NAME_USER = "user";
     public static final String ATTRIBUTE_NAME_USERS = "users";

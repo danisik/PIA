@@ -134,6 +134,9 @@ nav a {
 	display: table;
 	clear: both;
 }
+.div-new-line {
+	white-space: pre;
+}
 
 
 
