@@ -5,11 +5,11 @@
 	lang="cs"
 >
 	<head th:replace="fragments/headers :: head(~{::title})">
-		<title>Index</title>
+		<title>Vytvoření kontaktu</title>
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a>
+		<h1 class="body-h1">Vytvoření kontaktu</h1>
 		<form th:action="@{/addressbook/contact/new}" method="post">
 			<div th:include="fragments/new/tableNewContact"></div>
 		</form>

@@ -5,12 +5,15 @@
 	lang="cs"
 >
 	<head th:replace="fragments/headers :: head(~{::title})">
-		<title>Index</title>
+		<title>Úprava kontaktu</title>
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a>
-		<div><a th:href="@{/addressbook/contact/info?id={id}(id=${contact.Id})}" class="href-no-underline dropdown-font-size">Zpět na informace</a></div>
+		<h1 class="body-h1">Úprava kontaktu</h1>
+		<div><a th:href="@{/addressbook/info}" class="href-no-underline body-a-href">Zpět na seznam</a></div>
+		<br/>
+		<div><a th:href="@{/addressbook/contact/info?id={id}(id=${contact.Id})}" class="href-no-underline body-a-href">Zpět na informace</a></div>
+		<br/>
 		<form th:action="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" method="post">
 			<div th:include="fragments/edit/tableEditContact"></div>
 		</form>

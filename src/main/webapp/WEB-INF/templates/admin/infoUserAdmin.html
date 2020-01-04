@@ -5,12 +5,12 @@
 		lang="cs"
 >
 	<head th:replace="fragments/headers :: head(~{::title})">
-		<title>Index</title>
+		<title>Informace o uživateli</title>
 	</head>
 
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<h1 class="body-h1">Úprava údajů</h1>
+		<h1 class="body-h1">Informace o uživateli</h1>
 		<div><a th:href="@{/admin/manage}" class="href-no-underline body-a-href">Zpět na seznam kontaktů</a></div>
 		<br/>
 		<div><a th:href="@{/admin/manage/user/edit?id={id}(id=${user.Id})}" class="href-no-underline body-a-href">Úprava údajů</a></div>

@@ -5,17 +5,20 @@
 	lang="cs"
 >
 	<head th:replace="fragments/headers :: head(~{::title})">
-		<title>Index</title>
+		<title>Informace o kontaktu</title>
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div><a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
-		<div><a th:href="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" class="href-no-underline dropdown-font-size">Úprava kontaktu</a></div>
+		<h1 class="body-h1">Informace o kontaktu</h1>
+		<div><a th:href="@{/addressbook/info}" class="href-no-underline body-a-href">Zpět na seznam</a></div>
+		<br/>
+		<div><a th:href="@{/addressbook/contact/edit?id={id}(id=${contact.Id})}" class="href-no-underline body-a-href">Úprava kontaktu</a></div>
+		<br/>
 		<div th:text="${message}"></div>
 		<div th:include="fragments/info/tableInfoContact"></div>
 		<br/>
 		<form th:action="@{/addressbook/contact/info?id={id}(id=${contact.Id})}" method="post">
-			<input type="submit" value="Smazat kontakt" />
+			<input type="submit" value="Smazat kontakt"/>
 		</form>
 	</body>
 	<br/>

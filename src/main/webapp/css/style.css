@@ -69,6 +69,9 @@ nav a {
 .body-color {
 	background-color: #efefef;
 }
+.padding-left-10 {
+	padding-left: 10px;
+}
 .header-fa-icon-size {
 	font-size: 0.73em;
 }

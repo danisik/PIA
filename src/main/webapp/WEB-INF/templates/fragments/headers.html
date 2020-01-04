@@ -52,7 +52,7 @@
 						<button class="dropbtn header-font-size">Faktury</button>
 						<div class="dropdown-content">
 							<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Seznam</a>
-							<a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size">Nová faktura</a>
+							<a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size">Vytvoření faktury</a>
 						</div>
 					</div>
 				</li>
@@ -65,13 +65,19 @@
 						<button class="dropbtn header-font-size">Správa účtů</button>
 						<div class="dropdown-content">
 							<a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Seznam</a>
-							<a th:href="@{/admin/manage/user/new}" class="href-no-underline dropdown-font-size">Nový uživatel</a>
+							<a th:href="@{/admin/manage/user/new}" class="href-no-underline dropdown-font-size">Vytvoření uživatele</a>
 						</div>
 					</div>
 				</li>
 
 				<li sec:authorize="hasAuthority('PURSER')">
-					<a th:href="@{/addressbook/info}" class="href-no-underline header-font-size">Kontakty</a>
+					<div class="dropdown">
+						<button class="dropbtn header-font-size">Správa kontaktů</button>
+						<div class="dropdown-content">
+							<a th:href="@{/addressbook/info}" class="href-no-underline dropdown-font-size">Seznam</a>
+							<a th:href="@{/addressbook/contact/new}" class="href-no-underline dropdown-font-size">Vytvoření kontaktu</a>
+						</div>
+					</div>
 				</li>
 
 				<li sec:authorize="!isAuthenticated()">
