@@ -9,12 +9,14 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div><a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
-		<div sec:authorize="hasAuthority('PURSER')"><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline dropdown-font-size">Úprava faktury</a></div>
+		<h1 class="body-h1">Informace o faktuře</h1>
+		<div><a th:href="@{/invoices/info}" class="href-no-underline body-a-href">Zpět na seznam</a></div>
+		<br/>
+		<div sec:authorize="hasAuthority('PURSER')"><a th:href="@{/invoices/invoice/edit?id={id}(id=${invoice.Id})}" class="href-no-underline body-a-href">Úprava faktury</a></div>
+		<br/>
 		<div th:include="fragments/info/tableInfoInvoice"></div>
-		<br/>
-		<br/>
 		<br/>
 		<div th:include="fragments/info/tableInfoListWaresInvoice"></div>
 	</body>
+	<br/>
 </html>

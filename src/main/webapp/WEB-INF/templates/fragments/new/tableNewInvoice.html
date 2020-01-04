@@ -1,4 +1,4 @@
-<table class="tables">
+<table class="tables table-headers-as-column">
     <thead></thead>
     <tbody>
         <tr>
@@ -70,10 +70,11 @@
         </tr>
     </tbody>
 </table>
-<div th:include="fragments/edit/tableEditGoods"></div>
+<br/>
 <div>
-    <div>Políčka označená * jsou povinná.</div>
+    <div class="error-message div-change-password-admin">Políčka označená * jsou povinná.</div>
 </div>
+<div th:include="fragments/edit/tableEditGoods"></div>
 <div>
     <button type="submit" name="action" value="change">Vytvořit</button>
 </div>

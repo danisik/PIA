@@ -44,8 +44,21 @@
 							<a th:href="@{/user/password}" class="href-no-underline dropdown-font-size">Změna hesla</a>
 						</div>
 					</div>
-					<a th:href="@{/invoices/info}" class="href-no-underline header-font-size">Faktury</a>
+
         		</li>
+
+				<li th:if="${#authorization.expression('hasAuthority(''PURSER'')') and #authorization.expression('isAuthenticated()')}">
+					<div class="dropdown">
+						<button class="dropbtn header-font-size">Faktury</button>
+						<div class="dropdown-content">
+							<a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Seznam</a>
+							<a th:href="@{/invoices/invoice/new}" class="href-no-underline dropdown-font-size">Nová faktura</a>
+						</div>
+					</div>
+				</li>
+				<li sec:authorize="isAuthenticated()" th:unless="${#authorization.expression('hasAuthority(''PURSER'')')}">
+					<a th:href="@{/invoices/info}" class="href-no-underline header-font-size">Faktury</a>
+				</li>
 
 				<li sec:authorize="hasAuthority('ADMIN')">
 					<div class="dropdown">

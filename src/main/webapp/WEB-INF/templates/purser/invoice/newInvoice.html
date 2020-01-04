@@ -9,11 +9,14 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div><a th:href="@{/invoices/info}" class="href-no-underline dropdown-font-size">Zpět na seznam</a></div>
+		<h1 class="body-h1">Vytvoření faktury</h1>
+		<div><a th:href="@{/invoices/info}" class="href-no-underline body-a-href">Zpět na seznam</a></div>
 		<script th:src="@{/js/displayInvoiceFilter.js}"></script>
+		<br/>
 		<form th:action="@{/invoices/invoice/new}" method="post">
 			<div th:include="fragments/new/tableNewInvoice"></div>
 		</form>
 	</body>
+	<br/>
 </html>
 

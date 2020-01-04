@@ -1,4 +1,4 @@
-<table class="tables">
+<table class="tables table-headers-as-row">
     <thead></thead>
     <tbody>
         <tr>
@@ -87,11 +87,12 @@
         </tr>
     </tbody>
 </table>
-<div th:include="fragments/edit/tableEditGoods"></div>
+<br/>
 <div>
-    <div>Políčka označená * jsou povinná.</div>
-    <div>Políčka označená ** nelze měnit.</div>
+    <div class="error-message div-change-password-admin">Políčka označená * jsou povinná.</div>
+    <div class="error-message div-change-password-admin">Políčka označená ** nelze měnit.</div>
 </div>
+<div th:include="fragments/edit/tableEditGoods"></div>
 <div>
     <button type="submit" name="action" th:disabled="${invoice.cancelled}" value="change">Upravit</button>
 </div>

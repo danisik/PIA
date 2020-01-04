@@ -1,5 +1,5 @@
 <br/>
-<table class="tables tables-content-center" th:object="${invoice.wares}" name="editWares" id="editWares">
+<table class="tables tables-content-center table-headers-as-column" th:object="${invoice.wares}" name="editWares" id="editWares">
     <thead>
         <tr>
             <th>Jméno</th>
@@ -24,5 +24,6 @@
         </th:block>
     </tbody>
 </table>
-<div><button th:disabled="${invoice.cancelled}" type="button" onclick="addRow()" id="addRowButton">Přidat řádek</button></div>
+<br/>
+<div><button th:disabled="${invoice.cancelled}" type="button" onclick="addRow()" id="addRowButton" class="butto">Přidat řádek</button></div>
 <br/>
