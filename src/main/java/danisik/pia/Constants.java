@@ -29,6 +29,7 @@ public class Constants {
     public static final String REQUEST_PARAM_USER_NEW_PASSWORD = "newPassword";
     public static final String REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION = "newPasswordConfirmation";
     public static final String ADMIN_EDIT_USER_ROLE_MESSAGE = "Informations updated, but you can't change your role!";
+    public static final String ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT = "changePasswordObject";
 
 
     // Contact.

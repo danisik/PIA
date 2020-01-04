@@ -4,6 +4,7 @@ import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.exceptions.ObjectNotFoundException;
 import danisik.pia.exceptions.ParseIDException;
+import danisik.pia.model.ChangePasswordObject;
 import danisik.pia.service.role.RoleManager;
 import danisik.pia.service.user.UserManager;
 import danisik.pia.validators.UserValidator;
@@ -32,7 +33,7 @@ public class AdminController extends BasicController {
 	@Autowired
 	private UserValidator userValidator;
 
-	@InitBinder
+	@InitBinder("user")
 	protected void initBinder(WebDataBinder binder) {
 		binder.addValidators(this.userValidator);
 	}
@@ -175,22 +176,24 @@ public class AdminController extends BasicController {
 		User user = userManager.findUserById(parseId(Id));
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, user);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT, new ChangePasswordObject());
 
 		return modelAndView;
 	}
 
 	@PostMapping("/admin/manage/user/password")
-	public ModelAndView adminChangeUserPasswordPost(@RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD) String newPassword,
+	public ModelAndView adminChangeUserPasswordPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT) ChangePasswordObject changePasswordObject,
 											   @RequestParam(Constants.REQUEST_PARAM_ID) String Id) throws ParseIDException, ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("admin/passwordUserAdmin");
 		ModelMap modelMap = modelAndView.getModelMap();
 
 		User updateUser = userManager.findUserById(parseId(Id));
-		userManager.updatePassword(updateUser.getUsername(), newPassword);
+		userManager.updatePassword(updateUser.getUsername(), changePasswordObject.getNewPassword());
 		updateUser = userManager.findUserById(parseId(Id));
 
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, Constants.USER_PASSWORD_CHANGE_MESSAGE);
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT, new ChangePasswordObject());
 		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER, updateUser);
 		return modelAndView;
 	}

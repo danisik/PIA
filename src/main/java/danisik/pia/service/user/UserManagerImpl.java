@@ -171,16 +171,6 @@ public class UserManagerImpl implements UserManager, UserDetailsService {
 	}
 
 	@Override
-	public void updatePassword(String username, String oldPassword,
-								 String newPassword, String newPasswordConfirmation) throws ObjectNotFoundException {
-
-		User user = findUserByUsername(username);
-
-		user.setPassword(encoder.encode(newPassword));
-		userRepo.save(user);
-	}
-
-	@Override
 	public void updatePassword(String username, String newPassword) throws ObjectNotFoundException {
 
 		User user = findUserByUsername(username);

@@ -3,7 +3,9 @@ package danisik.pia.web.controller.user;
 import danisik.pia.Constants;
 import danisik.pia.domain.User;
 import danisik.pia.exceptions.ObjectNotFoundException;
+import danisik.pia.model.ChangePasswordObject;
 import danisik.pia.service.user.UserManager;
+import danisik.pia.validators.PasswordValidator;
 import danisik.pia.validators.UserValidator;
 import danisik.pia.web.controller.BasicController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,17 @@ public class UserController extends BasicController {
 	@Autowired
 	private UserValidator userValidator;
 
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
+	@Autowired
+	private PasswordValidator passwordValidator;
+
+	@InitBinder("user")
+	protected void userBinder(WebDataBinder binder) {
 		binder.addValidators(this.userValidator);
+	}
+
+	@InitBinder("changePasswordObject")
+	protected void passwordBinder(WebDataBinder binder) {
+		binder.addValidators(this.passwordValidator);
 	}
 
 	@GetMapping("/user/edit")
@@ -92,24 +102,31 @@ public class UserController extends BasicController {
 	public ModelAndView userChangePasswordGet() {
 
 		ModelAndView modelAndView = new ModelAndView("user/passwordUser");
+		ModelMap modelMap = modelAndView.getModelMap();
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT, new ChangePasswordObject());
 
 		return modelAndView;
 	}
 
 	@PostMapping("/user/password")
-	public ModelAndView userChangePasswordPost(@RequestParam(Constants.REQUEST_PARAM_USER_OLD_PASSWORD) String oldPassword,
-											   @RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD) String newPassword,
-											   @RequestParam(Constants.REQUEST_PARAM_USER_NEW_PASSWORD_CONFIRMATION) String newPasswordConfirmation) throws ObjectNotFoundException {
+	public ModelAndView userChangePasswordPost(@Valid @ModelAttribute(Constants.ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT) ChangePasswordObject changePasswordObject,
+											   BindingResult result) throws ObjectNotFoundException {
 
 		ModelAndView modelAndView = new ModelAndView("user/passwordUser");
 		ModelMap modelMap = modelAndView.getModelMap();
 
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		userManager.updatePassword(username, oldPassword, newPassword, newPasswordConfirmation);
+		if (result.hasErrors()) {
+			String message = getFullErrorMessage(result);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, message);
+		}
+		else {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			userManager.updatePassword(username, changePasswordObject.getNewPassword());
 
-		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_USER_SUCCESS_MESSAGE, Constants.USER_PASSWORD_CHANGE_MESSAGE);
+			modelMap.addAttribute(Constants.ATTRIBUTE_NAME_MESSAGE, Constants.USER_PASSWORD_CHANGE_MESSAGE);
+		}
+		modelMap.addAttribute(Constants.ATTRIBUTE_NAME_CHANGE_PASSWORD_OBJECT, new ChangePasswordObject());
 		return modelAndView;
 	}
-
 
 }

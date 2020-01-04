@@ -25,9 +25,6 @@ public interface UserManager {
 
 	User findUserById(Long Id) throws ObjectNotFoundException;
 
-	void updatePassword(String username, String oldPassword,
-						String newPassword, String newPasswordConfirmation) throws ObjectNotFoundException;
-
 	void updatePassword(String username, String newPassword) throws ObjectNotFoundException;
 
 	void deleteUser(Long Id) throws ObjectNotFoundException;
