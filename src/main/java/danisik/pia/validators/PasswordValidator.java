@@ -41,6 +41,7 @@ public class PasswordValidator implements Validator {
      */
     @SneakyThrows
     public void validate(Object obj, Errors e) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(e, "newPassword", "field.required");
 
         ChangePasswordObject changePasswordObject = (ChangePasswordObject) obj;
 
@@ -49,7 +50,6 @@ public class PasswordValidator implements Validator {
 
         if (!user.getRole().getCode().equals(InitConstants.DEFAULT_ROLE_ADMIN_CODE)) {
             ValidationUtils.rejectIfEmptyOrWhitespace(e, "oldPassword", "field.required");
-            ValidationUtils.rejectIfEmptyOrWhitespace(e, "newPassword", "field.required");
             ValidationUtils.rejectIfEmptyOrWhitespace(e, "newPasswordConfirm", "field.required");
 
             if (!passwordEncoder.encode(changePasswordObject.getOldPassword()).equals(user.getPassword())) {

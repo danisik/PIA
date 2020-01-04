@@ -48,7 +48,13 @@
         		</li>
 
 				<li sec:authorize="hasAuthority('ADMIN')">
-					<a th:href="@{/admin/manage}" class="href-no-underline header-font-size">Seznam účtů</a>
+					<div class="dropdown">
+						<button class="dropbtn header-font-size">Správa účtů</button>
+						<div class="dropdown-content">
+							<a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Seznam</a>
+							<a th:href="@{/admin/manage/user/new}" class="href-no-underline dropdown-font-size">Nový uživatel</a>
+						</div>
+					</div>
 				</li>
 
 				<li sec:authorize="hasAuthority('PURSER')">

@@ -10,7 +10,8 @@
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
 		<div class="div-new-line" th:text="${message}"></div>
-		<div><a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Zpět na seznam kontaktů</a></div>
+		<h1 class="body-h1">Nový uživatel</h1>
+		<br/>
 		<form th:action="@{/admin/manage/user/new}" method="post">
 			<div th:include="fragments/edit/tableEditUserAdmin"></div>
 		</form>

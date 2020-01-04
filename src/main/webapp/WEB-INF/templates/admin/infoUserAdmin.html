@@ -10,8 +10,11 @@
 
 	<body>
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div><a th:href="@{/admin/manage}" class="href-no-underline dropdown-font-size">Zpět na seznam kontaktů</a></div>
-		<div><a th:href="@{/admin/manage/user/edit?id={id}(id=${user.Id})}" class="href-no-underline dropdown-font-size">Úprava údajů</a></div>
+		<h1 class="body-h1">Úprava údajů</h1>
+		<div><a th:href="@{/admin/manage}" class="href-no-underline body-a-href">Zpět na seznam kontaktů</a></div>
+		<br/>
+		<div><a th:href="@{/admin/manage/user/edit?id={id}(id=${user.Id})}" class="href-no-underline body-a-href">Úprava údajů</a></div>
+		<br/>
 		<div th:include="fragments/info/tableInfoUser"></div>
 	</body>
 	<br/>

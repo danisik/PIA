@@ -7,10 +7,12 @@
 	<head th:replace="fragments/headers :: head(~{::title})">
 		<title>Index</title>
 	</head>
-	<body>
+	<body class="body-color">
 		<nav th:replace="fragments/headers :: nav"></nav>
+		<h1 class="body-h1">Úprava údajů</h1>
 		<div class="div-new-line" th:text="${message}"></div>
-		<div><a th:href="@{/user/info?id={id}(id=${user.Id})}" class="href-no-underline dropdown-font-size">Uživatelské informace</a></div>
+		<div><a th:href="@{/user/info?id={id}(id=${user.Id})}" class="href-no-underline body-a-href">Uživatelské informace</a></div>
+		<br/>
 		<form th:action="@{/user/edit}" method="post">
 			<div th:include="fragments/edit/tableEditUser"></div>
 		</form>

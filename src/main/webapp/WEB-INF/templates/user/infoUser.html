@@ -8,9 +8,11 @@
 		<title>Index</title>
 	</head>
 
-	<body>
+	<body class="body-color">
 		<nav th:replace="fragments/headers :: nav"></nav>
-		<div><a th:href="@{/user/edit}" class="href-no-underline dropdown-font-size">Úprava údajů</a></div>
+		<h1 class="body-h1">Uživatelské údaje</h1>
+		<div><a th:href="@{/user/edit}" class="href-no-underline body-a-href">Úprava údajů</a></div>
+		<br/>
 		<div th:include="fragments/info/tableInfoUser"></div>
 	</body>
 </html>
