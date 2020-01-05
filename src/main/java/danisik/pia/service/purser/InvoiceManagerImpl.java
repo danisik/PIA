@@ -247,11 +247,13 @@ public class InvoiceManagerImpl implements InvoiceManager {
 	private void manageGoods(Invoice invoice, List<Goods> wares) {
 
 		List<Goods> newWares = new ArrayList<Goods>();
+
+		if (invoice.getWares() != null) {
+			goodsRepo.deleteAll(invoice.getWares());
+		}
+
 		if (wares != null) {
 			for (Goods goods : wares) {
-				if (goods.getId() != null) {
-					goodsRepo.delete(goodsRepo.getById(goods.getId()));
-				}
 				if (goods.getName() != null && goods.getQuantity() != null && goods.getPricePerOne() != null &&
 						goods.getDiscount() != null && goods.getTaxRate() != null) {
 					Goods newGoods = new Goods(goods.getName(), goods.getQuantity(), goods.getPricePerOne(), goods.getDiscount(), goods.getTaxRate());

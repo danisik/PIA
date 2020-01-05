@@ -88,11 +88,11 @@
     </tbody>
 </table>
 <br/>
+<div th:include="fragments/edit/tableEditGoods"></div>
 <div>
     <div class="error-message div-change-password-admin">Políčka označená * jsou povinná.</div>
     <div class="error-message div-change-password-admin">Políčka označená ** nelze měnit.</div>
 </div>
-<div th:include="fragments/edit/tableEditGoods"></div>
 <div>
     <button type="submit" name="action" th:disabled="${invoice.cancelled}" value="change">Upravit</button>
 </div>
