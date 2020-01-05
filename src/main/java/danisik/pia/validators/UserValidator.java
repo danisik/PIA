@@ -42,7 +42,6 @@ public class UserValidator implements Validator {
         Pattern emailPattern = Pattern.compile(Constants.VALIDATE_EMAIL_REGEX);
         Pattern phoneNumberPattern = Pattern.compile(Constants.VALIDATE_PHONE_NUMBER_REGEX);
 
-
         User user = (User) obj;
 
         if (!birthNumberPattern.matcher(user.getBirthNumber()).matches()) {
